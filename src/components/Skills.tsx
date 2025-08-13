@@ -1,0 +1,232 @@
+import React, { useState } from 'react';
+import { Code, Smartphone, Globe, Database, Cloud, Zap, Star, TrendingUp, Award, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const Skills = () => {
+  const [activeCategory, setActiveCategory] = useState('frontend');
+
+  const skillCategories = {
+    frontend: {
+      title: 'Frontend Development',
+      icon: Globe,
+      color: 'from-blue-500 to-cyan-500',
+      skills: [
+        { name: 'React', level: 95, experience: '4+ years', projects: 25 },
+        { name: 'Vue.js', level: 90, experience: '3+ years', projects: 18 },
+        { name: 'TypeScript', level: 92, experience: '3+ years', projects: 30 },
+        { name: 'Next.js', level: 88, experience: '2+ years', projects: 15 },
+        { name: 'Tailwind CSS', level: 95, experience: '3+ years', projects: 35 },
+        { name: 'JavaScript (ES6+)', level: 96, experience: '5+ years', projects: 40 },
+        { name: 'HTML5 & CSS3', level: 98, experience: '5+ years', projects: 50 },
+        { name: 'Sass/SCSS', level: 85, experience: '3+ years', projects: 20 }
+      ]
+    },
+    mobile: {
+      title: 'Mobile Development',
+      icon: Smartphone,
+      color: 'from-purple-500 to-pink-500',
+      skills: [
+        { name: 'React Native', level: 92, experience: '3+ years', projects: 12 },
+        { name: 'Flutter', level: 85, experience: '2+ years', projects: 8 },
+        { name: 'Expo', level: 90, experience: '3+ years', projects: 15 },
+        { name: 'iOS Development', level: 75, experience: '1+ years', projects: 5 },
+        { name: 'Android Development', level: 78, experience: '1+ years', projects: 6 },
+        { name: 'Firebase', level: 88, experience: '2+ years', projects: 10 },
+        { name: 'Push Notifications', level: 85, experience: '2+ years', projects: 12 },
+        { name: 'App Store Deployment', level: 82, experience: '2+ years', projects: 8 }
+      ]
+    },
+    backend: {
+      title: 'Backend Development',
+      icon: Database,
+      color: 'from-green-500 to-emerald-500',
+      skills: [
+        { name: 'Node.js', level: 90, experience: '4+ years', projects: 22 },
+        { name: 'Express.js', level: 92, experience: '4+ years', projects: 25 },
+        { name: 'MongoDB', level: 85, experience: '3+ years', projects: 18 },
+        { name: 'PostgreSQL', level: 82, experience: '2+ years', projects: 12 },
+        { name: 'GraphQL', level: 78, experience: '2+ years', projects: 8 },
+        { name: 'REST APIs', level: 95, experience: '4+ years', projects: 30 },
+        { name: 'Microservices', level: 80, experience: '2+ years', projects: 6 },
+        { name: 'Docker', level: 75, experience: '1+ years', projects: 10 }
+      ]
+    },
+    tools: {
+      title: 'Tools & Technologies',
+      icon: Zap,
+      color: 'from-orange-500 to-red-500',
+      skills: [
+        { name: 'Git & GitHub', level: 95, experience: '5+ years', projects: 50 },
+        { name: 'VS Code', level: 98, experience: '5+ years', projects: 50 },
+        { name: 'Figma', level: 85, experience: '3+ years', projects: 25 },
+        { name: 'AWS', level: 75, experience: '1+ years', projects: 8 },
+        { name: 'Vercel', level: 90, experience: '2+ years', projects: 20 },
+        { name: 'Netlify', level: 88, experience: '2+ years', projects: 15 },
+        { name: 'Jest', level: 80, experience: '2+ years', projects: 18 },
+        { name: 'Webpack', level: 75, experience: '2+ years', projects: 12 }
+      ]
+    }
+  };
+
+  const achievements = [
+    { icon: Award, title: '50+ Projects Completed', description: 'Successfully delivered diverse web and mobile applications' },
+    { icon: Star, title: '4.9/5 Client Rating', description: 'Consistently high satisfaction scores from clients' },
+    { icon: TrendingUp, title: '3+ Years Experience', description: 'Proven track record in modern development practices' },
+    { icon: CheckCircle, title: '100% On-Time Delivery', description: 'Never missed a project deadline' }
+  ];
+
+  const currentSkills = skillCategories[activeCategory as keyof typeof skillCategories];
+
+  return (
+    <section id="skills" className="py-20 bg-white relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-purple-100 to-blue-100 rounded-full opacity-30 transform translate-x-32 -translate-y-32"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-100 to-purple-100 rounded-full opacity-30 transform -translate-x-32 translate-y-32"></div>
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Section Header */}
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            My <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Skills</span>
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-blue-600 mx-auto mb-8"></div>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Mastering the art of web and mobile development with cutting-edge technologies. 
+            Here's my expertise across the full development stack.
+          </p>
+        </motion.div>
+
+        {/* Achievements */}
+        <motion.div 
+          className="grid md:grid-cols-4 gap-6 mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          {achievements.map((achievement, index) => (
+            <motion.div
+              key={index}
+              className="text-center p-6 bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
+              whileHover={{ y: -5, scale: 1.02 }}
+            >
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mb-4">
+                <achievement.icon className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-bold text-lg text-gray-800 mb-2">{achievement.title}</h3>
+              <p className="text-gray-600 text-sm">{achievement.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Category Tabs */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-4 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          {Object.entries(skillCategories).map(([key, category]) => (
+            <button
+              key={key}
+              onClick={() => setActiveCategory(key)}
+              className={`flex items-center gap-3 px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
+                activeCategory === key
+                  ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
+                  : 'bg-white text-gray-700 hover:bg-gray-50 shadow-md border border-gray-200'
+              }`}
+            >
+              <category.icon className="w-5 h-5" />
+              {category.title}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Skills Grid */}
+        <motion.div
+          key={activeCategory}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="grid md:grid-cols-2 gap-6"
+        >
+          {currentSkills.skills.map((skill, index) => (
+            <motion.div
+              key={skill.name}
+              className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -2 }}
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="font-bold text-lg text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
+                    {skill.name}
+                  </h3>
+                  <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
+                    <span>{skill.experience}</span>
+                    <span>•</span>
+                    <span>{skill.projects} projects</span>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-purple-600">{skill.level}%</div>
+                </div>
+              </div>
+              
+              {/* Progress Bar */}
+              <div className="relative">
+                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                  <motion.div
+                    className={`h-full bg-gradient-to-r ${currentSkills.color} rounded-full`}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${skill.level}%` }}
+                    transition={{ duration: 1, delay: index * 0.1 }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-gray-500 mt-2">
+                  <span>Beginner</span>
+                  <span>Expert</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Call to Action */}
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-8 text-white">
+            <h3 className="text-2xl font-bold mb-4">Ready to Work Together?</h3>
+            <p className="text-lg mb-6 opacity-90">
+              Let's bring your ideas to life with cutting-edge technology and exceptional user experiences.
+            </p>
+            <button 
+              onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-lg"
+            >
+              Start a Project
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default Skills;
