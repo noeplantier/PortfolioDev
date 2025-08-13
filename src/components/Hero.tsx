@@ -83,7 +83,6 @@ const Hero = () => {
               <ChevronDown className="w-8 h-8 text-white/70 mx-auto" />
             </div>
           </div>
-    </section>
   );
 };
 
