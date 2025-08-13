@@ -28,7 +28,6 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700"></div>
       
 
-
             {/* Main Heading */}
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
               Hello, I'm <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">Noé</span>
