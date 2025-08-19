@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Code, Smartphone, Globe, Database, Cloud, Zap, Star, TrendingUp, Award, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
+import { Smartphone, Globe, Database, Zap, Star, TrendingUp, Award, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Skills = () => {

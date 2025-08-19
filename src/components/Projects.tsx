@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Github, ExternalLink, Star, GitFork, Eye, Calendar, Code2, Smartphone, Globe } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Github, ExternalLink, Star, GitFork, Calendar, Code2, Smartphone, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface Repository {
