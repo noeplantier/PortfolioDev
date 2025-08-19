@@ -11,14 +11,14 @@ const Skills = () => {
       icon: Globe,
       color: 'from-blue-500 to-cyan-500',
       skills: [
-        { name: 'React', level: 95, experience: '4+ years', projects: 25 },
-        { name: 'Vue.js', level: 90, experience: '3+ years', projects: 18 },
+        { name: 'React', level: 89, experience: '3+ years', projects: 25 },
+        { name: 'Vue.js', level: 80, experience: '3+ years', projects: 8 },
         { name: 'TypeScript', level: 92, experience: '3+ years', projects: 30 },
-        { name: 'Next.js', level: 88, experience: '2+ years', projects: 15 },
-        { name: 'Tailwind CSS', level: 95, experience: '3+ years', projects: 35 },
-        { name: 'JavaScript (ES6+)', level: 96, experience: '5+ years', projects: 40 },
-        { name: 'HTML5 & CSS3', level: 98, experience: '5+ years', projects: 50 },
-        { name: 'Sass/SCSS', level: 85, experience: '3+ years', projects: 20 }
+        { name: 'Next.js', level: 88, experience: '2+ years', projects: 7 },
+        { name: 'Tailwind CSS', level: 85, experience: '3+ years', projects: 10 },
+        { name: 'JavaScript (ES6+)', level: 96, experience: '5+ years', projects: 32 },
+        { name: 'HTML5 & CSS3', level: 98, experience: '5+ years', projects: 39 },
+        { name: 'Sass/SCSS', level: 75, experience: '3+ years', projects: 17 }
       ]
     },
     mobile: {
@@ -27,13 +27,11 @@ const Skills = () => {
       color: 'from-purple-500 to-pink-500',
       skills: [
         { name: 'React Native', level: 92, experience: '3+ years', projects: 12 },
-        { name: 'Flutter', level: 85, experience: '2+ years', projects: 8 },
-        { name: 'Expo', level: 90, experience: '3+ years', projects: 15 },
-        { name: 'iOS Development', level: 75, experience: '1+ years', projects: 5 },
-        { name: 'Android Development', level: 78, experience: '1+ years', projects: 6 },
-        { name: 'Firebase', level: 88, experience: '2+ years', projects: 10 },
-        { name: 'Push Notifications', level: 85, experience: '2+ years', projects: 12 },
-        { name: 'App Store Deployment', level: 82, experience: '2+ years', projects: 8 }
+        { name: 'Flutter', level: 85, experience: '2+ years', projects: 10 },
+        { name: 'Expo', level: 90, experience: '3+ years', projects: 5 },
+        { name: 'iOS Development', level: 75, experience: '2+ years', projects: 5 },
+        { name: 'Android Development', level: 76, experience: '1+ years', projects: 2 },
+        { name: 'Firebase', level: 88, experience: '2+ years', projects: 8 },
       ]
     },
     backend: {
@@ -41,14 +39,12 @@ const Skills = () => {
       icon: Database,
       color: 'from-green-500 to-emerald-500',
       skills: [
-        { name: 'Node.js', level: 90, experience: '4+ years', projects: 22 },
-        { name: 'Express.js', level: 92, experience: '4+ years', projects: 25 },
-        { name: 'MongoDB', level: 85, experience: '3+ years', projects: 18 },
-        { name: 'PostgreSQL', level: 82, experience: '2+ years', projects: 12 },
-        { name: 'GraphQL', level: 78, experience: '2+ years', projects: 8 },
-        { name: 'REST APIs', level: 95, experience: '4+ years', projects: 30 },
-        { name: 'Microservices', level: 80, experience: '2+ years', projects: 6 },
-        { name: 'Docker', level: 75, experience: '1+ years', projects: 10 }
+        { name: 'Node.js', level: 96, experience: '4+ years', projects: 22 },
+        { name: 'Express.js', level: 90, experience: '4+ years', projects: 22 },
+        { name: 'MongoDB', level: 80, experience: '2+ years', projects: 8 },
+        { name: 'PostgreSQL', level: 85, experience: '3+ years', projects: 12 },
+        { name: 'REST APIs', level: 95, experience: '4+ years', projects: 25 },
+        { name: 'Docker', level: 85, experience: '2+ years', projects: 15 }
       ]
     },
     tools: {
@@ -56,20 +52,18 @@ const Skills = () => {
       icon: Zap,
       color: 'from-orange-500 to-red-500',
       skills: [
-        { name: 'Git & GitHub', level: 95, experience: '5+ years', projects: 50 },
-        { name: 'VS Code', level: 98, experience: '5+ years', projects: 50 },
-        { name: 'Figma', level: 85, experience: '3+ years', projects: 25 },
-        { name: 'AWS', level: 75, experience: '1+ years', projects: 8 },
+        { name: 'Git & GitHub', level: 97, experience: '4+ years', projects: 47 },
+        { name: 'VS Code', level: 98, experience: '4+ years', projects: 47 },
+        { name: 'Figma', level: 89, experience: '3+ years', projects: 25 },
         { name: 'Vercel', level: 90, experience: '2+ years', projects: 20 },
-        { name: 'Netlify', level: 88, experience: '2+ years', projects: 15 },
-        { name: 'Jest', level: 80, experience: '2+ years', projects: 18 },
-        { name: 'Webpack', level: 75, experience: '2+ years', projects: 12 }
+        { name: 'Netlify', level: 88, experience: '2+ years', projects: 12 },
+        { name: 'Jest', level: 80, experience: '2+ years', projects: 8 },
       ]
     }
   };
 
   const achievements = [
-    { icon: Award, title: '50+ Projects Completed', description: 'Successfully delivered diverse web and mobile applications' },
+    { icon: Award, title: '30+ Projects Completed', description: 'Successfully delivered diverse web and mobile applications' },
     { icon: Star, title: '4.9/5 Client Rating', description: 'Consistently high satisfaction scores from clients' },
     { icon: TrendingUp, title: '3+ Years Experience', description: 'Proven track record in modern development practices' },
     { icon: CheckCircle, title: '100% On-Time Delivery', description: 'Never missed a project deadline' }

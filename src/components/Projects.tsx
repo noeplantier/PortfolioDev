@@ -24,76 +24,89 @@ const Projects = () => {
   const mockRepositories: Repository[] = [
     {
       id: 1,
-      name: 'react-native-ecommerce',
-      description: 'A full-featured e-commerce mobile app built with React Native, featuring user authentication, product catalog, shopping cart, and payment integration.',
-      html_url: 'https://github.com/noeplantier/react-native-ecommerce',
-      homepage: 'https://ecommerce-demo.netlify.app',
+      name: 'WestApp - Social Media',
+      description: 'A full-featured sport meeting website built with TypeScript, featuring user authentication, real-time chat, and event management.',
+      html_url: 'https://github.com/noeplantier/WestApp',
+      homepage: 'https://github.com/noeplantier/WestApp',
       stargazers_count: 124,
       forks_count: 32,
-      language: 'TypeScript',
+      language: 'TypeScript, JavaScript, Sass, Node.JS',
       updated_at: '2024-01-15T10:30:00Z',
-      topics: ['react-native', 'ecommerce', 'mobile', 'typescript', 'expo']
+      topics: ['sport', 'meeting', 'typescript', 'Node.JS']
     },
     {
       id: 2,
-      name: 'vue-dashboard-analytics',
-      description: 'Modern analytics dashboard built with Vue.js 3, featuring real-time data visualization, responsive design, and dark mode support.',
-      html_url: 'https://github.com/noeplantier/vue-dashboard-analytics',
-      homepage: 'https://analytics-dashboard-demo.netlify.app',
+      name: 'Bellagancia - Nails Beauty Booking',
+      description: 'Modern nail art site built with Next.JS, featuring real-time nails beauty booking, responsive design, and dark mode support.',
+      html_url: 'https://github.com/noeplantier/Bellangancia',
+      homepage: 'https://github.com/noeplantier/Bellangancia',
       stargazers_count: 89,
       forks_count: 21,
-      language: 'Vue',
+      language: 'Next',
       updated_at: '2024-01-10T14:20:00Z',
-      topics: ['vue', 'dashboard', 'analytics', 'charts', 'responsive']
+      topics: ['next', 'beauty', 'responsive', 'charts', 'responsive']
     },
     {
       id: 3,
-      name: 'nodejs-microservices-api',
-      description: 'Scalable microservices architecture with Node.js, Express, MongoDB, and Docker. Includes authentication, rate limiting, and comprehensive testing.',
-      html_url: 'https://github.com/noeplantier/nodejs-microservices-api',
-      homepage: '',
+      name: 'Mots de maitre - Community Management',
+      description: 'Scalable microservices architecture with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
+      html_url: 'https://github.com/noeplantier/Mots-de-ma-tre',
+      homepage: 'https://motsdemaitre.com',
       stargazers_count: 156,
       forks_count: 45,
-      language: 'JavaScript',
+      language: 'Typescript, JavaScript, Node.JS, Express',
       updated_at: '2024-01-08T09:15:00Z',
-      topics: ['nodejs', 'microservices', 'api', 'mongodb', 'docker']
+      topics: ['nodejs', 'microservices', 'express',  'react']
     },
     {
       id: 4,
-      name: 'flutter-fitness-tracker',
-      description: 'Cross-platform fitness tracking app with workout plans, progress tracking, and social features. Built with Flutter and Firebase.',
+      name: 'Feelomi - Medical App',
+      description: 'Brain new medical application. Built with Flutter and Firebase.',
       html_url: 'https://github.com/noeplantier/flutter-fitness-tracker',
       homepage: 'https://play.google.com/store/apps/details?id=com.fitness.tracker',
       stargazers_count: 203,
       forks_count: 67,
       language: 'Dart',
       updated_at: '2024-01-05T16:45:00Z',
-      topics: ['flutter', 'fitness', 'mobile', 'firebase', 'health']
+      topics: ['flutter', 'medics', 'mobile', 'firebase', 'health']
     },
     {
       id: 5,
-      name: 'react-portfolio-generator',
-      description: 'Dynamic portfolio generator built with React and Next.js. Features drag-and-drop interface, theme customization, and SEO optimization.',
-      html_url: 'https://github.com/noeplantier/react-portfolio-generator',
-      homepage: 'https://portfolio-generator.vercel.app',
+      name: 'Portfolio - Dev Website',
+      description: 'Static portfolio built with React. Features UX desinged interface, theme customization, and SEO optimization.',
+      html_url: 'https://github.com/noeplantier/PortfolioDev',
+      homepage: 'https://noe.plantier.com',
       stargazers_count: 78,
       forks_count: 19,
-      language: 'TypeScript',
+      language: 'TypeScrip, JavaScript',
       updated_at: '2024-01-03T11:30:00Z',
-      topics: ['react', 'nextjs', 'portfolio', 'generator', 'seo']
+      topics: ['react', 'portfolio', 'web developer', 'seo']
     },
     {
       id: 6,
-      name: 'python-ai-chatbot',
-      description: 'Intelligent chatbot powered by machine learning, built with Python, TensorFlow, and FastAPI. Includes natural language processing and sentiment analysis.',
-      html_url: 'https://github.com/noeplantier/python-ai-chatbot',
-      homepage: 'https://ai-chatbot-demo.herokuapp.com',
+      name: 'Autoriz.io - Transport Authorization SaaS',
+    description: 'A SaaS platform for managing transport authorizations, built with PHP Symfony, React, Auth0 and Node.JS/Express. Features transport authors management and truck traffic control.',
+      html_url: 'https://autoriz.io',
+      homepage: 'https://autoriz.io',
       stargazers_count: 145,
       forks_count: 38,
-      language: 'Python',
+      language: 'Typescript, PHP, Node.JS, Express',
       updated_at: '2023-12-28T13:20:00Z',
       topics: ['python', 'ai', 'chatbot', 'tensorflow', 'nlp']
-    }
+    },
+    {
+      id: 7,
+      name: 'TECUM - Jewelry WebSite',
+    description: 'A SaaS platform for selling mode accessories and brain new jewelry, built with Next.JS, GraphQL Node.JS/Express.',
+      html_url: 'https://github.com/noeplantier/TECUM',
+      homepage: 'https://github.com/noeplantier/TECUM',
+      stargazers_count: 145,
+      forks_count: 38,
+      language: 'Typescript, NextJS, Node.JS, GraphQL',
+      updated_at: '2023-12-28T13:20:00Z',
+      topics: ['jewelry', 'next', 'mode', 'graphql']
+
+    }, 
   ];
 
   useEffect(() => {

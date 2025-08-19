@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, Send, MessageCircle, ExternalLink, CheckCircle, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, Send, MessageCircle, ExternalLink, CheckCircle, Clock, Facebook } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 
@@ -71,20 +71,20 @@ const Contact = () => {
       icon: Github,
       name: 'GitHub',
       href: 'https://github.com/noeplantier',
-      followers: '2.3k',
+      contacts: '5',
       color: 'hover:bg-gray-800'
     },
     {
       icon: Linkedin,
       name: 'LinkedIn',
       href: 'https://linkedin.com/in/noeplantier',
-      followers: '1.8k',
+      relations: '1.2k',
       color: 'hover:bg-blue-600'
     },
     {
-      icon: Twitter,
-      name: 'Twitter',
-      href: 'https://twitter.com/noeplantier',
+      icon: Facebook,
+      name: 'Facebook',
+      href: 'https://facebook.com/noeplantier',
       followers: '956',
       color: 'hover:bg-blue-400'
     },

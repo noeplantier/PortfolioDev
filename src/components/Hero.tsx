@@ -46,7 +46,7 @@ const Hero = () => {
                 {/* Description */}
                 <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
                     Passionate about creating exceptional digital experiences through innovative web and mobile applications.
-                    Let's build something amazing together.
+                    Let's build something amazing together !
                 </p>
 
                 {/* CTA Buttons */}
