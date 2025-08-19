@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, Send, MessageCircle, ExternalLink, CheckCircle, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -38,21 +39,21 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'Email',
-      value: 'noe.plantier@example.com',
-      href: 'mailto:noe.plantier@example.com',
+      value: 'plantiernoe50@gmail.com',
+      href: 'mailto:plantiernoe50@gmail.com',
       description: 'Send me an email anytime'
     },
     {
       icon: Phone,
       title: 'Phone',
-      value: '+33 6 12 34 56 78',
-      href: 'tel:+33612345678',
+      value: '+33 6 66 16 77 88',
+      href: 'tel:+33666167788',
       description: 'Call me during business hours'
     },
     {
       icon: MapPin,
       title: 'Location',
-      value: 'Paris, France',
+      value: 'Nîmes, France',
       href: '#',
       description: 'Available for remote work'
     },
@@ -101,13 +102,14 @@ const Contact = () => {
       <section id="contact"
                className="py-20 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 relative overflow-hidden">
         {/* Background Elements */}
-        <div className="absolute inset-0">
+        <div className="pointer-events-none absolute inset-0">
           <div
               className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-purple-500/20 to-blue-500/20 rounded-full blur-3xl"></div>
           <div
               className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+        </div>
 
-          <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-6 relative z-10">
             {/* Section Header */}
             <motion.div
                 className="text-center mb-16"
@@ -339,7 +341,7 @@ const Contact = () => {
                     Start a Project
                   </button>
                   <a
-                      href="mailto:noe.plantier@example.com"
+                      href="mailto:plantiernoe50@gmail.com"
                       className="px-8 py-4 border-2 border-white/30 text-white rounded-full font-semibold hover:bg-white/10 transform hover:scale-105 transition-all duration-200"
                   >
                     Quick Email
@@ -348,7 +350,6 @@ const Contact = () => {
               </div>
             </motion.div>
           </div>
-        </div>
 
       </section>
   )
