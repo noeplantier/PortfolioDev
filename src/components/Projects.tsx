@@ -107,6 +107,33 @@ const Projects = () => {
       topics: ['jewelry', 'next', 'mode', 'graphql']
 
     }, 
+    {
+      id: 8,
+      name: 'Clem\'s Coffee - Coffee App',
+      description: 'Brain new coffee application. Built with Glide.',
+      html_url: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
+      homepage: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
+      stargazers_count: 203,
+      forks_count: 67,
+      language: 'Dart',
+      updated_at: '2024-01-05T16:45:00Z',
+      topics: ['glide', 'coffee', 'mobile', 'chill']
+
+    },
+    {
+      id: 9,
+      name: 'TrailerMate API - Truck Geolocation',
+      description: 'Brain new coffee application. Built with Glide.',
+      html_url: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
+      homepage: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
+      stargazers_count: 203,
+      forks_count: 67,
+      language: 'Node.JS, Express',
+      updated_at: '2024-01-05T16:45:00Z',
+      topics: ['trucks', 'geolocation', 'node', 'unhitched trailers']
+
+    },
+
   ];
 
   useEffect(() => {

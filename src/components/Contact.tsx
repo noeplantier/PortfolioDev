@@ -85,14 +85,14 @@ const Contact = () => {
       icon: Facebook,
       name: 'Facebook',
       href: 'https://facebook.com/noeplantier',
-      followers: '956',
+      friends: '1,4k',
       color: 'hover:bg-blue-400'
     },
     {
       icon: Instagram,
       name: 'Instagram',
-      href: 'https://instagram.com/noeplantier',
-      followers: '1.2k',
+      href: 'https://instagram.com/punchinline',
+      followers: '1.8k',
       color: 'hover:bg-pink-500'
     }
   ];
