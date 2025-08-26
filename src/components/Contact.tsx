@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Send, MessageCircle, CheckCircle, Clock, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, MessageCircle, CheckCircle, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 
@@ -223,7 +223,7 @@ const Contact = () => {
                   viewport={{once: true}}
               >
                 {/* Contact Info Cards */}
-                <div className="grid gap-6">
+                <div className="grid gap-6 p-0">
                   {contactInfo.map((info, index) => (
                       <motion.a
                           key={index}
