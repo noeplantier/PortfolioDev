@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Send, MessageCircle, ExternalLink, CheckCircle, Clock, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Send, MessageCircle, CheckCircle, Clock, Facebook } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 
@@ -66,36 +66,7 @@ const Contact = () => {
     }
   ];
 
-  const socialLinks = [
-    {
-      icon: Github,
-      name: 'GitHub',
-      href: 'https://github.com/noeplantier',
-      contacts: '5',
-      color: 'hover:bg-gray-800'
-    },
-    {
-      icon: Linkedin,
-      name: 'LinkedIn',
-      href: 'https://linkedin.com/in/noeplantier',
-      relations: '1.2k',
-      color: 'hover:bg-blue-600'
-    },
-    {
-      icon: Facebook,
-      name: 'Facebook',
-      href: 'https://facebook.com/noeplantier',
-      friends: '1,4k',
-      color: 'hover:bg-blue-400'
-    },
-    {
-      icon: Instagram,
-      name: 'Instagram',
-      href: 'https://instagram.com/punchinline',
-      followers: '1.8k',
-      color: 'hover:bg-pink-500'
-    }
-  ];
+
 
   return (
 
@@ -273,48 +244,7 @@ const Contact = () => {
                   ))}
                 </div>
 
-                {/* Social Media */}
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-                  <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                    <ExternalLink className="w-5 h-5"/>
-                    Connect With Me
-                  </h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    {socialLinks.map((social, index) => (
-                        <motion.a
-                            key={index}
-                            href={social.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`flex items-center gap-3 p-4 bg-white/10 rounded-lg hover:bg-white/20 ${social.color} transition-all duration-300 group`}
-                            whileHover={{scale: 1.05}}
-                            whileTap={{scale: 0.95}}
-                        >
-                          <social.icon className="w-5 h-5 text-white"/>
-                          <div>
-                            <div className="text-white font-medium text-sm">{social.name}</div>
-                            <div className="text-gray-400 text-xs">{social.followers} followers</div>
-                          </div>
-                        </motion.a>
-                    ))}
-                  </div>
-                </div>
 
-                {/* Quick Response Guarantee */}
-                <div
-                    className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg">
-                      <Clock className="w-5 h-5 text-white"/>
-                    </div>
-                    <h4 className="text-lg font-bold text-white">Quick Response Guarantee</h4>
-                  </div>
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    I understand that time is valuable. That's why I guarantee a response to all inquiries within 24
-                    hours,
-                    usually much sooner. Let's discuss your project and get started right away!
-                  </p>
-                </div>
               </motion.div>
             </div>
 

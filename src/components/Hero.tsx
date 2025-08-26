@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, Globe } from 'lucide-react';
+import {ChevronDown, Github, Linkedin, Mail, Globe, FacebookIcon} from 'lucide-react';
 
 const Hero = () => {
     const [text, setText] = useState('');
@@ -19,7 +19,8 @@ const Hero = () => {
     const socialLinks = [
         { icon: Github, href: 'https://github.com/noeplantier', label: 'GitHub' },
         { icon: Linkedin, href: 'https://linkedin.com/in/noeplantier', label: 'LinkedIn' },
-        { icon: Mail, href: 'mailto:noe.plantier@example.com', label: 'Email' },
+        { icon: FacebookIcon, href: 'https://facebook.com/noe.plantier', label: 'Facebook' },
+        { icon: Mail, href: 'plantiernoe50@gmail.com', label: 'Email' },
     ];
 
     return (
@@ -28,14 +29,14 @@ const Hero = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700"></div>
 
             {/* Content */}
-            <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
+            <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6 mt-14">
                 {/* Main Heading */}
-                <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+                <h1 className="text-9xl md:text-9xl font-bold text-white mb-6">
                     Hello, I'm <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">Noé</span>
                 </h1>
 
                 {/* Typing Effect */}
-                <div className="text-2xl md:text-3xl text-white/90 mb-8 h-12 flex items-center justify-center">
+                <div className="text-4xl md:text-4xl text-white/90 mb-8 h-12 flex items-center justify-center">
           <span className="flex items-center gap-2">
             <Globe className="w-6 h-6" />
               {text}
@@ -44,8 +45,8 @@ const Hero = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
-                    Passionate about creating exceptional digital experiences through innovative web and mobile applications.
+                <p className="text-2xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
+                    Passionate about creating exceptional digital experiences.<br></br>
                     Let's build something amazing together !
                 </p>
 
@@ -82,9 +83,14 @@ const Hero = () => {
                 </div>
 
                 {/* Scroll Indicator */}
-                <div className="animate-bounce">
+                <button
+                    onClick={() => document.querySelector('#skills')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="animate-bounce cursor-pointer focus:outline-none"
+                    aria-label="Scroll to Projects"
+                    title="Scroll down"
+                >
                     <ChevronDown className="w-8 h-8 text-white/70 mx-auto" />
-                </div>
+                </button>
             </div>
         </section>
     );
