@@ -18,7 +18,7 @@ const Hero = () => {
 
     const socialLinks = [
         { icon: Github, href: 'https://github.com/noeplantier', label: 'GitHub' },
-        { icon: Linkedin, href: 'https://linkedin.com/in/noeplantier', label: 'LinkedIn' },
+        { icon: Linkedin, href: 'https://www.linkedin.com/in/noe-plantier/', label: 'LinkedIn' },
         { icon: FacebookIcon, href: 'https://facebook.com/noe.plantier', label: 'Facebook' },
         { icon: Mail, href: 'plantiernoe50@gmail.com', label: 'Email' },
     ];
@@ -36,7 +36,7 @@ const Hero = () => {
                 </h1>
 
                 {/* Typing Effect */}
-                <div className="text-4xl md:text-4xl text-white/90 mb-8 h-12 flex items-center justify-center">
+                <div className="text-4xl font-bold md:text-4xl text-white/90 mb-8 h-12 flex items-center justify-center">
           <span className="flex items-center gap-2">
             <Globe className="w-6 h-6" />
               {text}
@@ -45,7 +45,7 @@ const Hero = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-2xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-2xl font-semibold text-white mb-12 max-w-2xl mx-auto leading-relaxed">
                     Passionate about creating exceptional digital experiences.<br></br>
                     Let's build something amazing together !
                 </p>
@@ -54,13 +54,13 @@ const Hero = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                     <button
                         onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                        className="px-8 py-4 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-110 transition-all duration-200 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:border-white"
                     >
                         View My Work
                     </button>
                     <button
                         onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-purple-600 transform hover:scale-105 transition-all duration-200"
+                        className="px-8 py-4 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-110 transition-all duration-200 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:border-white"
                     >
                         Get In Touch
                     </button>
