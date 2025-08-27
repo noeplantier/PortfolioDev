@@ -22,81 +22,85 @@ const Projects = () => {
 
   // Mock data for demonstration - replace with actual GitHub API call
   const mockRepositories: Repository[] = [
+
+      {
+          id: 1,
+          name: 'Mots de maitre',
+          description: 'Scalable microservices architecture with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
+          html_url: 'https://github.com/noeplantier/Mots-de-ma-tre',
+          homepage: 'https://motsdemaitre.com',
+          stargazers_count: 156,
+          forks_count: 45,
+          language: 'Next',
+          updated_at: '2024-01-08T09:15:00Z',
+          topics: ['nodejs', 'microservices', 'express',  'react']
+      },
+      {
+          id: 2,
+          name: 'Autoriz.io',
+          description: 'A SaaS platform for managing transport authorizations, built with PHP Symfony, React, Auth0 and Node.JS/Express. Features transport authors management and truck traffic control.',
+          html_url: 'https://autoriz.io',
+          homepage: 'https://autoriz.io',
+          stargazers_count: 145,
+          forks_count: 38,
+          language: 'Typescript, PHP, Node.JS, Express',
+          updated_at: '2023-12-28T13:20:00Z',
+          topics: ['python', 'ai', 'chatbot', 'tensorflow', 'nlp']
+      },
+
+      {
+          id: 3,
+          name: 'StudioCall',
+          description: 'AI‑assisted voice-over and voicemail recording studio for the web — record takes, manage scripts, and share previews with clients in one click.',
+          html_url: 'https://github.com/hugoisidore/studiocall-front',
+          homepage: 'https://www.studiocall.fr/',
+          stargazers_count: 89,
+          forks_count: 21,
+          language: 'Embedded JavaScript',
+          updated_at: '2024-01-10T14:20:00Z',
+          topics: ['JavaScript', 'Voicemail', 'AI']
+      },
+      {
+          id: 4,
+          name: 'Portfolio',
+          description: 'Static portfolio built with React. Features UX desinged interface, theme customization, and SEO optimization.',
+          html_url: 'https://github.com/noeplantier/PortfolioDev',
+          homepage: 'https://noeplantier.com',
+          stargazers_count: 78,
+          forks_count: 19,
+          language: 'TypeScrip, JavaScript',
+          updated_at: '2024-01-03T11:30:00Z',
+          topics: ['react', 'portfolio', 'web developer', 'seo']
+      },
     {
-      id: 1,
-      name: 'WestApp - Social Media',
-      description: 'A full-featured sport meeting website built with TypeScript, featuring user authentication, real-time chat, and event management.',
-      html_url: 'https://github.com/noeplantier/WestApp',
-      homepage: 'https://github.com/noeplantier/WestApp',
-      stargazers_count: 124,
-      forks_count: 32,
-      language: 'TypeScript, JavaScript, Sass, Node.JS',
-      updated_at: '2024-01-15T10:30:00Z',
-      topics: ['sport', 'meeting', 'typescript', 'Node.JS']
-    },
-    {
-      id: 2,
-      name: 'Bellagancia - Nails Beauty Booking',
-      description: 'Modern nail art site built with Next.JS, featuring real-time nails beauty booking, responsive design, and dark mode support.',
-      html_url: 'https://github.com/noeplantier/Bellangancia',
-      homepage: 'https://github.com/noeplantier/Bellangancia',
-      stargazers_count: 89,
-      forks_count: 21,
-      language: 'Next',
-      updated_at: '2024-01-10T14:20:00Z',
-      topics: ['next', 'beauty', 'responsive', 'charts', 'responsive']
-    },
-    {
-      id: 3,
-      name: 'Mots de maitre - Community Management',
-      description: 'Scalable microservices architecture with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
-      html_url: 'https://github.com/noeplantier/Mots-de-ma-tre',
-      homepage: 'https://motsdemaitre.com',
-      stargazers_count: 156,
-      forks_count: 45,
-      language: 'Typescript, JavaScript, Node.JS, Express',
-      updated_at: '2024-01-08T09:15:00Z',
-      topics: ['nodejs', 'microservices', 'express',  'react']
-    },
-    {
-      id: 4,
-      name: 'Feelomi - Medical App',
+      id: 5,
+      name: 'Feelomi',
       description: 'Brain new medical application. Built with Flutter and Firebase.',
-      html_url: 'https://github.com/noeplantier/flutter-fitness-tracker',
-      homepage: 'https://play.google.com/store/apps/details?id=com.fitness.tracker',
+      html_url: 'https://github.com/noeplantier/FEELOMI',
+      homepage: 'https://github.com/noeplantier/FEELOMI',
       stargazers_count: 203,
       forks_count: 67,
       language: 'Dart',
       updated_at: '2024-01-05T16:45:00Z',
       topics: ['flutter', 'medics', 'mobile', 'firebase', 'health']
     },
-    {
-      id: 5,
-      name: 'Portfolio - Dev Website',
-      description: 'Static portfolio built with React. Features UX desinged interface, theme customization, and SEO optimization.',
-      html_url: 'https://github.com/noeplantier/PortfolioDev',
-      homepage: 'https://noe.plantier.com',
-      stargazers_count: 78,
-      forks_count: 19,
-      language: 'TypeScrip, JavaScript',
-      updated_at: '2024-01-03T11:30:00Z',
-      topics: ['react', 'portfolio', 'web developer', 'seo']
-    },
-    {
-      id: 6,
-      name: 'Autoriz.io - Transport Authorization SaaS',
-    description: 'A SaaS platform for managing transport authorizations, built with PHP Symfony, React, Auth0 and Node.JS/Express. Features transport authors management and truck traffic control.',
-      html_url: 'https://autoriz.io',
-      homepage: 'https://autoriz.io',
-      stargazers_count: 145,
-      forks_count: 38,
-      language: 'Typescript, PHP, Node.JS, Express',
-      updated_at: '2023-12-28T13:20:00Z',
-      topics: ['python', 'ai', 'chatbot', 'tensorflow', 'nlp']
-    },
+
+      {
+          id: 6,
+          name: 'WestApp',
+          description: 'A full-featured sport meeting website built with TypeScript, featuring user authentication, real-time chat, and event management.',
+          html_url: 'https://github.com/noeplantier/WestApp',
+          homepage: 'https://github.com/noeplantier/WestApp',
+          stargazers_count: 124,
+          forks_count: 32,
+          language: 'React',
+          updated_at: '2024-01-15T10:30:00Z',
+          topics: ['sport', 'meeting', 'typescript', 'Node.JS']
+      },
+
     {
       id: 7,
-      name: 'TECUM - Jewelry WebSite',
+      name: 'TECUM',
     description: 'A SaaS platform for selling mode accessories and brain new jewelry, built with Next.JS, GraphQL Node.JS/Express.',
       html_url: 'https://github.com/noeplantier/TECUM',
       homepage: 'https://github.com/noeplantier/TECUM',
@@ -109,7 +113,7 @@ const Projects = () => {
     }, 
     {
       id: 8,
-      name: 'Clem\'s Coffee - Coffee App',
+      name: 'Clem\'s Coffee Shop',
       description: 'Brain new coffee application. Built with Glide.',
       html_url: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
       homepage: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
@@ -122,8 +126,8 @@ const Projects = () => {
     },
     {
       id: 9,
-      name: 'TrailerMate API - Truck Geolocation',
-      description: 'Brain new coffee application. Built with Glide.',
+      name: 'TrailerMate',
+      description: 'Smart trailer tracking for haulers — locate unhitched trailers in real time, get geofenced alerts, and keep your fleet moving.',
       html_url: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
       homepage: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
       stargazers_count: 203,
@@ -133,6 +137,30 @@ const Projects = () => {
       topics: ['trucks', 'geolocation', 'node', 'unhitched trailers']
 
     },
+      {
+          id: 10,
+          name: 'Bellagancia',
+          description: 'Modern nail art site built with Next.JS, featuring real-time nails beauty booking, responsive design, and dark mode support.',
+          html_url: 'https://github.com/noeplantier/Bellangancia',
+          homepage: 'https://github.com/noeplantier/Bellangancia',
+          stargazers_count: 89,
+          forks_count: 21,
+          language: 'Next',
+          updated_at: '2024-01-10T14:20:00Z',
+          topics: ['next', 'beauty', 'responsive', 'charts', 'responsive']
+      },
+      {
+          id: 11,
+          name: 'Ti Padel',
+          description: 'Local padel community app — book courts, find partners, and track match stats with a clean, mobile‑first experience.',
+          html_url: 'https://github.com/noeplantier/Bellangancia',
+          homepage: 'https://github.com/noeplantier/Bellangancia',
+          stargazers_count: 89,
+          forks_count: 21,
+          language: 'Next',
+          updated_at: '2024-01-10T14:20:00Z',
+          topics: ['next', 'beauty', 'responsive', 'charts', 'responsive']
+      },
 
   ];
 
@@ -167,10 +195,15 @@ const Projects = () => {
   };
 
   const filteredRepositories = repositories.filter(repo => {
+    const name = repo.name.toLowerCase();
     if (filter === 'all') return true;
-    if (filter === 'web') return repo.topics.some(topic => ['react', 'vue', 'nextjs', 'web'].includes(topic));
-    if (filter === 'mobile') return repo.topics.some(topic => ['react-native', 'flutter', 'mobile'].includes(topic));
-    if (filter === 'backend') return repo.topics.some(topic => ['nodejs', 'api', 'microservices', 'python'].includes(topic));
+    if (filter === 'web') {
+      // Show all projects except Feelomi and Clem's Coffee Shop
+      return name !== 'feelomi' && name !== "clem's coffee shop";
+    }
+    if (filter === 'mobile') {
+      return repo.topics.some(topic => ['react-native', 'flutter', 'mobile'].includes(topic));
+    }
     return true;
   });
 
@@ -216,7 +249,6 @@ const Projects = () => {
             { key: 'all', label: 'All Projects', icon: Globe },
             { key: 'web', label: 'Web Apps', icon: Globe },
             { key: 'mobile', label: 'Mobile Apps', icon: Smartphone },
-            { key: 'backend', label: 'Backend', icon: Code2 }
           ].map((filterOption) => (
             <button
               key={filterOption.key}
