@@ -184,11 +184,6 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-purple-200 to-blue-200 rounded-full opacity-20 transform -translate-x-32 -translate-y-32"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-blue-200 to-purple-200 rounded-full opacity-20 transform translate-x-32 translate-y-32"></div>
-      </div>
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
