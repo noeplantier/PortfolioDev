@@ -103,7 +103,7 @@ const Contact = () => {
             <div className="grid lg:grid-cols-2 gap-12 items-start">
               {/* Contact Form */}
               <motion.div
-                  className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20"
+                  className="bg-white/10 backdrop-blur-lg rounded-2xl p-9 border border-white/20"
                   initial={{opacity: 0, x: -20}}
                   whileInView={{opacity: 1, x: 0}}
                   transition={{duration: 0.6}}
@@ -228,7 +228,7 @@ const Contact = () => {
                       <motion.a
                           key={index}
                           href={info.href}
-                          className="flex items-center gap-4 p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group"
+                          className="flex items-center gap-4 p-8 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group"
                           whileHover={{y: -2}}
                       >
                         <div
@@ -256,30 +256,8 @@ const Contact = () => {
                 transition={{duration: 0.6, delay: 0.4}}
                 viewport={{once: true}}
             >
-              <div
-                  className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-                <h3 className="text-2xl font-bold text-white mb-4">Ready to Start Your Project?</h3>
-                <p className="text-lg text-gray-300 mb-6">
-                  Whether you need a stunning website, a powerful mobile app, or a complete digital solution,
-                  I'm here to bring your vision to life with cutting-edge technology and exceptional design.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button
-                      onClick={() => document.querySelector('#contact form')?.scrollIntoView({behavior: 'smooth'})}
-                      className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full font-semibold hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
-                  >
-                    Start a Project
-                  </button>
-                  <a
-                      href="mailto:plantiernoe50@gmail.com"
-                      className="px-8 py-4 border-2 border-white/30 text-white rounded-full font-semibold hover:bg-white/10 transform hover:scale-105 transition-all duration-200"
-                  >
-                    Quick Email
-                  </a>
-                </div>
-              </div>
             </motion.div>
-          </div>
+        </div>
 
       </section>
   )

@@ -29,7 +29,7 @@ const Hero = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700"></div>
 
             {/* Content */}
-            <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6 mt-14">
+            <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6 mt-20">
                 {/* Main Heading */}
                 <h1 className="text-9xl md:text-9xl font-bold text-white mb-6">
                     Hello, I'm <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">Noé</span>
@@ -51,16 +51,16 @@ const Hero = () => {
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6 mb-12">
                     <button
                         onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="px-8 py-4 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-110 transition-all duration-200 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:border-white"
+                        className="px-8 py-4 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-110 transition-all duration-600 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:border-white"
                     >
                         View My Work
                     </button>
                     <button
                         onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="px-8 py-4 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-110 transition-all duration-200 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:border-white"
+                        className="px-8 py-4 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-110 transition-all duration-600 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:border-white"
                     >
                         Get In Touch
                     </button>
@@ -89,7 +89,7 @@ const Hero = () => {
                     aria-label="Scroll to Projects"
                     title="Scroll down"
                 >
-                    <ChevronDown className="w-8 h-8 text-white/70 mx-auto" />
+                    <ChevronDown className="w-10 h-10 text-white/70 mx-auto mt-10" />
                 </button>
             </div>
         </section>
