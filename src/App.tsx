@@ -12,8 +12,9 @@ function App() {
         <div className="relative">
             <ParticleBackground />
             <Hero />
-            <Carrousel />
             <Skills />
+            <Carrousel />
+
             <Projects />
             <Contact />
             <Footer />
