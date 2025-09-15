@@ -65,7 +65,7 @@ const Skills = () => {
   const achievements = [
     { icon: Award, title: '30+ Projects Completed', description: 'Successfully delivered diverse web and mobile applications' },
     { icon: Star, title: '4.9/5 Client Rating', description: 'Consistently high satisfaction scores from clients' },
-    { icon: TrendingUp, title: '3+ Years Experience', description: 'Proven track record in modern development practices' },
+    { icon: TrendingUp, title: '4+ Years Experience', description: 'Proven track record in modern development practices' },
     { icon: CheckCircle, title: '100% On-Time Delivery', description: 'Never missed a project deadline' }
   ];
 
