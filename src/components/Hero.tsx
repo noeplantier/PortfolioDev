@@ -67,19 +67,8 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80 z-0" />
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full min-h-screen px-4 py-12 text-center">
-        {/* Title */}
-        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold text-white mt-6 mb-8 drop-shadow-lg">
-          Hello, I'm <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">Noé</span>
-        </h1>
-        {/* Subtitle */}
-        <div className="text-4xl sm:text-4xl md:text-4xl lg:text-5xl font-bold text-white/90  md:mb-14 flex items-center justify-center drop-shadow-lg">
-          <span className="flex items-center gap-3">
-            <Globe className="w-10 h-10 md:w-12 md:h-12" />
-            {text}
-            <span className="animate-pulse">|</span>
-          </span>
-        </div>
-
+ {/* Title */}
+ <h1 className="text-white mt-6 mb-8 drop-shadow-lg font-extrabold leading-[1.05] tracking-tight text-[clamp(2rem,8vw,6.5rem)]"> Hello, I'm <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">Noé</span> </h1> {/* Subtitle */} <div className="font-bold text-white/90 mb-8 sm:mb-10 md:mb-14 lg:mb-16 flex items-center justify-center drop-shadow-lg leading-tight text-[clamp(1.125rem,3.5vw,3rem)]"> <span className="flex items-center gap-3"> <Globe className="w-[1.1em] h-[1.1em] shrink-0" /> {text} <span className="animate-pulse">|</span> </span> </div> 
         {/* Skills Cards Section */}
         <div className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2 pb-2 mb-16">
           {skills.map((skill, index) => (
