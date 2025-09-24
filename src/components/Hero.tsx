@@ -1,19 +1,11 @@
 import { useState, useEffect } from 'react';
 import {
   ChevronDown,
-  Github,
-  Linkedin,
-  Mail,
   Globe,
-  FacebookIcon,
   LayoutDashboard,
   BrainCog,
   SearchCode,
-  ShieldCheck,
-  Rocket,
-  Lightbulb,
-  Zap,
-  ShieldHalf
+  ShieldCheck
 } from 'lucide-react';
 
 const skills = [
@@ -45,12 +37,6 @@ const skills = [
 
 ];
 
-const socialLinks = [
-  { icon: Github, href: 'https://github.com/noeplantier', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://www.linkedin.com/in/noe-plantier/', label: 'LinkedIn' },
-  { icon: FacebookIcon, href: 'https://facebook.com/noe.plantier', label: 'Facebook' },
-  { icon: Mail, href: 'mailto:plantiernoe50@gmail.com', label: 'Email' },
-];
 
 const Hero = () => {
   const [text, setText] = useState('');
