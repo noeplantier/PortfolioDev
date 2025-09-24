@@ -1,5 +1,5 @@
 import Hero from './components/Hero';
-import Carrousel from './components/Carrousel';
+// import Carrousel from './components/Carrousel';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import ParticleBackground from './components/ParticleBackground';
@@ -13,8 +13,7 @@ function App() {
             <ParticleBackground />
             <Hero />
             <Skills />
-            <Carrousel />
-
+            {/* <Carrousel /> */}
             <Projects />
             <Contact />
             <Footer />

@@ -109,7 +109,7 @@ const Carrousel = () => {
   };
 
   return (
-    <section id="carrousel" className="relative py-20 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 overflow-hidden">
+    <section id="carrousel" className="relative py-20 bg-gradient-to-br from-gray-600 via-gray-400 to-gray-200 overflow-hidden">
       {/* soft background sparkles to match Hero vibe */}
       <div className="pointer-events-none absolute inset-0 opacity-20">
         <div className="absolute -top-10 -left-10 w-72 h-72 rounded-full bg-white/10 blur-3xl" />

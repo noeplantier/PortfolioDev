@@ -22,11 +22,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white">
+    <footer className="relative overflow-hidden bg-black text-white">
       {/* Soft gradient glows */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-purple-500/20 to-blue-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 container mx-auto px-6 py-16">
