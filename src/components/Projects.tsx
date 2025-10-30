@@ -35,18 +35,7 @@ const Projects = () => {
           updated_at: '2024-01-08T09:15:00Z',
           topics: ['nodejs', 'microservices', 'express',  'react']
       },
-      {
-          id: 2,
-          name: 'Autoriz.io',
-          description: 'A SaaS platform for managing transport authorizations, built with PHP Symfony, React, Auth0 and Node.JS/Express. Features transport authors management and truck traffic control.',
-          html_url: 'https://autoriz.io',
-          homepage: 'https://autoriz.io',
-          stargazers_count: 145,
-          forks_count: 38,
-          language: 'Typescript, PHP, Node.JS, Express',
-          updated_at: '2023-12-28T13:20:00Z',
-          topics: ['python', 'ai', 'chatbot', 'tensorflow', 'nlp']
-      },
+ 
 
       {
           id: 3,
@@ -124,19 +113,8 @@ const Projects = () => {
       topics: ['glide', 'coffee', 'mobile', 'chill']
 
     },
-    {
-      id: 9,
-      name: 'TrailerMate',
-      description: 'Smart trailer tracking for haulers — locate unhitched trailers in real time, get geofenced alerts, and keep your fleet moving.',
-      html_url: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
-      homepage: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
-      stargazers_count: 203,
-      forks_count: 67,
-      language: 'Node.JS, Express',
-      updated_at: '2024-01-05T16:45:00Z',
-      topics: ['trucks', 'geolocation', 'node', 'unhitched trailers']
 
-    },
+  
       {
           id: 10,
           name: 'Bellagancia',
