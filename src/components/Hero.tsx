@@ -1,129 +1,258 @@
-import { useState, useEffect } from 'react';
-import {
-  ChevronDown,
-  Globe,
-  LayoutDashboard,
-  BrainCog,
-  SearchCode,
-  ShieldCheck
-} from 'lucide-react';
+'use client';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react';
 
-const skills = [
-  {
-    icon: LayoutDashboard,
-    label: 'Development',
-    description: 'End-to-end development for seamless, high-performance applications that scale with your business needs.',
-    color: 'text-blue-400',
-  },
-  {
-    icon: BrainCog,
-    label: 'Custom Solutions',
-    description: 'Tailored software solutions designed specifically to address your unique business challenges and goals.',
-    color: 'text-purple-400',
-  },
-  {
-    icon: SearchCode,
-    label: 'Clean & Efficient Code',
-    description: 'Well-structured, maintainable, and optimized code that ensures scalability and reduces technical debt.',
-    color: 'text-green-400',
-  },
-  {
-    icon: ShieldCheck,
-    label: 'Security & Compliance',
-    description: 'Robust security practices and compliance with industry standards to protect your data and users.',
-    color: 'text-yellow-400',
-  },
- 
-
-];
-
-
-const Hero = () => {
-  const [text, setText] = useState('');
-  const lines = [
-    'Founder of Plantiers',
-    'a Software Agency where code ages like fine wine'
-  ];
-  const fullText = lines[0] || '';
+export default function Hero() {
+  const [displayedH1, setDisplayedH1] = useState('');
+  const [h1Index, setH1Index] = useState(0);
+  const h1Text = "HI, I'M NOÉ";
+  
+  const [displayedFounder, setDisplayedFounder] = useState('');
+  const [founderIndex, setFounderIndex] = useState(0);
+  const founderText = 'FOUNDER OF PLANTIERS';
+  
+  const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+  const secondaryText = 'A Software Agency where code ages like fine wine';
+  const [displayedSecondary, setDisplayedSecondary] = useState('');
+  const [secondaryIndex, setSecondaryIndex] = useState(0);
 
   useEffect(() => {
-    if (currentIndex < fullText.length) {
+    // Animation H1 en premier
+    if (h1Index < h1Text.length) {
       const timeout = setTimeout(() => {
-        setText(fullText.slice(0, currentIndex + 1));
-        setCurrentIndex(currentIndex + 1);
-      }, 100);
+        setDisplayedH1(h1Text.slice(0, h1Index + 1));
+        setH1Index(h1Index + 1);
+      }, 80);
       return () => clearTimeout(timeout);
     }
-  }, [currentIndex, fullText]);
+    // Animation Founder après H1
+    else if (founderIndex < founderText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedFounder(founderText.slice(0, founderIndex + 1));
+        setFounderIndex(founderIndex + 1);
+      }, 60);
+      return () => clearTimeout(timeout);
+    }
+
+    // Animation texte secondaire
+    else if (secondaryIndex < secondaryText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedSecondary(secondaryText.slice(0, secondaryIndex + 1));
+        setSecondaryIndex(secondaryIndex + 1);
+      }, 30);
+      return () => clearTimeout(timeout);
+    }
+  }, [h1Index, founderIndex, currentIndex, secondaryIndex]);
+
+  const socialLinks = [
+    { icon: Github, href: 'https://github.com/noeplantier', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://linkedin.com/in/noe-plantier', label: 'LinkedIn' },
+    { icon: Mail, href: 'mailto:plantiernoe50@gmail.com', label: 'Email' }
+  ];
 
   return (
-<section id="hero" className="relative py-20 bg-transparent overflow-hidden">     
-   
+    <section id="hero" className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pt-20">
+      {/* Animated gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute top-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            rotate: [360, 180, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute bottom-1/4 -right-48 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl"
+        />
+      </div>
 
-      {/* Header */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full min-h-screen px-4 py-12 text-center">
- {/* Title */}
- <h1 className="text-white mb-8 drop-shadow-lg font-extrabold leading-[1.05] tracking-tight text-[clamp(5rem,10vw,8.5rem)]"> Hello I'm<span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> Noé</span> </h1> 
- {/* Subtitle */} 
- <div className="font-bold text-white/90 mb-8 sm:mb-10 md:mb-14 lg:mb-16 flex items-center justify-center drop-shadow-lg leading-tight text-[clamp(1.125rem,3.5vw,3rem)]"> <span className="flex items-center gap-3"> {text} <span className="animate-pulse">|</span> </span> </div> 
-       
-        {/* Skills Cards Section */}
-        <div className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2 pb-2 mb-16">
-          {skills.map((skill, index) => (
-            <div
-              key={index}
-              className="relative w-full h-48 p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden group hover:bg-white/20 transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex flex-col items-start justify-start"
+      <div className="max-w-7xl gap-16 items-center relative z-10">
+        {/* Content Centré */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center space-y-8 flex flex-col items-center lg:items-start"
+        >
+          {/* Titre H1 avec effet balayage */}
+          <div className="space-y-4 w-full">
+            <motion.h1 
+              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-20 transition-opacity duration-300 from-transparent via-white/10 to-white/20" />
-              <div className="flex flex-col items-start justify-start gap-3 relative z-10 h-full">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${skill.color} bg-opacity-20`}>
-                  <skill.icon className={`w-6 h-6 ${skill.color}`} />
-                </div>
-                <h3 className="text-xl font-bold text-white">{skill.label}</h3>
-                <p className="text-white/80 text-sm flex-grow">{skill.description}</p>
-               
-              </div>
-            </div>
-          ))}
-        </div>
+              <span className="text-white block mb-2">
+                {h1Text.split("Noé Plantier")[0].split('').map((char, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ 
+                      opacity: index < h1Index ? 1 : 0,
+                      y: index < h1Index ? 0 : 20
+                    }}
+                    transition={{ 
+                      duration: 0.3,
+                      delay: index * 0.05
+                    }}
+                    className="inline-block"
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
+              </span>
+            
+            </motion.h1>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-          <button
-            onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-2 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-105 transition-all duration-300 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:border-white text-base"
-          >
-            Get Started
-          </button>
-          <button
-            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-2 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-105 transition-all duration-300 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:border-white text-base"
-          >
-            Contact Me
-          </button>
-        </div>
+            {/* FUNDATOR OF PLANTIERS avec effet balayage */}
+            {h1Index >= h1Text.length && (
+              <motion.h2 
+                className="text-3xl md:text-4xl lg:text-5xl font-bold flex items-center justify-center lg:justify-start gap-3 flex-wrap"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                {founderText.split('').map((char, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ 
+                      opacity: index < founderIndex ? 1 : 0,
+                      y: index < founderIndex ? 0 : 20
+                    }}
+                    transition={{ 
+                      duration: 0.3,
+                      delay: index * 0.04
+                    }}
+                    className="inline-block bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent"
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
+                {founderIndex >= founderText.length && (
+                  <motion.span 
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+                    className="inline-block"
+                    style={{
+                      background: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 50%, #6366f1 100%)',
+                      WebkitBackgroundClip: 'text',
+                      backgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      filter: 'drop-shadow(0 0 8px rgba(147, 51, 234, 0.5))',
+                      fontSize: '48px',
+                      lineHeight: '48px'
+                    }}
+                  >
+                    🍇
+                  </motion.span>
+                )}
+              </motion.h2>
+            )}
 
-        {/* Social Links
-        <div className="flex justify-center space-x-6 mb-10">
-          {socialLinks.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transform hover:scale-110 transition-all duration-200"
-              aria-label={social.label}
+            {/* Sous-titre tagline */}
+            {founderIndex >= founderText.length && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="bg-white/10 backdrop-blur-lg px-6 py-3 rounded-full border border-white/20 inline-block"
+              >
+                <span className="text-purple-300 font-semibold text-sm md:text-base uppercase">
+                  A SOFTWARE AGENCY WHERE CODE AGES LIKE FINE WINE
+                </span>
+              </motion.div>
+            )}
+          </div>
+
+      
+          {/* CTA Buttons */}
+          {secondaryIndex >= secondaryText.length && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
+              className="flex flex-wrap gap-4 justify-center lg:justify-start"
             >
-              <social.icon className="w-6 h-6 md:w-6 md:h-6 text-white" />
-            </a>
-          ))}
-        </div> */}
+              <motion.a
+                href="#projects"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+              >
+                View My Work
+              </motion.a>
+              <motion.a
+                href="#contact"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-white/10 backdrop-blur-lg text-white font-semibold rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300"
+              >
+                Get In Touch
+              </motion.a>
+            </motion.div>
+          )}
+
+          {/* Social Links */}
+          {secondaryIndex >= secondaryText.length && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="flex gap-4 justify-center"
+            >
+              {socialLinks.map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="p-3 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300 group"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-6 h-6 text-white group-hover:text-purple-300 transition-colors" />
+                </motion.a>
+              ))}
+            </motion.div>
+          )}
+        </motion.div>
 
        
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2, duration: 0.8 }}
+        className="absolute bottom-8 translate-x-1/2"
+      >
+        <motion.a
+          href="#skills"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
+        >
+          <span className="text-sm font-medium">Scroll Down</span>
+          <ArrowDown className="w-5 h-5" />
+        </motion.a>
+      </motion.div>
     </section>
   );
-};
-
-export default Hero;
+}
