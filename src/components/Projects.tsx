@@ -194,7 +194,7 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+<section id="projects" className="py-20 bg-transparent relative overflow-hidden">
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
@@ -205,11 +205,11 @@ const Projects = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-4xl text-white md:text-5xl font-bold mb-6">
             My <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Projects</span>
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-blue-600 mx-auto mb-8"></div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-white max-w-3xl mx-auto leading-relaxed">
             Explore my latest work showcasing innovative solutions across web and mobile development. 
             Each project represents a unique challenge solved with modern technologies and best practices.
           </p>

@@ -40,7 +40,11 @@ const skills = [
 
 const Hero = () => {
   const [text, setText] = useState('');
-  const fullText = 'Full Stack Developer';
+  const lines = [
+    'Founder of Plantiers',
+    'a Software Agency where code ages like fine wine'
+  ];
+  const fullText = lines[0] || '';
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -54,21 +58,16 @@ const Hero = () => {
   }, [currentIndex, fullText]);
 
   return (
-    <section id="home" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Background image */}
-      <img
-        src="/images/dev.jpg"
-        alt="Noé Plantier Developer"
-        className="absolute inset-0 w-full h-full object-cover object-center z-0"
-        style={{ filter: 'blur(6px) brightness(0.7)' }}
-        loading="lazy"
-      />
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80 z-0" />
-      {/* Content */}
+<section id="hero" className="relative py-20 bg-transparent overflow-hidden">     
+   
+
+      {/* Header */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full min-h-screen px-4 py-12 text-center">
  {/* Title */}
- <h1 className="text-white mt-6 mb-8 drop-shadow-lg font-extrabold leading-[1.05] tracking-tight text-[clamp(2rem,8vw,6.5rem)]"> Hello, I'm <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">Noé</span> </h1> {/* Subtitle */} <div className="font-bold text-white/90 mb-8 sm:mb-10 md:mb-14 lg:mb-16 flex items-center justify-center drop-shadow-lg leading-tight text-[clamp(1.125rem,3.5vw,3rem)]"> <span className="flex items-center gap-3"> <Globe className="w-[1.1em] h-[1.1em] shrink-0" /> {text} <span className="animate-pulse">|</span> </span> </div> 
+ <h1 className="text-white mb-8 drop-shadow-lg font-extrabold leading-[1.05] tracking-tight text-[clamp(5rem,10vw,8.5rem)]"> Hello I'm<span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> Noé</span> </h1> 
+ {/* Subtitle */} 
+ <div className="font-bold text-white/90 mb-8 sm:mb-10 md:mb-14 lg:mb-16 flex items-center justify-center drop-shadow-lg leading-tight text-[clamp(1.125rem,3.5vw,3rem)]"> <span className="flex items-center gap-3"> {text} <span className="animate-pulse">|</span> </span> </div> 
+       
         {/* Skills Cards Section */}
         <div className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2 pb-2 mb-16">
           {skills.map((skill, index) => (
@@ -93,13 +92,13 @@ const Hero = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
           <button
             onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-2 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-105 transition-all duration-300 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:border-white text-base"
+            className="px-8 py-2 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-105 transition-all duration-300 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:border-white text-base"
           >
-            My projects
+            Get Started
           </button>
           <button
             onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-4 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-105 transition-all duration-300 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:border-white text-base"
+            className="px-8 py-2 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border-2 border-transparent transform hover:scale-105 transition-all duration-300 hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:border-white text-base"
           >
             Contact Me
           </button>
@@ -121,15 +120,7 @@ const Hero = () => {
           ))}
         </div> */}
 
-        {/* Scroll Indicator */}
-        <button
-          onClick={() => document.querySelector('#skills')?.scrollIntoView({ behavior: 'smooth' })}
-          className="animate-bounce cursor-pointer focus:outline-none"
-          aria-label="Scroll to Skills"
-          title="Scroll down"
-        >
-          <ChevronDown className="w-10 h-10 text-white/70 mx-auto " />
-        </button>
+       
       </div>
     </section>
   );

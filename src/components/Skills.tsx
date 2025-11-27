@@ -72,8 +72,7 @@ const Skills = () => {
   const currentSkills = skillCategories[activeCategory as keyof typeof skillCategories];
 
   return (
-    <section id="skills" className="py-20 bg-white relative overflow-hidden">
-
+<section id="skills" className="py-20 bg-transparent relative overflow-hidden">
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
@@ -84,11 +83,11 @@ const Skills = () => {
           transition={{ duration: 0.2 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-4xl text-white md:text-5xl font-bold mb-6">
             My <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Skills</span>
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-blue-600 mx-auto mb-8"></div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-white max-w-3xl mx-auto leading-relaxed">
             Mastering the art of web and mobile development with cutting-edge technologies. 
             Here's my expertise across the full development stack.
           </p>
