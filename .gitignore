@@ -1,5 +1,4 @@
 # Dependencies
-node_modules/
 .pnp
 .pnp.js
 
@@ -42,3 +41,5 @@ dist-ssr/
 # Editor directories
 .vscode/
 .idea/
+node_modules/
+next-swc.darwin-arm64.node
