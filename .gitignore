@@ -39,7 +39,4 @@ dist-ssr/
 *.local
 
 # Editor directories
-.vscode/
-.idea/
-node_modules/
-next-swc.darwin-arm64.node
+*.log
