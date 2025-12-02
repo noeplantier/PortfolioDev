@@ -11,11 +11,11 @@ export default function Hero() {
   const [revealButton, setRevealButton] = useState(false);
 
   useEffect(() => {
-    const timer1 = setTimeout(() => setRevealH1(true), 0);
-    const timer2 = setTimeout(() => setRevealFounder(true), 0);
-    const timer3 = setTimeout(() => setRevealTagline(true), 0);
-    const timer4 = setTimeout(() => setRevealValues(true), 0);
-    const timer5 = setTimeout(() => setRevealButton(true), 0);
+    const timer1 = setTimeout(() => setRevealH1(true), 100);
+    const timer2 = setTimeout(() => setRevealFounder(true), 100);
+    const timer3 = setTimeout(() => setRevealTagline(true), 200);
+    const timer4 = setTimeout(() => setRevealValues(true), 300);
+    const timer5 = setTimeout(() => setRevealButton(true), 300);
 
     return () => {
       clearTimeout(timer1);
@@ -56,10 +56,11 @@ export default function Hero() {
               initial={{ clipPath: 'inset(0 100% 0 0)' }}
               animate={{ clipPath: 'inset(0 0 0 0)' }}
               exit={{ clipPath: 'inset(0 100% 0 0)' }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+              transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
               className="text-9xl sm:text-9xl md:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 px-4"
             >
-              HI, I'M NOÉ
+              HI, I'M 
+              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> NOÉ</span>
             </motion.h1>
           )}
         </AnimatePresence>
@@ -72,7 +73,7 @@ export default function Hero() {
               animate={{ clipPath: 'inset(0 0 0 0)' }}
               exit={{ clipPath: 'inset(0 100% 0 0)' }}
               transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-              className="text-5xl sm:text-5xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent mb-1 sm:mb-2 px-4"
+              className="text-5xl sm:text-5xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-1 sm:mb-2 px-4"
             >
               FOUNDER OF PLANTIERS
             </motion.h2>
@@ -87,7 +88,7 @@ export default function Hero() {
               animate={{ clipPath: 'inset(0 0 0 0)' }}
               exit={{ clipPath: 'inset(0 100% 0 0)' }}
               transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-              className="text-base sm:text-lg text-center text-white/70 mb-3 sm:mb-4 max-w-2xl px-4"
+              className="text-base text-center text-bold text-white mb-3 sm:mb-4 max-w-2xl px-4"
             >
               A SOFTWARE AGENCY WHERE CODE AGES LIKE FINE WINE
             </motion.p>
@@ -101,7 +102,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-5 w-full max-w-3xl px-4"
+              className="grid grid-cols-1 sm:grid-cols-4 gap-3 sm:gap-4 mb-3 sm:mb-5 w-full h-full  px-4"
             >
               {devValues.map((value, index) => (
                 <motion.div
@@ -109,14 +110,13 @@ export default function Hero() {
                   initial={{ clipPath: 'inset(0 100% 0 0)' }}
                   animate={{ clipPath: 'inset(0 0 0 0)' }}
                   transition={{ duration: 0.6, delay: index * 0.1, ease: [0.76, 0, 0.24, 1] }}
-                  whileHover={{ y: -2, boxShadow: '0 8px 25px rgba(147, 51, 234, 0.2)' }}
-                  className="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10"
+                  className="bg-white/5 backdrop-blur-sm p-8 rounded-lg border border-white/10"
                 >
                   <div className="flex items-center gap-3">
                     <value.icon className="w-5 h-5 text-purple-300 shrink-0" />
                     <div>
-                      <h3 className="text-sm font-medium text-white/90">{value.title}</h3>
-                      <p className="text-xs text-white/60">{value.description}</p>
+                      <h3 className="text-m font-medium text-white/90">{value.title}</h3>
+                      <p className="text-s text-white/60">{value.description}</p>
                     </div>
                   </div>
                 </motion.div>

@@ -9,7 +9,7 @@ const Skills = () => {
     frontend: {
       title: 'Frontend Development',
       icon: Globe,
-      color: 'from-blue-500 to-cyan-500',
+      color: 'from-blue-400 to-cyan-400',
       skills: [
         { name: 'React', level: 89, experience: '3+ years', projects: 25 },
         { name: 'Vue.js', level: 80, experience: '3+ years', projects: 8 },
@@ -24,7 +24,7 @@ const Skills = () => {
     mobile: {
       title: 'Mobile Development',
       icon: Smartphone,
-      color: 'from-purple-500 to-pink-500',
+      color: 'from-purple-400 to-pink-400',
       skills: [
         { name: 'React Native', level: 92, experience: '3+ years', projects: 12 },
         { name: 'Flutter', level: 85, experience: '2+ years', projects: 10 },
@@ -37,7 +37,7 @@ const Skills = () => {
     backend: {
       title: 'Backend Development',
       icon: Database,
-      color: 'from-green-500 to-emerald-500',
+      color: 'from-green-400 to-emerald-400',
       skills: [
         { name: 'Node.js', level: 96, experience: '4+ years', projects: 22 },
         { name: 'Express.js', level: 90, experience: '4+ years', projects: 22 },
@@ -50,7 +50,7 @@ const Skills = () => {
     tools: {
       title: 'Tools & Technologies',
       icon: Zap,
-      color: 'from-orange-500 to-red-500',
+      color: 'from-orange-400 to-red-400',
       skills: [
         { name: 'Git & GitHub', level: 97, experience: '4+ years', projects: 47 },
         { name: 'VS Code', level: 98, experience: '4+ years', projects: 47 },
@@ -72,30 +72,27 @@ const Skills = () => {
   const currentSkills = skillCategories[activeCategory as keyof typeof skillCategories];
 
   return (
-<section id="skills" className="py-20 bg-transparent relative overflow-hidden">
-
+    <section id="skills" className="py-20 bg-transparent relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <motion.div 
-          className="text-center mb-16"
+        <motion.div
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl text-white md:text-5xl font-bold mb-6">
-            My <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Skills</span>
+         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          My Skills
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-blue-600 mx-auto mb-8"></div>
-          <p className="text-xl text-white max-w-3xl mx-auto leading-relaxed">
-            Mastering the art of web and mobile development with cutting-edge technologies. 
-            Here's my expertise across the full development stack.
+          <p className="text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
+            Mastering the art of web and mobile development with cutting-edge technologies.
           </p>
         </motion.div>
 
         {/* Achievements */}
-        <motion.div 
-          className="grid md:grid-cols-4 gap-6 mb-16"
+        <motion.div
+          className="grid md:grid-cols-4 gap-4 mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -104,21 +101,23 @@ const Skills = () => {
           {achievements.map((achievement, index) => (
             <motion.div
               key={index}
-              className="text-center p-6 bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
-              whileHover={{ y: -5, scale: 1.02 }}
+              className="flex items-center gap-4 p-5 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+              whileHover={{ y: -3 }}
             >
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mb-4">
-                <achievement.icon className="w-6 h-6 text-white" />
+              <div className="p-3 bg-white/20 rounded-lg">
+                <achievement.icon className="w-5 h-5 text-purple-300" />
               </div>
-              <h3 className="font-bold text-lg text-gray-800 mb-2">{achievement.title}</h3>
-              <p className="text-gray-600 text-sm">{achievement.description}</p>
+              <div>
+                <h3 className="font-medium text-white/90 text-sm">{achievement.title}</h3>
+                <p className="text-white/60 text-xs">{achievement.description}</p>
+              </div>
             </motion.div>
           ))}
         </motion.div>
 
         {/* Category Tabs */}
-        <motion.div 
-          className="flex flex-wrap justify-center gap-4 mb-12"
+        <motion.div
+          className="flex flex-wrap justify-center gap-3 mb-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -128,13 +127,13 @@ const Skills = () => {
             <button
               key={key}
               onClick={() => setActiveCategory(key)}
-              className={`flex items-center gap-3 px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm transition-all duration-200 ${
                 activeCategory === key
-                  ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
-                  : 'bg-white text-gray-700 hover:bg-gray-50 shadow-md border border-gray-200'
+                  ? 'bg-white/20 text-white/90 border border-white/30'
+                  : 'bg-white/10 text-white/60 hover:bg-white/20 border border-white/10'
               }`}
             >
-              <category.icon className="w-5 h-5" />
+              <category.icon className="w-4 h-4" />
               {category.title}
             </button>
           ))}
@@ -146,46 +145,43 @@ const Skills = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="grid md:grid-cols-2 gap-6"
+          className="grid md:grid-cols-2 gap-4"
         >
           {currentSkills.skills.map((skill, index) => (
             <motion.div
               key={skill.name}
-              className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+              className="flex items-center gap-4 p-5 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -2 }}
+              whileHover={{ y: -3 }}
             >
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="font-bold text-lg text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
-                    {skill.name}
-                  </h3>
-                  <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
-                    <span>{skill.experience}</span>
-                    <span>•</span>
-                    <span>{skill.projects} projects</span>
+              <div className="w-full">
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h3 className="font-medium text-white/90 text-lg">{skill.name}</h3>
+                    <div className="flex items-center gap-3 text-xs text-white/60 mt-1">
+                      <span>{skill.experience}</span>
+                      <span>•</span>
+                      <span>{skill.projects} projects</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xl font-bold text-purple-300">{skill.level}%</div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-purple-600">{skill.level}%</div>
-                </div>
-              </div>
-              
-              {/* Progress Bar */}
-              <div className="relative">
-                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                  <motion.div
-                    className={`h-full bg-gradient-to-r ${currentSkills.color} rounded-full`}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${skill.level}%` }}
-                    transition={{ duration: 1, delay: index * 0.1 }}
-                  />
-                </div>
-                <div className="flex justify-between text-xs text-gray-500 mt-2">
-                  <span>Beginner</span>
-                  <span>Expert</span>
+
+                {/* Progress Bar */}
+                <div className="relative">
+                  <div className="w-full bg-white/20 rounded-full h-2 overflow-hidden">
+                    <motion.div
+                      className={`h-full rounded-full`}
+                      style={{ background: `linear-gradient(90deg, rgba(147,51,234,0.8) 0%, rgba(96,165,250,0.8) 100%)` }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${skill.level}%` }}
+                      transition={{ duration: 1, delay: index * 0.1 }}
+                    />
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -193,21 +189,26 @@ const Skills = () => {
         </motion.div>
 
         {/* Call to Action */}
-        <motion.div 
-          className="text-center mt-16"
+        <motion.div
+          className="text-center mt-14"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-bold mb-4">Ready to Work Together?</h3>
-            <p className="text-lg mb-6 opacity-90">
-              Let's bring your ideas to life with cutting-edge technology and exceptional user experiences.
-            </p>
-            <button 
+          <div className="flex items-center gap-4 p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 max-w-2xl mx-auto">
+            <div className="p-3 bg-white/20 rounded-lg">
+              <Zap className="w-6 h-6 text-purple-300" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-medium text-white/90 text-lg">Ready to Work Together?</h3>
+              <p className="text-white/70 text-sm mt-1">
+                Let's bring your ideas to life with cutting-edge technology and exceptional user experiences.
+              </p>
+            </div>
+            <button
               onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="px-5 py-2.5 bg-white/20 text-white/90 rounded-lg font-medium hover:bg-white/30 transition-all duration-200 text-sm border border-white/20"
             >
               Start a Project
             </button>
