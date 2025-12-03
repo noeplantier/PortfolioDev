@@ -6,6 +6,7 @@ import ParticleBackground from './components/ParticleBackground';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import AIChat from './components/AIChat';
 
 function App() {
     const { scrollYProgress } = useScroll();
@@ -19,7 +20,7 @@ function App() {
         <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black">
             {/* Barre de progression en haut */}
             <motion.div
-                className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 origin-left z-50 shadow-lg shadow-purple-500/50"
+                className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-blue-500 origin-left z-50 shadow-lg shadow-purple-500/50"
                 style={{ scaleX }}
             />
             
@@ -54,6 +55,16 @@ function App() {
                 >
                     <Projects />
                 </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <AIChat />
+                </motion.div>
+
 
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}

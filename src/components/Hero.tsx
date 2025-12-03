@@ -83,15 +83,15 @@ export default function Hero() {
         {/* Tagline avec effet de traînée de poudre */}
         <AnimatePresence>
           {revealTagline && (
-            <motion.p
+            <motion.h2
               initial={{ clipPath: 'inset(0 100% 0 0)' }}
               animate={{ clipPath: 'inset(0 0 0 0)' }}
               exit={{ clipPath: 'inset(0 100% 0 0)' }}
               transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-              className="text-base text-center text-bold text-white mb-3 sm:mb-4 max-w-2xl px-4"
+              className=" text-center text-extrabold text-white mb-3 sm:mb-4 max-w-2xl px-4"
             >
               A SOFTWARE AGENCY WHERE CODE AGES LIKE FINE WINE
-            </motion.p>
+            </motion.h2>
           )}
         </AnimatePresence>
 
@@ -125,6 +125,11 @@ export default function Hero() {
           )}
         </AnimatePresence>
 
+        {/* CTA " Get Started" et "Ask AI" */}
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-2 sm:mt-4">
+
+
+
         {/* Bouton " Get Started" avec effet de traînée de poudre */}
         <AnimatePresence>
           {revealButton && (
@@ -137,13 +142,38 @@ export default function Hero() {
               <motion.a
                 href="#skills"
                 whileTap={{ scale: 0.98 }}
-                className="px-5 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white/90 font-medium text-sm sm:text-base rounded-full hover:shadow-lg transition-all duration-200"
+                className="px-5 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm sm:text-base rounded-full hover:shadow-lg transition-all duration-200"
               >
                 Get Started
               </motion.a>
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Bouton " Ask AI" possibilité de créer une requete à Claude IA */}
+
+        <AnimatePresence>
+          {revealButton && (
+            <motion.div
+              initial={{ clipPath: 'inset(0 100% 0 0)' }}
+              animate={{ clipPath: 'inset(0 0 0 0)' }}
+              transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+              className="flex gap-3"
+            >
+              <motion.a
+                href="https://claude.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileTap={{ scale: 0.98 }}
+                className="px-5 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm sm:text-base rounded-full hover:shadow-lg transition-all duration-200"
+              >
+                Ask Robot
+              </motion.a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        </div>
+
 
       
       </div>
