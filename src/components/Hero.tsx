@@ -161,9 +161,7 @@ export default function Hero() {
               className="flex gap-3"
             >
               <motion.a
-                href="https://claude.ai/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#ask-ai"
                 whileTap={{ scale: 0.98 }}
                 className="px-5 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm sm:text-base rounded-full hover:shadow-lg transition-all duration-200"
               >

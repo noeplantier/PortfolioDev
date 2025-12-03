@@ -163,17 +163,7 @@ export default function AIChat() {
     >
       <div className="w-full max-w-5xl flex flex-col items-center gap-6 relative z-10">
         
-        {/* Back Button */}
-        <motion.a
-          href="#hero"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="self-start flex items-center gap-2 text-white/70 hover:text-purple-400 transition-colors mb-4"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="text-sm font-medium">Back to Home</span>
-        </motion.a>
+   
 
         {/* Title Animation */}
         <AnimatePresence>
@@ -183,9 +173,8 @@ export default function AIChat() {
               animate={{ clipPath: 'inset(0 0 0 0)' }}
               exit={{ clipPath: 'inset(0 100% 0 0)' }}
               transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-              className="text-6xl sm:text-7xl md:text-8xl font-bold text-center text-white/90 mb-2"
-            >
-              ASK <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">PLANTIERS AI</span>
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
+            >Ask Artificial Intelligence
             </motion.h1>
           )}
         </AnimatePresence>
@@ -200,7 +189,7 @@ export default function AIChat() {
               transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
               className="text-lg text-center text-white/70 mb-6 max-w-2xl"
             >
-              Get instant answers about our services, tech stack, and how we can help your business
+              Get instant answers about our services and how we can help your business
             </motion.p>
           )}
         </AnimatePresence>
@@ -224,7 +213,7 @@ export default function AIChat() {
                       <Sparkles className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-white/90">Plantiers AI Assistant</h3>
+                      <h3 className="text-lg font-bold text-white/90">Claude AI Assistant</h3>
                       <p className="text-sm text-white/60">Powered by Claude Sonnet 4</p>
                     </div>
                   </div>
