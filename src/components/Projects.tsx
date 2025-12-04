@@ -140,25 +140,25 @@ const Projects = () => {
 
   const getLanguageColor = (language: string) => {
     const colors: { [key: string]: string } = {
-      TypeScript: 'bg-[#8b5cf6]/80',
-      JavaScript: 'bg-[#f59e0b]/80',
-      Vue: 'bg-[#10b981]/80',
-      Dart: 'bg-[#06b6d4]/80',
-      Python: 'bg-[#3b82f6]/80',
-      React: 'bg-[#06b6d4]/80',
-      Next: 'bg-black/80',
+      TypeScript: 'from-purple-500 to-blue-500',
+      JavaScript: 'from-yellow-500 to-orange-500',
+      Vue: 'from-green-500 to-emerald-500',
+      Dart: 'from-cyan-500 to-blue-500',
+      Python: 'from-blue-500 to-indigo-500',
+      React: 'from-cyan-400 to-blue-400',
+      Next: 'from-gray-800 to-black',
     };
-    return colors[language] || 'bg-gray-500/80';
+    return colors[language] || 'from-gray-500 to-gray-700';
   };
 
   const getProjectIcon = (topics: string[]) => {
     if (topics.some(topic => ['react-native', 'flutter', 'mobile'].includes(topic))) {
-      return <Smartphone className="w-5 h-5 text-purple-300" />;
+      return <Smartphone className="w-5 h-5 text-white" />;
     }
     if (topics.some(topic => ['api', 'nodejs', 'microservices'].includes(topic))) {
-      return <Code2 className="w-5 h-5 text-purple-300" />;
+      return <Code2 className="w-5 h-5 text-white" />;
     }
-    return <Globe className="w-5 h-5 text-purple-300" />;
+    return <Globe className="w-5 h-5 text-white" />;
   };
 
   const filteredRepositories = repositories.filter(repo => {
@@ -193,7 +193,7 @@ const Projects = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-          My Projects
+            My Projects
           </h2>
           <p className="text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
             Explore my latest work showcasing innovative solutions across web and mobile development.
@@ -202,7 +202,7 @@ const Projects = () => {
 
         {/* Filter Buttons */}
         <motion.div
-          className="flex flex-wrap justify-center gap-3 mb-10"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -213,26 +213,34 @@ const Projects = () => {
             { key: 'web', label: 'Web Apps', icon: Globe },
             { key: 'mobile', label: 'Mobile Apps', icon: Smartphone },
           ].map((filterOption) => (
-            <button
+            <motion.button
               key={filterOption.key}
               onClick={() => setFilter(filterOption.key)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm transition-all duration-200 ${
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className={`flex flex-col items-center gap-3 px-6 py-5 rounded-2xl font-semibold text-base transition-all duration-300 ${
                 filter === filterOption.key
-                  ? 'bg-white/10 text-white/90 border border-white/20'
-                  : 'bg-white/5 text-white/60 hover:bg-white/10 border border-white/10'
+                  ? 'bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20'
+                  : 'bg-white/5 text-white/60 hover:bg-white/10 border-2 border-white/10 hover:border-white/20'
               }`}
             >
-              <filterOption.icon className="w-4 h-4" />
-              {filterOption.label}
-            </button>
+              <div className={`p-3 rounded-xl transition-all duration-300 ${
+                filter === filterOption.key 
+                  ? 'bg-gradient-to-br from-purple-500 to-blue-500' 
+                  : 'bg-white/10'
+              }`}>
+                <filterOption.icon className="w-6 h-6" />
+              </div>
+              <span className="text-center">{filterOption.label}</span>
+            </motion.button>
           ))}
         </motion.div>
 
         {/* Projects Grid */}
         {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {[...Array(6)].map((_, index) => (
-              <div key={index} className="flex items-center gap-4 p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 animate-pulse">
+              <div key={index} className="p-6 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 animate-pulse">
                 <div className="h-4 bg-white/20 rounded w-3/4 mb-3"></div>
                 <div className="h-3 bg-white/20 rounded w-full mb-2"></div>
                 <div className="h-3 bg-white/20 rounded w-5/6 mb-4"></div>
@@ -244,29 +252,32 @@ const Projects = () => {
             ))}
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {filteredRepositories.map((repo, index) => (
               <motion.div
                 key={repo.id}
-                className="flex items-center gap-4 p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group"
+                className="group relative"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -3 }}
+                whileHover={{ y: -5 }}
               >
-                {/* Project Header */}
-                <div className="w-full">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2.5 bg-white/10 rounded-lg group-hover:scale-105 transition-transform duration-200 border border-white/20">
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                <div className="relative flex flex-col gap-4 p-6 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 group-hover:border-purple-400/30 transition-all duration-300 h-full">
+                  {/* Project Header */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className={`p-3 bg-gradient-to-br ${getLanguageColor(repo.language)} rounded-xl group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                         {getProjectIcon(repo.topics)}
                       </div>
-                      <div>
-                        <h3 className="font-medium text-lg text-white font-semibold group-hover:text-white transition-colors duration-200">
+                      <div className="flex-1">
+                        <h3 className="font-bold text-white text-lg group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-blue-400 transition-all duration-300">
                           {repo.name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                         </h3>
-                        <div className="flex items-center gap-1.5 text-xs text-purple-300 font-medium mt-1">
+                        <div className="flex items-center gap-1.5 text-xs text-white/50 mt-1">
                           <Calendar className="w-3 h-3" />
                           {formatDate(repo.updated_at)}
                         </div>
@@ -275,19 +286,19 @@ const Projects = () => {
                   </div>
 
                   {/* Description */}
-                  <p className="text-white text-sm mb-4 leading-relaxed line-clamp-3">
+                  <p className="text-white/70 text-sm leading-relaxed line-clamp-3 group-hover:text-white/90 transition-colors duration-300">
                     {repo.description}
                   </p>
 
                   {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className={`px-2.5 py-1 ${getLanguageColor(repo.language)} text-white text-xs rounded-full font-medium`}>
+                  <div className="flex flex-wrap gap-2">
+                    <span className={`px-3 py-1.5 bg-gradient-to-r ${getLanguageColor(repo.language)} text-white text-xs rounded-full font-medium shadow-md`}>
                       {repo.language}
                     </span>
                     {repo.topics.slice(0, 2).map((topic) => (
                       <span
                         key={topic}
-                        className="px-2.5 py-1 bg-white/10 text-white/70 text-xs rounded-full font-medium border border-white/20"
+                        className="px-3 py-1.5 bg-white/10 text-white/70 text-xs rounded-full font-medium border border-white/20"
                       >
                         {topic}
                       </span>
@@ -295,40 +306,47 @@ const Projects = () => {
                   </div>
 
                   {/* Stats */}
-                  <div className="flex items-center gap-4 mb-4 text-xs text-white/60">
+                  <div className="flex items-center gap-4 text-xs text-white/60">
                     <div className="flex items-center gap-1.5">
-                      <Star className="w-3.5 h-3.5" />
-                      {repo.stargazers_count}
+                      <Star className="w-3.5 h-3.5 text-yellow-400" />
+                      <span className="font-medium">{repo.stargazers_count}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <GitFork className="w-3.5 h-3.5" />
-                      {repo.forks_count}
+                      <GitFork className="w-3.5 h-3.5 text-blue-400" />
+                      <span className="font-medium">{repo.forks_count}</span>
                     </div>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <a
+                  <div className="flex gap-3 mt-auto pt-2">
+                    <motion.a
                       href={repo.html_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/80 rounded-lg hover:bg-white/20 transition-colors duration-200 text-xs font-medium flex-1 justify-center border border-white/20"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-colors duration-200 text-xs font-medium flex-1 justify-center border border-white/20"
                     >
-                      <Github className="w-3.5 h-3.5" />
+                      <Github className="w-4 h-4" />
                       Code
-                    </a>
+                    </motion.a>
                     {repo.homepage && (
-                      <a
+                      <motion.a
                         href={repo.homepage}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all duration-200 text-xs font-medium flex-1 justify-center"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium flex-1 justify-center"
                       >
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        <ExternalLink className="w-4 h-4" />
                         Demo
-                      </a>
+                      </motion.a>
                     )}
                   </div>
+
+                  {/* Bottom accent line */}
+                  <div className={`absolute bottom-0 left-0 h-1 w-0 group-hover:w-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500 rounded-full`} />
                 </div>
               </motion.div>
             ))}
@@ -343,16 +361,18 @@ const Projects = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <a
+          <motion.a
             href="https://github.com/noeplantier"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-6 py-3 bg-white/10 text-white/80 rounded-full font-medium hover:bg-white/20 transform hover:scale-[1.02] transition-all duration-200 border border-white/20"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 text-white rounded-2xl font-semibold border-2 border-purple-400/30 hover:border-purple-400/50 transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
           >
-            <Github className="w-4 h-4" />
+            <Github className="w-5 h-5" />
             View All Projects on GitHub
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
+            <ExternalLink className="w-4 h-4" />
+          </motion.a>
         </motion.div>
       </div>
     </section>
