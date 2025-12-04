@@ -242,7 +242,7 @@ const Skills = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Technical Expertise
+            My Skills
           </h2>
           <p className="text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
             4+ years of experience crafting exceptional web and mobile applications with modern technologies
@@ -364,7 +364,7 @@ const Skills = () => {
             {/* Animated Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-blue-500/20 to-purple-500/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
             
-            <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 p-8 md:p-10">
+            <div className="relative backdrop-blur-xl rounded-3xl border border-white/20 p-8 md:p-10">
               {/* Header */}
               <div className="text-center mb-8">
                 <motion.div
