@@ -3,16 +3,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Sparkles, Trash2, Copy, Check, ArrowLeft, Download } from 'lucide-react';
 
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+  isError?: boolean;
+}
+
 export default function AIChat() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState(null);
   const [revealTitle, setRevealTitle] = useState(false);
   const [revealSubtitle, setRevealSubtitle] = useState(false);
   const [revealChat, setRevealChat] = useState(false);
-  const messagesEndRef = useRef(null);
-  const textareaRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     const timer1 = setTimeout(() => setRevealTitle(true), 100);
@@ -53,13 +60,13 @@ export default function AIChat() {
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
-    const userMessage = { role: 'user', content: input, timestamp: new Date().toISOString() };
+    const userMessage: Message = { role: 'user', content: input, timestamp: new Date().toISOString() };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
 
     try {
-      const apiKey = process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY;
+      const apiKey = process.env.VITE_PUBLIC_ANTHROPIC_API_KEY || process.env.VITE_API_KEY;
       
       if (!apiKey) {
         throw new Error('API key not configured');
@@ -107,11 +114,12 @@ export default function AIChat() {
       }]);
     } catch (error) {
       console.error('Error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: error.message.includes('API key') 
+        content: errorMessage.includes('API key') 
           ? '⚠️ API key not configured. Please add your Anthropic API key to the .env file.\n\nCreate a .env.local file with:\nNEXT_PUBLIC_ANTHROPIC_API_KEY=your_api_key_here'
-          : '⚠️ Sorry, I encountered an error. Please try again or contact us at plantiernoe50@gmail.com',
+          : '⚠️ The AI service is currently unavailable. Please try again later.',
         timestamp: new Date().toISOString(),
         isError: true
       }]);
