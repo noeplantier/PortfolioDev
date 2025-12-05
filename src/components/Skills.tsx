@@ -22,7 +22,7 @@ const Skills = () => {
         { 
           name: 'Next.js', 
           level: 92, 
-          experience: '3+ years', 
+          experience: '4+ years', 
           projects: 18,
           icon: '▲',
           description: 'SSR, SSG, API routes, middleware, App Router'
@@ -54,7 +54,7 @@ const Skills = () => {
         { 
           name: 'Framer Motion', 
           level: 90, 
-          experience: '3+ years', 
+          experience: '4+ years', 
           projects: 25,
           icon: '🎭',
           description: 'Complex animations, gestures, layout animations'
@@ -85,7 +85,7 @@ const Skills = () => {
         { 
           name: 'Flutter', 
           level: 87, 
-          experience: '2+ years', 
+          experience: '3+ years', 
           projects: 8,
           icon: '🦋',
           description: 'Custom widgets, state management, platform channels'
@@ -93,7 +93,7 @@ const Skills = () => {
         { 
           name: 'iOS Development', 
           level: 80, 
-          experience: '2+ years', 
+          experience: '3+ years', 
           projects: 10,
           icon: '🍎',
           description: 'Swift, UIKit, SwiftUI, App Store deployment'
@@ -132,7 +132,7 @@ const Skills = () => {
         { 
           name: 'PostgreSQL', 
           level: 88, 
-          experience: '3+ years', 
+          experience: '4+ years', 
           projects: 16,
           icon: '🐘',
           description: 'Complex queries, indexes, optimization, migrations'
@@ -140,7 +140,7 @@ const Skills = () => {
         { 
           name: 'MongoDB', 
           level: 85, 
-          experience: '3+ years', 
+          experience: '4+ years', 
           projects: 20,
           icon: '🍃',
           description: 'Aggregations, indexes, Mongoose, Atlas'
@@ -148,7 +148,7 @@ const Skills = () => {
         { 
           name: 'GraphQL', 
           level: 84, 
-          experience: '2+ years', 
+          experience: '3+ years', 
           projects: 10,
           icon: '◉',
           description: 'Apollo, schema design, resolvers, subscriptions'
@@ -203,7 +203,7 @@ const Skills = () => {
         { 
           name: 'AWS', 
           level: 82, 
-          experience: '2+ years', 
+          experience: '4+ years', 
           projects: 12,
           icon: '☁️',
           description: 'S3, Lambda, EC2, CloudFront, RDS'
@@ -211,7 +211,7 @@ const Skills = () => {
         { 
           name: 'CI/CD', 
           level: 86, 
-          experience: '3+ years', 
+          experience: '4+ years', 
           projects: 24,
           icon: '🔄',
           description: 'GitHub Actions, automated testing, deployments'
@@ -219,7 +219,7 @@ const Skills = () => {
         { 
           name: 'Testing', 
           level: 85, 
-          experience: '3+ years', 
+          experience: '4+ years', 
           projects: 30,
           icon: '✅',
           description: 'Jest, React Testing Library, E2E with Cypress'

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, Zap, Code, Rocket, Lightbulb } from 'lucide-react';
+import { Github, Linkedin, Mail, Zap, Code, Rocket, Lightbulb, Sparkles } from 'lucide-react';
 import * as THREE from 'three';
 
 export default function Hero() {
@@ -128,34 +128,6 @@ export default function Hero() {
     };
   }, []);
 
-  const socialLinks = [
-    { icon: Github, href: 'https://github.com/noeplantier', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/noe-plantier', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:plantiernoe50@gmail.com', label: 'Email' }
-  ];
-
-  const devValues = [
-    { 
-      icon: Zap, 
-      title: "Lightning Fast", 
-      description: "Optimized for performance, no bloat, just pure speed.",
-    },
-    { 
-      icon: Code, 
-      title: "Modern Stack", 
-      description: "Built with TypeScript, React, and cutting-edge tools.",
-    },
-    { 
-      icon: Rocket, 
-      title: "Developer Experience", 
-      description: "Designed for you, not against you.",
-    },
-    { 
-      icon: Lightbulb, 
-      title: "Innovative", 
-      description: "We don't follow trends, we set them.",
-    }
-  ];
 
   return (
     <section
@@ -179,138 +151,144 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Main Content */}
-      <div className="w-full max-w-4xl flex flex-col items-center justify-center gap-2 sm:gap-3 relative z-10">
-        {/* H1 avec effet de traînée de poudre */}
-        <AnimatePresence>
-          {revealH1 && (
-            <motion.h1
-              initial={{ clipPath: 'inset(0 100% 0 0)' }}
-              animate={{ clipPath: 'inset(0 0 0 0)' }}
-              exit={{ clipPath: 'inset(0 100% 0 0)' }}
-              transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-              className="text-9xl sm:text-9xl md:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 px-4"
-            >
-              HI, I'M 
-              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> NOÉ</span>
-            </motion.h1>
-          )}
-        </AnimatePresence>
+      <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8">
+  {/* H1 avec effet de traînée de poudre */}
+  <AnimatePresence>
+    {revealH1 && (
+      <motion.h1
+        initial={{ clipPath: 'inset(0 100% 0 0)' }}
+        animate={{ clipPath: 'inset(0 0 0 0)' }}
+        exit={{ clipPath: 'inset(0 100% 0 0)' }}
+        transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+        className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
+      >
+        HI, I'M 
+        <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> NOÉ</span>
+      </motion.h1>
+    )}
+  </AnimatePresence>
 
-        {/* Founder avec effet de traînée de poudre */}
-        <AnimatePresence>
-          {revealFounder && (
-            <motion.h2
-              initial={{ clipPath: 'inset(0 100% 0 0)' }}
-              animate={{ clipPath: 'inset(0 0 0 0)' }}
-              exit={{ clipPath: 'inset(0 100% 0 0)' }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-              className="text-5xl sm:text-5xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-1 sm:mb-2 px-4"
-            >
-              FOUNDER OF PLANTIERS
-            </motion.h2>
-          )}
-        </AnimatePresence>
+  {/* Founder avec effet de traînée de poudre */}
+  <AnimatePresence>
+    {revealFounder && (
+      <motion.h2
+        initial={{ clipPath: 'inset(0 100% 0 0)' }}
+        animate={{ clipPath: 'inset(0 0 0 0)' }}
+        exit={{ clipPath: 'inset(0 100% 0 0)' }}
+        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+        className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
+      >
+        FOUNDER OF 
+        <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> PLANTIERS</span>
 
-        {/* Tagline avec effet de traînée de poudre */}
-        <AnimatePresence>
-          {revealTagline && (
-            <motion.h2
-              initial={{ clipPath: 'inset(0 100% 0 0)' }}
-              animate={{ clipPath: 'inset(0 0 0 0)' }}
-              exit={{ clipPath: 'inset(0 100% 0 0)' }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-              className="text-center font-extrabold text-white mb-3 sm:mb-4 max-w-2xl px-4"
-            >
-              A SOFTWARE AGENCY WHERE CODE AGES LIKE FINE WINE
-            </motion.h2>
-          )}
-        </AnimatePresence>
+      </motion.h2>
+    )}
+  </AnimatePresence>
 
-        {/* Modern Clean Dev Values Cards */}
-        <AnimatePresence>
-          {revealValues && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5 w-full px-4"
-            >
-              {devValues.map((value, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ clipPath: 'inset(0 100% 0 0)' }}
-                  animate={{ clipPath: 'inset(0 0 0 0)' }}
-                  transition={{ duration: 0.6, delay: index * 0.1, ease: [0.76, 0, 0.24, 1] }}
-                  className="relative group cursor-pointer"
-                >
-                  <div 
-                    className={`absolute inset-0 bg-gradient-to-br ${value.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-100 rounded-2xl blur-xl -z-10`}
-                  />
-                  
-                  <div className="relative h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/20 group-hover:border-white/40 transition-all duration-100 overflow-hidden">
-                    {/* Animated gradient orb */}
-                    <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${value.gradient} opacity-20 blur-3xl group-hover:opacity-30 transition-opacity duration-100 rounded-full`} />
-                    
-                    <div className="relative z-10 flex flex-col items-start h-full">
-                      {/* Icon with gradient background */}
-                      <div className={`p-3 rounded-xl bg-gradient-to-br ${value.gradient} shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                        <value.icon className="w-6 h-6 text-white" />
-                      </div>
-                      
-                      {/* Title */}
-                      <h3 
-                        className={`text-lg font-bold text-white mb-2  ${value.gradient}`}
-                   
-                      >
-                        {value.title}
-                      </h3>
-                      
-                      {/* Description */}
-                      <p className="text-sm text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
-                        {value.description}
-                      </p>
+  
 
-                      {/* Bottom accent line */}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-2 sm:mt-4">
-          {/* Bouton "Get Started" */}
-          <AnimatePresence>
-            {revealButton && (
+  {/* Expertise Cards */}
+<AnimatePresence>
+  {revealTagline && (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.3 }}
+      className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 md:mt-10 w-full max-w-6xl px-4"
+    >
+      {[
+        {
+          icon: '⚡',
+          title: 'Full Stack',
+          description: 'Back-end x Front-end Development',
+          gradient: 'from-purple-500/20 to-blue-500/20',
+          hoverGradient: 'from-purple-500 to-blue-500'
+        },
+        {
+          icon: '📱',
+          title: 'Mobile Dev',
+          description: 'Modern mobile applications',
+          gradient: 'from-purple-500/20 to-blue-500/20',
+          hoverGradient: 'from-purple-500 to-blue-500'
+        },
+        {
+          icon: '🚀',
+          title: 'Performance',
+          description: 'Lightning fast & scalable',
+          gradient: 'from-purple-500/20 to-blue-500/20',
+          hoverGradient: 'from-purple-500 to-blue-500'
+        },
+        {
+          icon: '🎨',
+          title: 'UX Design',
+          description: 'Modern & user-friendly',
+          gradient: 'from-purple-500/20 to-blue-500/20',
+          hoverGradient: 'from-purple-500 to-blue-500'
+        }
+      ].map((card, index) => (
+        <motion.div
+          key={card.title}
+          className="group relative"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+          whileHover={{ y: -5 }}
+        >
+          {/* Glow Effect */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} rounded-xl sm:rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+          
+          <div className="relative flex flex-col gap-2 sm:gap-3 p-4 sm:p-5 bg-white/5 backdrop-blur-lg rounded-xl sm:rounded-2xl border border-white/10 group-hover:border-purple-400/30 transition-all duration-300 h-full">
+            {/* Icon */}
+            <div className="text-3xl sm:text-4xl mb-1">{card.icon}</div>
             
-                <motion.a
-                  href="#skills"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-base rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-                >
-                  Get Started
-                </motion.a>
-            )}
-          </AnimatePresence>
+            {/* Title */}
+            <h3 className="font-bold text-white text-base sm:text-lg group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-blue-400 transition-all duration-300">
+              {card.title}
+            </h3>
+            
+            {/* Description */}
+            <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
+              {card.description}
+            </p>
+            
+          
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  )}
+</AnimatePresence>
 
-          {/* Bouton "Ask AI" */}
-          <AnimatePresence>
-            {revealButton && (
-         
-                <motion.a
-                  href="#ask-ai"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-base rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center gap-2"
-                >
-                  
-                  Ask Robot
-                </motion.a>
-            )}
-          </AnimatePresence>
+  {/* CTA Buttons */}
+  <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8 w-full max-w-xs xs:max-w-none xs:w-auto">
+    {/* Bouton "Get Started" */}
+    <AnimatePresence>
+      {revealButton && (
+        <motion.a
+          href="#skills"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full xs:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm sm:text-base rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 text-center"
+        >
+          Get Started
+        </motion.a>
+      )}
+    </AnimatePresence>
+
+    {/* Bouton "Ask AI" */}
+    <AnimatePresence>
+      {revealButton && (
+        <motion.a
+          href="#ask-ai"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full xs:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm sm:text-base rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center justify-center gap-2"
+        >
+          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+          Ask AI
+        </motion.a>
+      )}
+      </AnimatePresence>
         </div>
       </div>
     </section>
