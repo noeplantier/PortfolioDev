@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, Zap, Code, Rocket, Lightbulb, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { Sparkles, Zap } from 'lucide-react';
 import * as THREE from 'three';
 
 export default function Hero() {
@@ -9,9 +9,117 @@ export default function Hero() {
   const [revealH1, setRevealH1] = useState(false);
   const [revealFounder, setRevealFounder] = useState(false);
   const [revealTagline, setRevealTagline] = useState(false);
-  const [revealValues, setRevealValues] = useState(false);
   const [revealButton, setRevealButton] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorVariant, setCursorVariant] = useState('default');
   const canvasRef = useRef(null);
+  const particlesRef = useRef(null);
+
+  // Smooth cursor tracking
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  const springConfig = { damping: 25, stiffness: 700 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
+  // Track mouse position for cursor
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      cursorX.set(e.clientX - 16);
+      cursorY.set(e.clientY - 16);
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [cursorX, cursorY]);
+
+  // Particle background effect
+  useEffect(() => {
+    if (!particlesRef.current) return;
+
+    const canvas = particlesRef.current;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 80;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(147, 51, 234, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    let animationId;
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach((particle, i) => {
+        particle.update();
+        particle.draw();
+
+        // Connect particles
+        particles.slice(i + 1).forEach(particle2 => {
+          const dx = particle.x - particle2.x;
+          const dy = particle.y - particle2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 120) {
+            ctx.strokeStyle = `rgba(147, 51, 234, ${0.15 * (1 - distance / 120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(particle2.x, particle2.y);
+            ctx.stroke();
+          }
+        });
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // 3D Grape Loading Animation
   useEffect(() => {
@@ -29,7 +137,6 @@ export default function Hero() {
     renderer.setPixelRatio(window.devicePixelRatio);
     camera.position.z = 5;
 
-    // Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
     
@@ -41,10 +148,8 @@ export default function Hero() {
     pointLight2.position.set(-5, -5, 5);
     scene.add(pointLight2);
 
-    // Create grape bunch
     const grapeGroup = new THREE.Group();
     
-    // Main grape spheres with realistic material
     const grapeMaterial = new THREE.MeshPhysicalMaterial({
       color: 0x6b21a8,
       metalness: 0.1,
@@ -56,7 +161,6 @@ export default function Hero() {
       opacity: 0.95
     });
 
-    // Create multiple grapes in a bunch formation
     const grapePositions = [
       { x: 0, y: 0, z: 0, scale: 1.2 },
       { x: -0.8, y: 0.8, z: 0.2, scale: 1 },
@@ -76,7 +180,6 @@ export default function Hero() {
       grapeGroup.add(grape);
     });
 
-    // Add stem
     const stemGeometry = new THREE.CylinderGeometry(0.08, 0.12, 1.5, 8);
     const stemMaterial = new THREE.MeshPhysicalMaterial({
       color: 0x4a5568,
@@ -89,8 +192,7 @@ export default function Hero() {
 
     scene.add(grapeGroup);
 
-    // Animation
-    let animationFrameId: number;
+    let animationFrameId;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
       
@@ -102,7 +204,6 @@ export default function Hero() {
     };
     animate();
 
-    // Handle resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -110,14 +211,12 @@ export default function Hero() {
     };
     window.addEventListener('resize', handleResize);
 
-    // Loading timer
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       setTimeout(() => setRevealH1(true), 100);
-      setTimeout(() => setRevealFounder(true), 100);
-      setTimeout(() => setRevealTagline(true), 200);
-      setTimeout(() => setRevealValues(true), 300);
-      setTimeout(() => setRevealButton(true), 300);
+      setTimeout(() => setRevealFounder(true), 200);
+      setTimeout(() => setRevealTagline(true), 400);
+      setTimeout(() => setRevealButton(true), 600);
     }, 3000);
 
     return () => {
@@ -128,72 +227,118 @@ export default function Hero() {
     };
   }, []);
 
+  const cursorVariants = {
+    default: {
+      height: 32,
+      width: 32,
+      backgroundColor: 'rgba(147, 51, 234, 0.5)',
+      border: '2px solid rgba(147, 51, 234, 1)',
+      mixBlendMode: 'difference'
+    },
+    button: {
+      height: 64,
+      width: 64,
+      backgroundColor: 'rgba(147, 51, 234, 0.2)',
+      border: '2px solid rgba(147, 51, 234, 1)',
+      mixBlendMode: 'difference'
+    }
+  };
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden"
-      style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, sans-serif" }}
-    >
-      {/* 3D Grape Loading Screen */}
-      <AnimatePresence>
-        {isLoading && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black"
-          >
-            <canvas ref={canvasRef} className="absolute inset-0" />
+    <>
+      {/* Custom Futuristic Cursor */}
+      <motion.div
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block"
+        variants={cursorVariants}
+        animate={cursorVariant}
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+        }}
+        transition={{ type: 'spring', damping: 25, stiffness: 700 }}
+      />
+
+      <section
+        id="hero"
+        className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden cursor-none"
+        style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, sans-serif" }}
+      >
+        {/* Particle Background */}
+        <canvas
+          ref={particlesRef}
+          className="absolute inset-0 pointer-events-none"
+          style={{ opacity: 0.6 }}
+        />
+
+    
+        {/* 3D Grape Loading Screen */}
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8 }}
+              className="fixed inset-0 z-50 flex flex-col items-center justify-center"
+            >
+              <canvas ref={canvasRef} className="absolute inset-0" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Main Content */}
+        <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8">
+          {/* H1 with glitch effect */}
+          <AnimatePresence>
+            {revealH1 && (
+              <motion.div className="relative">
+                <motion.h1
+                  initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 0.8, ease: [0.6, 0.01, 0.05, 0.95] }}
+                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
+                >
+                  HI, I'M 
+                  <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    {' '}NOÉ
+                  </span>
+                </motion.h1>
          
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-      {/* Main Content */}
-      <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8">
-  {/* H1 avec effet de traînée de poudre */}
-  <AnimatePresence>
-    {revealH1 && (
-      <motion.h1
-        initial={{ clipPath: 'inset(0 100% 0 0)' }}
-        animate={{ clipPath: 'inset(0 0 0 0)' }}
-        exit={{ clipPath: 'inset(0 100% 0 0)' }}
-        transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-        className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
-      >
-        HI, I'M 
-        <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> NOÉ</span>
-      </motion.h1>
-    )}
-  </AnimatePresence>
+          {/* Founder with typing effect */}
+          <AnimatePresence>
+            {revealFounder && (
+              <motion.h2
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
+              >
+               
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                    {' '}
+                    FOUNDER OF PLANTIERS
+                  </span>
+                  <motion.span
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 0.5 }}
+                    className="absolute -right-2 top-0 w-1 h-full bg-purple-500"
+                  />
+                </span>
+              </motion.h2>
+            )}
+          </AnimatePresence>
 
-  {/* Founder avec effet de traînée de poudre */}
-  <AnimatePresence>
-    {revealFounder && (
-      <motion.h2
-        initial={{ clipPath: 'inset(0 100% 0 0)' }}
-        animate={{ clipPath: 'inset(0 0 0 0)' }}
-        exit={{ clipPath: 'inset(0 100% 0 0)' }}
-        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
-      >
-        FOUNDER OF 
-        <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> PLANTIERS</span>
-
-      </motion.h2>
-    )}
-  </AnimatePresence>
-
-  
-
-  {/* Expertise Cards */}
-<AnimatePresence>
+          {/* Expertise Cards with magnetic effect */}
+          <AnimatePresence>
   {revealTagline && (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.3 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
       className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 md:mt-10 w-full max-w-6xl px-4"
     >
       {[
@@ -201,57 +346,56 @@ export default function Hero() {
           icon: '⚡',
           title: 'Full Stack',
           description: 'Back-end x Front-end Development',
-          gradient: 'from-purple-500/20 to-blue-500/20',
-          hoverGradient: 'from-purple-500 to-blue-500'
+          metric: '50+ Projects'
         },
         {
           icon: '📱',
           title: 'Mobile Dev',
           description: 'Modern mobile applications',
-          gradient: 'from-purple-500/20 to-blue-500/20',
-          hoverGradient: 'from-purple-500 to-blue-500'
+          metric: '4+ Years'
         },
         {
           icon: '🚀',
           title: 'Performance',
           description: 'Lightning fast & scalable',
-          gradient: 'from-purple-500/20 to-blue-500/20',
-          hoverGradient: 'from-purple-500 to-blue-500'
+          metric: '98% Score'
         },
         {
           icon: '🎨',
           title: 'UX Design',
           description: 'Modern & user-friendly',
-          gradient: 'from-purple-500/20 to-blue-500/20',
-          hoverGradient: 'from-purple-500 to-blue-500'
+          metric: '100% Satisfaction'
         }
       ].map((card, index) => (
         <motion.div
           key={card.title}
-          className="group relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-          whileHover={{ y: -5 }}
+          whileHover={{ scale: 1.02, y: -2 }}
+          whileTap={{ scale: 0.98 }}
+          className="flex flex-col items-center gap-3 px-4 sm:px-6 py-4 sm:py-5 rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 transition-all duration-300 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/30"
         >
-          {/* Glow Effect */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} rounded-xl sm:rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+          {/* Icon */}
+          <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 transition-all duration-300">
+            <span className="text-2xl sm:text-3xl">{card.icon}</span>
+          </div>
           
-          <div className="relative flex flex-col gap-2 sm:gap-3 p-4 sm:p-5 bg-white/5 backdrop-blur-lg rounded-xl sm:rounded-2xl border border-white/10 group-hover:border-purple-400/30 transition-all duration-300 h-full">
-            {/* Icon */}
-            <div className="text-3xl sm:text-4xl mb-1">{card.icon}</div>
-            
-            {/* Title */}
-            <h3 className="font-bold text-white text-base sm:text-lg group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-blue-400 transition-all duration-300">
-              {card.title}
-            </h3>
-            
-            {/* Description */}
-            <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
-              {card.description}
-            </p>
-            
+          {/* Title */}
+          <h3 className="font-bold text-white text-base sm:text-lg text-center">
+            {card.title}
+          </h3>
           
+          {/* Description */}
+          <p className="text-xs sm:text-sm text-white/80 text-center leading-relaxed">
+            {card.description}
+          </p>
+          
+          {/* Metric */}
+          <div className="mt-auto pt-2 sm:pt-3 border-t border-white/20 w-full">
+            <div className="text-sm sm:text-base font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
+              {card.metric}
+            </div>
           </div>
         </motion.div>
       ))}
@@ -259,38 +403,70 @@ export default function Hero() {
   )}
 </AnimatePresence>
 
-  {/* CTA Buttons */}
-  <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8 w-full max-w-xs xs:max-w-none xs:w-auto">
-    {/* Bouton "Get Started" */}
-    <AnimatePresence>
-      {revealButton && (
-        <motion.a
-          href="#skills"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full xs:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm sm:text-base rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 text-center"
-        >
-          Get Started
-        </motion.a>
-      )}
-    </AnimatePresence>
+          {/* CTA Buttons with magnetic effect */}
+          <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8 w-full max-w-xs xs:max-w-none xs:w-auto">
+            <AnimatePresence>
+              {revealButton && (
+                <>
+                  <motion.a
+                    href="#skills"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, type: 'spring' }}
+                    whileTap={{ scale: 0.95 }}
+                    onMouseEnter={() => setCursorVariant('button')}
+                    onMouseLeave={() => setCursorVariant('default')}
+                    className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium flex-1 justify-center"
+                    >
+                      <Zap className="w-4 h-4" />
+                      Get Started
+                
+                  </motion.a>
 
-    {/* Bouton "Ask AI" */}
-    <AnimatePresence>
-      {revealButton && (
-        <motion.a
-          href="#ask-ai"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full xs:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm sm:text-base rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center justify-center gap-2"
-        >
-          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-          Ask AI
-        </motion.a>
-      )}
-      </AnimatePresence>
+                  <motion.a
+                    href="#ask-ai"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.1, type: 'spring' }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onMouseEnter={() => setCursorVariant('button')}
+                    onMouseLeave={() => setCursorVariant('default')}
+                    className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium flex-1 justify-center"
+                    >
+                      <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+                      Ask AI
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500"
+                      initial={{ scale: 0, opacity: 0 }}
+                      whileHover={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.a>
+                </>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <style jsx global>{`
+        @keyframes gradient {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        .animate-gradient {
+          animation: gradient 3s ease infinite;
+        }
+        * {
+          cursor: none !important;
+        }
+        @media (max-width: 768px) {
+          * {
+            cursor: auto !important;
+          }
+        }
+      `}</style>
+    </>
   );
 }
