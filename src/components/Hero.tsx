@@ -271,19 +271,31 @@ export default function Hero() {
         />
 
     
-        {/* 3D Grape Loading Screen */}
-        <AnimatePresence>
-          {isLoading && (
-            <motion.div
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              className="fixed inset-0 z-50 flex flex-col items-center justify-center"
-            >
-              <canvas ref={canvasRef} className="absolute inset-0" />
-            </motion.div>
-          )}
-        </AnimatePresence>
+<span className="inline-block w-20 h-20 relative">
+  {/* Divine glow effect behind */}
+  <span 
+    className="absolute inset-0 rounded-full blur-xl"
+    style={{
+      background: 'radial-gradient(circle, rgba(147, 51, 234, 0.6) 0%, rgba(124, 58, 237, 0.4) 50%, transparent 70%)',
+      animation: 'pulse 2s ease-in-out infinite'
+    }}
+  />
+  
+  {/* Grape with gradient */}
+  <span 
+    className="inline-block text-[70px] relative z-10"
+    style={{
+      background: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 50%, #6366f1 100%)',
+      WebkitBackgroundClip: 'text',
+      backgroundClip: 'text',
+      color: 'transparent',
+      WebkitTextFillColor: 'transparent',
+      filter: 'drop-shadow(0 0 6px rgba(147, 51, 234, 0.4))'
+    }}
+  >
+    🍇
+  </span>
+</span>
 
         {/* Main Content */}
         <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8">
@@ -295,7 +307,7 @@ export default function Hero() {
                   initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   transition={{ duration: 0.8, ease: [0.6, 0.01, 0.05, 0.95] }}
-                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
+                  className="text-6xl xs:text-7xl sm:text-8xl md:text-9xl lg:text-8xl xl:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
                 >
                   HI, I'M 
                   <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
@@ -314,20 +326,16 @@ export default function Hero() {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
-                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
+                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight flex items-center justify-center gap-3"
               >
-               
+               FOUNDER OF 
                 <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                    {' '}
-                    FOUNDER OF PLANTIERS
+                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    {' '}PLANTIERS
                   </span>
-                  <motion.span
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 0.5 }}
-                    className="absolute -right-2 top-0 w-1 h-full bg-purple-500"
-                  />
+           
                 </span>
+             
               </motion.h2>
             )}
           </AnimatePresence>
@@ -346,25 +354,25 @@ export default function Hero() {
           icon: '⚡',
           title: 'Full Stack',
           description: 'Back-end x Front-end Development',
-          metric: '50+ Projects'
+          metric: '30+ Projects'
         },
         {
           icon: '📱',
           title: 'Mobile Dev',
           description: 'Modern mobile applications',
-          metric: '4+ Years'
+          metric: '4+ Years Experience'
         },
         {
           icon: '🚀',
           title: 'Performance',
           description: 'Lightning fast & scalable',
-          metric: '98% Score'
+          metric: 'Fastest in class'
         },
         {
           icon: '🎨',
           title: 'UX Design',
           description: 'Modern & user-friendly',
-          metric: '100% Satisfaction'
+          metric: 'New gen UI/UX'
         }
       ].map((card, index) => (
         <motion.div
@@ -416,7 +424,7 @@ export default function Hero() {
                     whileTap={{ scale: 0.95 }}
                     onMouseEnter={() => setCursorVariant('button')}
                     onMouseLeave={() => setCursorVariant('default')}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium flex-1 justify-center"
+                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium  justify-center"
                     >
                       <Zap className="w-4 h-4" />
                       Get Started
@@ -432,10 +440,10 @@ export default function Hero() {
                     whileTap={{ scale: 0.95 }}
                     onMouseEnter={() => setCursorVariant('button')}
                     onMouseLeave={() => setCursorVariant('default')}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium flex-1 justify-center"
+                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium justify-center"
                     >
                       <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-                      Ask AI
+                      Ask Claude
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500"
                       initial={{ scale: 0, opacity: 0 }}
