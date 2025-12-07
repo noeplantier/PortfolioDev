@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { Sparkles, Zap } from 'lucide-react';
-import * as THREE from 'three';
+import Loader from './Loader';
 
 export default function Hero() {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,7 +12,6 @@ export default function Hero() {
   const [revealButton, setRevealButton] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState('default');
-  const canvasRef = useRef(null);
   const particlesRef = useRef(null);
 
   // Smooth cursor tracking
@@ -121,111 +120,14 @@ export default function Hero() {
     };
   }, []);
 
-  // 3D Grape Loading Animation
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ 
-      canvas: canvasRef.current, 
-      alpha: true,
-      antialias: true 
-    });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    camera.position.z = 5;
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-    
-    const pointLight1 = new THREE.PointLight(0x9333ea, 2);
-    pointLight1.position.set(5, 5, 5);
-    scene.add(pointLight1);
-    
-    const pointLight2 = new THREE.PointLight(0x3b82f6, 1.5);
-    pointLight2.position.set(-5, -5, 5);
-    scene.add(pointLight2);
-
-    const grapeGroup = new THREE.Group();
-    
-    const grapeMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x6b21a8,
-      metalness: 0.1,
-      roughness: 0.3,
-      clearcoat: 1,
-      clearcoatRoughness: 0.2,
-      reflectivity: 0.8,
-      transparent: true,
-      opacity: 0.95
-    });
-
-    const grapePositions = [
-      { x: 0, y: 0, z: 0, scale: 1.2 },
-      { x: -0.8, y: 0.8, z: 0.2, scale: 1 },
-      { x: 0.8, y: 0.8, z: -0.2, scale: 1 },
-      { x: -0.6, y: -0.9, z: 0.3, scale: 0.9 },
-      { x: 0.6, y: -0.9, z: -0.3, scale: 0.9 },
-      { x: 0, y: 1.5, z: 0, scale: 0.85 },
-      { x: -1.2, y: 0, z: 0, scale: 0.8 },
-      { x: 1.2, y: 0, z: 0.1, scale: 0.8 },
-      { x: 0, y: -1.6, z: 0, scale: 0.75 }
-    ];
-
-    grapePositions.forEach(pos => {
-      const geometry = new THREE.SphereGeometry(0.5 * pos.scale, 32, 32);
-      const grape = new THREE.Mesh(geometry, grapeMaterial);
-      grape.position.set(pos.x, pos.y, pos.z);
-      grapeGroup.add(grape);
-    });
-
-    const stemGeometry = new THREE.CylinderGeometry(0.08, 0.12, 1.5, 8);
-    const stemMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x4a5568,
-      metalness: 0.2,
-      roughness: 0.7
-    });
-    const stem = new THREE.Mesh(stemGeometry, stemMaterial);
-    stem.position.y = 2.2;
-    grapeGroup.add(stem);
-
-    scene.add(grapeGroup);
-
-    let animationFrameId;
-    const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
-      
-      grapeGroup.rotation.y += 0.01;
-      grapeGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
-      grapeGroup.position.y = Math.sin(Date.now() * 0.002) * 0.3;
-      
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', handleResize);
-
-    const loadingTimer = setTimeout(() => {
-      setIsLoading(false);
-      setTimeout(() => setRevealH1(true), 100);
-      setTimeout(() => setRevealFounder(true), 200);
-      setTimeout(() => setRevealTagline(true), 400);
-      setTimeout(() => setRevealButton(true), 600);
-    }, 3000);
-
-    return () => {
-      clearTimeout(loadingTimer);
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-      renderer.dispose();
-    };
-  }, []);
+  // Handle loading complete
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    setTimeout(() => setRevealH1(true), 100);
+    setTimeout(() => setRevealFounder(true), 200);
+    setTimeout(() => setRevealTagline(true), 400);
+    setTimeout(() => setRevealButton(true), 600);
+  };
 
   const cursorVariants = {
     default: {
@@ -246,6 +148,11 @@ export default function Hero() {
 
   return (
     <>
+      {/* Loader Component */}
+      <AnimatePresence>
+        {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />}
+      </AnimatePresence>
+
       {/* Custom Futuristic Cursor */}
       <motion.div
         className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block"
@@ -270,33 +177,6 @@ export default function Hero() {
           style={{ opacity: 0.6 }}
         />
 
-    
-<span className="inline-block w-20 h-20 relative">
-  {/* Divine glow effect behind */}
-  <span 
-    className="absolute inset-0 rounded-full blur-xl"
-    style={{
-      background: 'radial-gradient(circle, rgba(147, 51, 234, 0.6) 0%, rgba(124, 58, 237, 0.4) 50%, transparent 70%)',
-      animation: 'pulse 2s ease-in-out infinite'
-    }}
-  />
-  
-  {/* Grape with gradient */}
-  <span 
-    className="inline-block text-[70px] relative z-10"
-    style={{
-      background: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 50%, #6366f1 100%)',
-      WebkitBackgroundClip: 'text',
-      backgroundClip: 'text',
-      color: 'transparent',
-      WebkitTextFillColor: 'transparent',
-      filter: 'drop-shadow(0 0 6px rgba(147, 51, 234, 0.4))'
-    }}
-  >
-    🍇
-  </span>
-</span>
-
         {/* Main Content */}
         <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8">
           {/* H1 with glitch effect */}
@@ -307,6 +187,8 @@ export default function Hero() {
                   initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   transition={{ duration: 0.8, ease: [0.6, 0.01, 0.05, 0.95] }}
+                  onMouseEnter={() => setCursorVariant('button')}
+                  onMouseLeave={() => setCursorVariant('default')}
                   className="text-6xl xs:text-7xl sm:text-8xl md:text-9xl lg:text-8xl xl:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
                 >
                   HI, I'M 
@@ -314,7 +196,6 @@ export default function Hero() {
                     {' '}NOÉ
                   </span>
                 </motion.h1>
-         
               </motion.div>
             )}
           </AnimatePresence>
@@ -326,90 +207,92 @@ export default function Hero() {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
+                onMouseEnter={() => setCursorVariant('button')}
+                onMouseLeave={() => setCursorVariant('default')}
                 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight flex items-center justify-center gap-3"
               >
-               FOUNDER OF 
+                FOUNDER OF 
                 <span className="relative inline-block">
-                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                  <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
                     {' '}PLANTIERS
                   </span>
-           
                 </span>
-             
               </motion.h2>
             )}
           </AnimatePresence>
 
           {/* Expertise Cards with magnetic effect */}
           <AnimatePresence>
-  {revealTagline && (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.2 }}
-      className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 md:mt-10 w-full max-w-6xl px-4"
-    >
-      {[
-        {
-          icon: '⚡',
-          title: 'Full Stack',
-          description: 'Back-end x Front-end Development',
-          metric: '30+ Projects'
-        },
-        {
-          icon: '📱',
-          title: 'Mobile Dev',
-          description: 'Modern mobile applications',
-          metric: '4+ Years Experience'
-        },
-        {
-          icon: '🚀',
-          title: 'Performance',
-          description: 'Lightning fast & scalable',
-          metric: 'Fastest in class'
-        },
-        {
-          icon: '🎨',
-          title: 'UX Design',
-          description: 'Modern & user-friendly',
-          metric: 'New gen UI/UX'
-        }
-      ].map((card, index) => (
-        <motion.div
-          key={card.title}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-          whileHover={{ scale: 1.02, y: -2 }}
-          whileTap={{ scale: 0.98 }}
-          className="flex flex-col items-center gap-3 px-4 sm:px-6 py-4 sm:py-5 rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 transition-all duration-300 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/30"
-        >
-          {/* Icon */}
-          <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 transition-all duration-300">
-            <span className="text-2xl sm:text-3xl">{card.icon}</span>
-          </div>
-          
-          {/* Title */}
-          <h3 className="font-bold text-white text-base sm:text-lg text-center">
-            {card.title}
-          </h3>
-          
-          {/* Description */}
-          <p className="text-xs sm:text-sm text-white/80 text-center leading-relaxed">
-            {card.description}
-          </p>
-          
-          {/* Metric */}
-          <div className="mt-auto pt-2 sm:pt-3 border-t border-white/20 w-full">
-            <div className="text-sm sm:text-base font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
-              {card.metric}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
-  )}
-</AnimatePresence>
+            {revealTagline && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 md:mt-10 w-full max-w-6xl px-4"
+              >
+                {[
+                  {
+                    icon: '⚡',
+                    title: 'Full Stack',
+                    description: 'Back-end x Front-end Development',
+                    metric: '30+ Projects'
+                  },
+                  {
+                    icon: '📱',
+                    title: 'Mobile Dev',
+                    description: 'Modern mobile applications',
+                    metric: '4+ Years Experience'
+                  },
+                  {
+                    icon: '🚀',
+                    title: 'Performance',
+                    description: 'Lightning fast & scalable',
+                    metric: 'Fastest in class'
+                  },
+                  {
+                    icon: '🎨',
+                    title: 'UX Design',
+                    description: 'Modern & user-friendly',
+                    metric: 'New gen UI/UX'
+                  }
+                ].map((card, index) => (
+                  <motion.div
+                    key={card.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    onMouseEnter={() => setCursorVariant('button')}
+                    onMouseLeave={() => setCursorVariant('default')}
+                    className="flex flex-col items-center gap-3 px-4 sm:px-6 py-4 sm:py-5 rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 transition-all duration-300 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/30"
+                  >
+                    {/* Icon */}
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 transition-all duration-300">
+                      <span className="text-2xl sm:text-3xl">{card.icon}</span>
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="font-bold text-white text-base sm:text-lg text-center">
+                      {card.title}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm text-white/80 text-center leading-relaxed">
+                      {card.description}
+                    </p>
+                    
+                    {/* Metric */}
+                    <div className="mt-auto pt-2 sm:pt-3 border-t border-white/20 w-full">
+                      <div className="text-sm sm:text-base font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
+                        {card.metric}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* CTA Buttons with magnetic effect */}
           <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8 w-full max-w-xs xs:max-w-none xs:w-auto">
@@ -424,11 +307,10 @@ export default function Hero() {
                     whileTap={{ scale: 0.95 }}
                     onMouseEnter={() => setCursorVariant('button')}
                     onMouseLeave={() => setCursorVariant('default')}
-                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium  justify-center"
-                    >
-                      <Zap className="w-4 h-4" />
-                      Get Started
-                
+                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-m font-semibold justify-center"
+                  >
+                    <Zap className="w-4 h-4" />
+                    Get Started
                   </motion.a>
 
                   <motion.a
@@ -440,16 +322,10 @@ export default function Hero() {
                     whileTap={{ scale: 0.95 }}
                     onMouseEnter={() => setCursorVariant('button')}
                     onMouseLeave={() => setCursorVariant('default')}
-                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-xs font-medium justify-center"
-                    >
-                      <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-                      Ask Claude
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500"
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileHover={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
+                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-m font-semibold justify-center relative"
+                  >
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+                    Ask Claude
                   </motion.a>
                 </>
               )}
