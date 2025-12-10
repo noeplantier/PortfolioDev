@@ -146,12 +146,12 @@ const Skills = () => {
           description: 'Aggregations, indexes, Mongoose, Atlas'
         },
         { 
-          name: 'GraphQL', 
-          level: 84, 
-          experience: '3+ years', 
+          name: 'Golang', 
+          level: 87, 
+          experience: '4+ years', 
           projects: 10,
-          icon: '◉',
-          description: 'Apollo, schema design, resolvers, subscriptions'
+          icon: '🐹',
+          description: 'Goroutines, channels, microservices, REST APIs, concurrency patterns, performance optimization'
         },
         { 
           name: 'Firebase', 
