@@ -178,7 +178,7 @@ export default function Hero() {
         />
 
         {/* Main Content */}
-        <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8">
+        <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8 py-8">
           {/* H1 with glitch effect */}
           <AnimatePresence>
             {revealH1 && (
@@ -221,78 +221,79 @@ export default function Hero() {
             )}
           </AnimatePresence>
 
-          {/* Expertise Cards with magnetic effect */}
-          <AnimatePresence>
+            {/* Expertise Cards with magnetic effect */}
+            <AnimatePresence>
             {revealTagline && (
               <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mt-4 sm:mt-6 md:mt-8 w-full max-w-6xl px-4"
+              >
+              {[
+                {
+                icon: '⚡',
+                title: 'Full Stack',
+                description: 'Back-end x Front-end Development',
+                metric: '30+ Projects'
+                },
+                {
+                icon: '📱',
+                title: 'Mobile Dev',
+                description: 'Modern mobile applications',
+                metric: '4+ Years Experience'
+                },
+                {
+                icon: '🚀',
+                title: 'Performance',
+                description: 'Lightning fast & scalable',
+                metric: 'Fastest in class'
+                },
+                {
+                icon: '🎨',
+                title: 'UX Design',
+                description: 'Modern & user-friendly',
+                metric: 'New gen UI/UX'
+                }
+              ].map((card, index) => (
+                <motion.div
+                key={card.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 md:mt-10 w-full max-w-6xl px-4"
-              >
-                {[
-                  {
-                    icon: '⚡',
-                    title: 'Full Stack',
-                    description: 'Back-end x Front-end Development',
-                    metric: '30+ Projects'
-                  },
-                  {
-                    icon: '📱',
-                    title: 'Mobile Dev',
-                    description: 'Modern mobile applications',
-                    metric: '4+ Years Experience'
-                  },
-                  {
-                    icon: '🚀',
-                    title: 'Performance',
-                    description: 'Lightning fast & scalable',
-                    metric: 'Fastest in class'
-                  },
-                  {
-                    icon: '🎨',
-                    title: 'UX Design',
-                    description: 'Modern & user-friendly',
-                    metric: 'New gen UI/UX'
-                  }
-                ].map((card, index) => (
-                  <motion.div
-                    key={card.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    onMouseEnter={() => setCursorVariant('button')}
-                    onMouseLeave={() => setCursorVariant('default')}
-                    className="flex flex-col items-center gap-3 px-4 sm:px-6 py-4 sm:py-5 rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 transition-all duration-300 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/30"
-                  >
-                    {/* Icon */}
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 transition-all duration-300">
-                      <span className="text-2xl sm:text-3xl">{card.icon}</span>
-                    </div>
-                    
-                    {/* Title */}
-                    <h3 className="font-bold text-white text-base sm:text-lg text-center">
-                      {card.title}
-                    </h3>
-                    
-                    {/* Description */}
-                    <p className="text-xs sm:text-sm text-white/80 text-center leading-relaxed">
-                      {card.description}
-                    </p>
-                    
-                    {/* Metric */}
-                    <div className="mt-auto pt-2 sm:pt-3 border-t border-white/20 w-full">
-                      <div className="text-sm sm:text-base font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
-                        {card.metric}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onMouseEnter={() => setCursorVariant('button')}
+                onMouseLeave={() => setCursorVariant('default')}
+                className="flex flex-col items-center gap-2 px-3 sm:px-4 py-3 sm:py-4 rounded-xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 transition-all duration-300 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/30"
+                >
+                {/* Icon */}
+                <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 transition-all duration-300">
+                  <span className="text-xl sm:text-2xl">{card.icon}</span>
+                </div>
+                
+                {/* Title */}
+                <h3 className="font-bold text-white text-sm sm:text-base text-center">
+                  {card.title}
+                </h3>
+                
+                {/* Description */}
+                <p className="text-xs text-white/80 text-center leading-relaxed">
+                  {card.description}
+                </p>
+                
+                {/* Metric */}
+                <div className="mt-auto pt-1.5 sm:pt-2 border-t border-white/20 w-full">
+                  <div className="text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
+                  {card.metric}
+                  </div>
+                </div>
+                </motion.div>
+              ))}
               </motion.div>
             )}
-          </AnimatePresence>
+            </AnimatePresence>
+          
 
           {/* CTA Buttons with magnetic effect */}
           <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8 w-full max-w-xs xs:max-w-none xs:w-auto">

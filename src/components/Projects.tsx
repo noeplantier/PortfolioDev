@@ -26,7 +26,20 @@ const Projects = () => {
       name: 'Mots de maitre',
       description: 'Scalable microservices architecture with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
       html_url: 'https://github.com/noeplantier/Mots-de-ma-tre',
-      homepage: 'https://motsdemaitre.com',
+      homepage: 'https://motsdemaitre.netlify.app/',
+      stargazers_count: 156,
+      forks_count: 45,
+      language: 'Next',
+      updated_at: '2024-01-08T09:15:00Z',
+      topics: ['nodejs', 'microservices', 'express', 'react']
+    },
+ 
+    {
+      id: 2,
+      name: 'Ti Padel',
+      description: 'Ti Padel booking platform with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
+      html_url: 'https://github.com/noeplantier/Ti-Padel',
+      homepage: 'https://ti-padel.com',
       stargazers_count: 156,
       forks_count: 45,
       language: 'Next',
@@ -35,6 +48,30 @@ const Projects = () => {
     },
     {
       id: 3,
+      name: 'Plantiers',
+      description: 'Plantiers pricing platform with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
+      html_url: 'https://github.com/noeplantier/plantiers',
+      homepage: 'https://plantiers.com',
+      stargazers_count: 156,
+      forks_count: 45,
+      language: 'Next',
+      updated_at: '2024-01-08T09:15:00Z',
+      topics: ['nodejs', 'microservices', 'express', 'react']
+    },
+    {
+      id: 4,
+      name: "Clem's Coffee Shop",
+      description: 'Brain new coffee application. Built with Glide.',
+      html_url: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
+      homepage: 'https://clems-coffee-shop.glide.page',
+      stargazers_count: 203,
+      forks_count: 67,
+      language: 'Dart',
+      updated_at: '2024-01-05T16:45:00Z',
+      topics: ['glide', 'coffee', 'mobile', 'chill']
+    },
+    {
+      id: 5,
       name: 'StudioCall',
       description: 'AI-assisted voice-over and voicemail recording studio for the web — record takes, manage scripts, and share previews with clients in one click.',
       html_url: 'https://github.com/hugoisidore/studiocall-front',
@@ -46,11 +83,11 @@ const Projects = () => {
       topics: ['JavaScript', 'Voicemail', 'AI']
     },
     {
-      id: 4,
-      name: 'Portfolio',
-      description: 'Static portfolio built with React. Features UX designed interface, theme customization, and SEO optimization.',
-      html_url: 'https://github.com/noeplantier/PortfolioDev',
-      homepage: 'https://noeplantier.com',
+      id: 6,
+      name: 'Stadium Spot',
+      description: 'Sports Bar and Restaurant locator app built with Vue.js and Tailwind CSS, featuring interactive maps and user reviews.',
+      html_url: 'https://github.com/noeplantier/StadiumSpot',
+      homepage: '',
       stargazers_count: 78,
       forks_count: 19,
       language: 'TypeScript, JavaScript',
@@ -58,11 +95,11 @@ const Projects = () => {
       topics: ['react', 'portfolio', 'web developer', 'seo']
     },
     {
-      id: 5,
+      id: 7,
       name: 'Feelomi',
       description: 'Brain new medical application. Built with Flutter and Firebase.',
       html_url: 'https://github.com/noeplantier/FEELOMI',
-      homepage: 'https://github.com/noeplantier/FEELOMI',
+      homepage: '',
       stargazers_count: 203,
       forks_count: 67,
       language: 'Dart',
@@ -70,11 +107,11 @@ const Projects = () => {
       topics: ['flutter', 'medics', 'mobile', 'firebase', 'health']
     },
     {
-      id: 6,
+      id:8,
       name: 'WestApp',
       description: 'A full-featured sport meeting website built with TypeScript, featuring user authentication, real-time chat, and event management.',
       html_url: 'https://github.com/noeplantier/WestApp',
-      homepage: 'https://github.com/noeplantier/WestApp',
+      homepage: '',
       stargazers_count: 124,
       forks_count: 32,
       language: 'React',
@@ -82,7 +119,7 @@ const Projects = () => {
       topics: ['sport', 'meeting', 'typescript', 'Node.JS']
     },
     {
-      id: 7,
+      id: 9,
       name: 'TECUM',
       description: 'A SaaS platform for selling mode accessories and brain new jewelry, built with Next.JS, GraphQL Node.JS/Express.',
       html_url: 'https://github.com/noeplantier/TECUM',
@@ -93,18 +130,7 @@ const Projects = () => {
       updated_at: '2023-12-28T13:20:00Z',
       topics: ['jewelry', 'next', 'mode', 'graphql']
     },
-    {
-      id: 8,
-      name: "Clem's Coffee Shop",
-      description: 'Brain new coffee application. Built with Glide.',
-      html_url: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
-      homepage: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
-      stargazers_count: 203,
-      forks_count: 67,
-      language: 'Dart',
-      updated_at: '2024-01-05T16:45:00Z',
-      topics: ['glide', 'coffee', 'mobile', 'chill']
-    },
+
     {
       id: 10,
       name: 'Bellagancia',
@@ -117,18 +143,7 @@ const Projects = () => {
       updated_at: '2024-01-10T14:20:00Z',
       topics: ['next', 'beauty', 'responsive', 'charts', 'responsive']
     },
-    {
-      id: 11,
-      name: 'Ti Padel',
-      description: 'Local padel community app — book courts, find partners, and track match stats with a clean, mobile-first experience.',
-      html_url: 'https://github.com/noeplantier/Bellangancia',
-      homepage: 'https://github.com/noeplantier/Bellangancia',
-      stargazers_count: 89,
-      forks_count: 21,
-      language: 'Next',
-      updated_at: '2024-01-10T14:20:00Z',
-      topics: ['next', 'beauty', 'responsive', 'charts', 'responsive']
-    },
+   
   ];
 
   useEffect(() => {
