@@ -40,3 +40,4 @@ dist-ssr/
 
 # Editor directories
 *.log
+node_modules/
