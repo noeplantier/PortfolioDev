@@ -41,3 +41,7 @@ dist-ssr/
 # Editor directories
 *.log
 node_modules/
+node_modules/
+.next/
+out/
+.DS_Store
