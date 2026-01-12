@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
-import { Sparkles, Zap } from 'lucide-react';
+import { Sparkles, Zap, X, TrendingUp, Users, Target, BarChart3 } from 'lucide-react';
 import Loader from './Loader';
 
 export default function Hero() {
@@ -12,6 +12,7 @@ export default function Hero() {
   const [revealButton, setRevealButton] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState('default');
+  const [selectedCard, setSelectedCard] = useState(null);
   const particlesRef = useRef(null);
 
   // Smooth cursor tracking
@@ -21,7 +22,7 @@ export default function Hero() {
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  // Track mouse position for cursor
+  // Track mouse position for cursor and particles
   useEffect(() => {
     const handleMouseMove = (e) => {
       cursorX.set(e.clientX - 16);
@@ -33,7 +34,7 @@ export default function Hero() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [cursorX, cursorY]);
 
-  // Particle background effect
+  // Particle background effect with cursor interaction
   useEffect(() => {
     if (!particlesRef.current) return;
 
@@ -43,26 +44,49 @@ export default function Hero() {
     canvas.height = window.innerHeight;
 
     const particles = [];
-    const particleCount = 80;
+    const particleCount = 100;
 
     class Particle {
       constructor() {
+        this.reset();
+      }
+
+      reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.size = Math.random() * 2 + 0.5;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.density = (Math.random() * 30) + 1;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
         this.opacity = Math.random() * 0.5 + 0.2;
       }
 
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+      update(mouse) {
+        // Interaction with mouse
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let forceDirectionX = dx / distance;
+        let forceDirectionY = dy / distance;
+        let maxDistance = 150;
+        let force = (maxDistance - distance) / maxDistance;
+        let directionX = forceDirectionX * force * this.density;
+        let directionY = forceDirectionY * force * this.density;
 
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
+        if (distance < maxDistance) {
+          this.x -= directionX;
+          this.y -= directionY;
+        } else {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
       }
 
       draw() {
@@ -82,7 +106,7 @@ export default function Hero() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach((particle, i) => {
-        particle.update();
+        particle.update(mousePosition);
         particle.draw();
 
         // Connect particles
@@ -118,7 +142,7 @@ export default function Hero() {
       cancelAnimationFrame(animationId);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [mousePosition]);
 
   // Handle loading complete
   const handleLoadingComplete = () => {
@@ -145,6 +169,53 @@ export default function Hero() {
       mixBlendMode: 'difference'
     }
   };
+
+  const cards = [
+    {
+      icon: '⚡',
+      title: 'Full Stack',
+      description: 'Back-end x Front-end Development',
+      metric: '30+ Projects',
+      stats: [
+        { label: 'Uptime', value: '99.9%', icon: <Zap className="w-4 h-4" /> },
+        { label: 'Code Quality', value: 'A+', icon: <Target className="w-4 h-4" /> },
+        { label: 'Latency', value: '< 100ms', icon: <TrendingUp className="w-4 h-4" /> }
+      ]
+    },
+    {
+      icon: '📱',
+      title: 'Mobile Dev',
+      description: 'Modern mobile applications',
+      metric: '4+ Years Experience',
+      stats: [
+        { label: 'Active Users', value: '50k+', icon: <Users className="w-4 h-4" /> },
+        { label: 'App Rating', value: '4.9/5', icon: <Sparkles className="w-4 h-4" /> },
+        { label: 'Crash Rate', value: '0.01%', icon: <BarChart3 className="w-4 h-4" /> }
+      ]
+    },
+    {
+      icon: '🚀',
+      title: 'Performance',
+      description: 'Lightning fast & scalable',
+      metric: 'Fastest in class',
+      stats: [
+        { label: 'Load Time', value: '0.8s', icon: <Zap className="w-4 h-4" /> },
+        { label: 'Optimization', value: '100%', icon: <Target className="w-4 h-4" /> },
+        { label: 'Scalability', value: 'Infinite', icon: <TrendingUp className="w-4 h-4" /> }
+      ]
+    },
+    {
+      icon: '🎨',
+      title: 'UX Design',
+      description: 'Modern & user-friendly',
+      metric: 'New gen UI/UX',
+      stats: [
+        { label: 'User Retention', value: '85%', icon: <Users className="w-4 h-4" /> },
+        { label: 'Satisfaction', value: '98%', icon: <Sparkles className="w-4 h-4" /> },
+        { label: 'Conversion', value: '+40%', icon: <TrendingUp className="w-4 h-4" /> }
+      ]
+    }
+  ];
 
   return (
     <>
@@ -179,27 +250,28 @@ export default function Hero() {
 
         {/* Main Content */}
         <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8 py-8">
-          {/* H1 with glitch effect */}
-          <AnimatePresence>
-            {revealH1 && (
-              <motion.div className="relative">
+          {/* H1 with React Bits SplitText */}
+          {/* H1 Title */}
+          <div className="relative min-h-[120px] flex items-center justify-center">
+            <AnimatePresence>
+              {revealH1 && (
                 <motion.h1
-                  initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 0.8, ease: [0.6, 0.01, 0.05, 0.95] }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="text-7xl xs:text-8xl sm:text-[9rem] md:text-[10rem] lg:text-[11rem] xl:text-[13rem] font-black text-center text-white/90 mb-1 sm:mb-2 leading-none tracking-tighter"
                   onMouseEnter={() => setCursorVariant('button')}
                   onMouseLeave={() => setCursorVariant('default')}
-                  className="text-6xl xs:text-7xl sm:text-8xl md:text-9xl lg:text-8xl xl:text-9xl font-bold text-center text-white/90 mb-1 sm:mb-2 leading-tight"
                 >
-                  HI, I'M 
+                  HI ! I'M       <span className="relative inline-block">
                   <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
                     {' '}NOÉ
                   </span>
+                </span>
                 </motion.h1>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
+              )}
+            </AnimatePresence>
+          </div>
           {/* Founder with typing effect */}
           <AnimatePresence>
             {revealFounder && (
@@ -221,81 +293,45 @@ export default function Hero() {
             )}
           </AnimatePresence>
 
-            {/* Expertise Cards with magnetic effect */}
-            <AnimatePresence>
+          {/* Expertise Cards */}
+          <AnimatePresence>
             {revealTagline && (
               <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mt-4 sm:mt-6 md:mt-8 w-full max-w-6xl px-4"
-              >
-              {[
-                {
-                icon: '⚡',
-                title: 'Full Stack',
-                description: 'Back-end x Front-end Development',
-                metric: '30+ Projects'
-                },
-                {
-                icon: '📱',
-                title: 'Mobile Dev',
-                description: 'Modern mobile applications',
-                metric: '4+ Years Experience'
-                },
-                {
-                icon: '🚀',
-                title: 'Performance',
-                description: 'Lightning fast & scalable',
-                metric: 'Fastest in class'
-                },
-                {
-                icon: '🎨',
-                title: 'UX Design',
-                description: 'Modern & user-friendly',
-                metric: 'New gen UI/UX'
-                }
-              ].map((card, index) => (
-                <motion.div
-                key={card.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                onMouseEnter={() => setCursorVariant('button')}
-                onMouseLeave={() => setCursorVariant('default')}
-                className="flex flex-col items-center gap-2 px-3 sm:px-4 py-3 sm:py-4 rounded-xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 transition-all duration-300 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/30"
-                >
-                {/* Icon */}
-                <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 transition-all duration-300">
-                  <span className="text-xl sm:text-2xl">{card.icon}</span>
-                </div>
-                
-                {/* Title */}
-                <h3 className="font-bold text-white text-sm sm:text-base text-center">
-                  {card.title}
-                </h3>
-                
-                {/* Description */}
-                <p className="text-xs text-white/80 text-center leading-relaxed">
-                  {card.description}
-                </p>
-                
-                {/* Metric */}
-                <div className="mt-auto pt-1.5 sm:pt-2 border-t border-white/20 w-full">
-                  <div className="text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
-                  {card.metric}
-                  </div>
-                </div>
-                </motion.div>
-              ))}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mt-4 sm:mt-6 md:mt-8 w-full max-w-6xl px-4"
+              >
+                {cards.map((card, index) => (
+                  <motion.div
+                    key={card.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelectedCard(card)}
+                    onMouseEnter={() => setCursorVariant('button')}
+                    onMouseLeave={() => setCursorVariant('default')}
+                    className="flex flex-col items-center gap-2 px-3 sm:px-4 py-3 sm:py-4 rounded-xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 transition-all duration-300 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/30 cursor-pointer"
+                  >
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 transition-all duration-300">
+                      <span className="text-xl sm:text-2xl">{card.icon}</span>
+                    </div>
+                    <h3 className="font-bold text-white text-sm sm:text-base text-center">{card.title}</h3>
+                    <p className="text-xs text-white/80 text-center leading-relaxed">{card.description}</p>
+                    <div className="mt-auto pt-1.5 sm:pt-2 border-t border-white/20 w-full">
+                      <div className="text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
+                        {card.metric}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
               </motion.div>
             )}
-            </AnimatePresence>
-          
+          </AnimatePresence>
 
-          {/* CTA Buttons with magnetic effect */}
+          {/* CTA Buttons */}
           <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8 w-full max-w-xs xs:max-w-none xs:w-auto">
             <AnimatePresence>
               {revealButton && (
@@ -334,6 +370,78 @@ export default function Hero() {
           </div>
         </div>
       </section>
+
+      {/* Modal for Cards */}
+      <AnimatePresence>
+        {selectedCard && (
+          <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedCard(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-lg bg-gradient-to-br from-gray-900 to-purple-900/50 border border-purple-500/30 rounded-2xl p-6 shadow-2xl overflow-hidden"
+            >
+              {/* Modal Background Glow */}
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-purple-600/20 blur-[100px]" />
+              <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-600/20 blur-[100px]" />
+
+              <button
+                onClick={() => setSelectedCard(null)}
+                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 text-2xl">
+                  {selectedCard.icon}
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">{selectedCard.title}</h2>
+                  <p className="text-purple-300/80">{selectedCard.description}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 mb-6">
+                {selectedCard.stats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10"
+                  >
+                    <div className="flex items-center gap-3 text-white/70">
+                      {stat.icon}
+                      <span>{stat.label}</span>
+                    </div>
+                    <div className="text-xl font-bold text-white font-mono">
+                      {stat.value}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="pt-4 border-t border-white/10">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-white/50">Status</span>
+                  <span className="flex items-center gap-2 text-green-400">
+                    <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    Live Data Active
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <style jsx global>{`
         @keyframes gradient {

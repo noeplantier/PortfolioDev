@@ -393,7 +393,7 @@ const Skills = () => {
                 </div>
                 <div className="text-center p-4 bg-white/5 rounded-xl border border-white/10">
                   <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-1">
-                    50+
+                    30+
                   </div>
                   <div className="text-sm text-white/60">Projects Delivered</div>
                 </div>
@@ -429,7 +429,7 @@ const Skills = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-center gap-3 px-6 py-4 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold border border-white/20 hover:border-white/40 transition-all duration-300"
+                  className="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
                 >
                   <Linkedin className="w-5 h-5" />
                   <span>LinkedIn</span>
@@ -441,7 +441,7 @@ const Skills = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-center gap-3 px-6 py-4 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold border border-white/20 hover:border-white/40 transition-all duration-300"
+                  className="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
                 >
                   <Github className="w-5 h-5" />
                   <span>GitHub</span>

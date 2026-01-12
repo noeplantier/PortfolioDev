@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Sparkles, Trash2, Copy, Check, ArrowLeft, Download } from 'lucide-react';
+import { Send, Sparkles, Trash2, Copy, Check, Download } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -14,7 +14,7 @@ export default function AIChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [copiedIndex, setCopiedIndex] = useState(null);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [revealTitle, setRevealTitle] = useState(false);
   const [revealSubtitle, setRevealSubtitle] = useState(false);
   const [revealChat, setRevealChat] = useState(false);
@@ -60,51 +60,61 @@ export default function AIChat() {
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
-    const userMessage: Message = { role: 'user', content: input, timestamp: new Date().toISOString() };
+    const userMessage: Message = { 
+      role: 'user', 
+      content: input, 
+      timestamp: new Date().toISOString() 
+    };
     setMessages(prev => [...prev, userMessage]);
+    const userInput = input;
     setInput('');
     setIsLoading(true);
 
     try {
-      const apiKey = process.env.VITE_PUBLIC_ANTHROPIC_API_KEY || process.env.VITE_API_KEY;
-      
-      if (!apiKey) {
-        throw new Error('API key not configured');
-      }
+      // Utiliser la route API Next.js au lieu d'appeler directement l'API Anthropic
+      const requestBody = {
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        messages: [
+          ...messages.map(msg => ({
+            role: msg.role,
+            content: msg.content
+          })),
+          {
+            role: 'user',
+            content: `You are an AI assistant for the Plantiers website. Context: ${websiteContext}\n\nUser question: ${userInput}\n\nProvide a helpful, detailed, and professional response. Be conversational, friendly, and informative. If asked about technical details, provide thorough explanations. Format your response with proper spacing and structure for readability.`
+          }
+        ]
+      };
 
-      const conversationHistory = messages.map(msg => ({
-        role: msg.role,
-        content: msg.content
-      }));
+      console.log('📤 Sending request to API...');
 
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01'
         },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 2000,
-          messages: [
-            ...conversationHistory,
-            {
-              role: 'user',
-              content: `You are an AI assistant for the Plantiers website. Context: ${websiteContext}\n\nUser question: ${input}\n\nProvide a helpful, detailed, and professional response. Be conversational, friendly, and informative. If asked about technical details, provide thorough explanations. Format your response with proper spacing and structure for readability.`
-            }
-          ]
-        })
+        body: JSON.stringify(requestBody)
+      });
+
+      console.log('📥 Response received:', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok
       });
 
       if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        console.error('❌ API Error:', errorData);
+        throw new Error(`API_ERROR_${response.status}: ${errorData.error?.message || errorData.error?.type || 'Request failed'}`);
       }
 
       const data = await response.json();
+      console.log('✅ Data parsed successfully');
+      
       const aiResponse = data.content
-        .filter(block => block.type === 'text')
-        .map(block => block.text)
+        .filter((block: any) => block.type === 'text')
+        .map((block: any) => block.text)
         .join('\n');
 
       setMessages(prev => [...prev, { 
@@ -113,13 +123,28 @@ export default function AIChat() {
         timestamp: new Date().toISOString()
       }]);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('❌ Full error details:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      
+      let displayMessage = '';
+      
+      if (errorMessage.includes('API_ERROR_401')) {
+        displayMessage = '⚠️ **Invalid API Key**\n\nYour Anthropic API key is invalid or expired.\n\n**Solution:**\n1. Go to https://console.anthropic.com/settings/keys\n2. Create a new API key\n3. Update your `.env.local` file:\n   `ANTHROPIC_API_KEY=your_new_key`\n4. Restart your server: `npm run dev`';
+      } else if (errorMessage.includes('API_ERROR_429')) {
+        displayMessage = '⚠️ **Rate Limit Exceeded**\n\nYou\'ve sent too many requests. Please wait a moment and try again.';
+      } else if (errorMessage.includes('API_ERROR_400')) {
+        displayMessage = '⚠️ **Bad Request**\n\nThere was an error with the request format. Please try again or refresh the page.';
+      } else if (errorMessage.includes('Failed to fetch') || errorMessage.includes('NetworkError')) {
+        displayMessage = '⚠️ **Network Error**\n\nCould not connect to the API. Please check:\n- Your internet connection\n- If the API route `/api/chat` exists\n- Your server is running';
+      } else if (errorMessage.includes('API_ERROR')) {
+        displayMessage = `⚠️ **API Error**\n\n${errorMessage.split(':')[1] || 'Unknown error occurred'}`;
+      } else {
+        displayMessage = '⚠️ **Service Unavailable**\n\nThe AI service is currently unavailable. Please:\n1. Check the browser console for details\n2. Verify your API route is configured\n3. Ensure your server is running\n4. Try again in a moment';
+      }
+      
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: errorMessage.includes('API key') 
-          ? '⚠️ API key not configured. Please add your Anthropic API key to the .env file.\n\nCreate a .env.local file with:\nNEXT_PUBLIC_ANTHROPIC_API_KEY=your_api_key_here'
-          : '⚠️ The AI service is currently unavailable. Please try again later.',
+        content: displayMessage,
         timestamp: new Date().toISOString(),
         isError: true
       }]);
@@ -134,7 +159,7 @@ export default function AIChat() {
     }
   };
 
-  const handleCopyMessage = (content, index) => {
+  const handleCopyMessage = (content: string, index: number) => {
     navigator.clipboard.writeText(content);
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2000);
@@ -171,8 +196,6 @@ export default function AIChat() {
     >
       <div className="w-full max-w-5xl flex flex-col items-center gap-6 relative z-10">
         
-   
-
         {/* Title Animation */}
         <AnimatePresence>
           {revealTitle && (
@@ -182,7 +205,8 @@ export default function AIChat() {
               exit={{ clipPath: 'inset(0 100% 0 0)' }}
               transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
               className="text-4xl md:text-5xl font-bold text-white mb-4"
-            >Ask Artificial Intelligence
+            >
+              Ask Artificial Intelligence
             </motion.h1>
           )}
         </AnimatePresence>
