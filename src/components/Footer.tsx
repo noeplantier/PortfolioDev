@@ -1,104 +1,155 @@
-import { Github, Linkedin, Mail, Globe, FacebookIcon } from 'lucide-react';
+import React from 'react';
+import { Mail, Github, Linkedin, Twitter, Calendar, MapPin, Facebook } from 'lucide-react';
+import { Stack } from 'three/src/nodes/TSL.js';
 
 const Footer = () => {
-  const year = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
 
-  const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'contact', label: 'Contact' },
+  const contactMethods = [
+    {
+      icon: Mail,
+      label: 'Email',
+      value: 'plantiernoe50@gmail.com',
+      href: 'mailto:contact@plantiernoe50@gmail.com',
+    },
+    {
+      icon: Calendar,
+      label: 'Calendly',
+      value: 'Schedule a call',
+      href: 'https://calendly.com/plantiernoe50/30min',
+    },
+    {
+      icon: MapPin,
+      label: 'Location',
+      value: 'Vancouver, Canada',
+    },
   ];
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/noeplantier', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/noe-plantier/', label: 'LinkedIn' },
-    { icon: FacebookIcon, href: 'https://facebook.com/noe.plantier', label: 'Facebook' },
-    { icon: Mail, href: 'mailto:plantiernoe50@gmail.com', label: 'Email' },
+    { 
+      icon: Github, 
+      label: 'GitHub', 
+      href: 'https://github.com/noeplantier', 
+      color: 'hover:bg-gray-800 hover:text-white hover:shadow-gray-500/20' 
+    },
+    { 
+      icon: Linkedin, 
+      label: 'LinkedIn', 
+      href: 'www.linkedin.com/in/noe-plantier', 
+      color: 'hover:bg-[#0077b5] hover:text-white hover:shadow-blue-500/20' 
+    },
+    { 
+      icon: Facebook, 
+      label: 'Facebook', 
+      href: 'https://www.facebook.com/noe.plantier/', 
+      color: 'hover:bg-[#1877F2] hover:text-white hover:shadow-sky-500/20' 
+    },
+  
+    
   ];
 
-  const scrollTo = (id: string) => {
-    document.querySelector(`#${id}`)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const quickLinks = [
+    { name: 'Home', href: '#' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'About', href: '#about' },
+  ];
 
   return (
-    <footer className="relative overflow-hidden bg-black text-white">
-      {/* Soft gradient glows */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" />
-      </div>
+    <footer className="relative bg-[#0a0a0a] border-t border-white/10 pt-16 pb-8 overflow-hidden">
+      {/* Decorative gradients */}
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl -translate-y-1/2" />
+      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl translate-y-1/2" />
 
-      <div className="relative z-10 container mx-auto px-6 py-16">
-        <div className="grid gap-12 md:grid-cols-12 items-start">
-          {/* Brand */}
-          <div className="md:col-span-4">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg">
-                <Globe className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold">Noé Plantier</h3>
-            </div>
-            <p className="text-gray-300 max-w-sm">
-              Web & Mobile Developer crafting delightful, performant digital experiences with modern technologies.
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-12">
+          
+          {/* Brand Column */}
+          <div className="lg:col-span-4 space-y-4">
+            <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Noé Plantier
+            </h3>
+            <p className="text-gray-400 leading-relaxed max-w-sm">
+              Passionate developer creating innovative digital experiences. Let's turn your ideas into reality.
             </p>
-
-
-
           </div>
 
-          {/* Navigation */}
-          <div className="md:col-span-4">
-            <h4 className="text-lg font-semibold mb-4">Navigation</h4>
-            <div className="flex flex-wrap gap-3">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => scrollTo(link.id)}
-                  className="px-5 py-2 rounded-full font-medium text-white bg-white/10 backdrop-blur-sm border-2 border-transparent hover:border-white hover:bg-transparent hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 transform hover:scale-105 transition-all duration-300"
-                  aria-label={`Go to ${link.label}`}
+          {/* Quick Links */}
+          <div className="lg:col-span-2">
+            <h4 className="text-lg font-semibold mb-6 text-white">Navigation</h4>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-gray-400 hover:text-purple-400 transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Section */}
+          <div className="lg:col-span-3">
+            <h4 className="text-lg font-semibold mb-6 text-white">Contact</h4>
+            <div className="space-y-3">
+              {contactMethods.map((method) => (
+                <a
+                  key={method.label}
+                  href={method.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 group"
                 >
-                  {link.label}
-                </button>
+                  <div className="p-2 bg-purple-500/10 rounded-lg group-hover:bg-purple-500/20 transition-colors">
+                    <method.icon className="w-4 h-4 text-purple-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">{method.label}</p>
+                    <p className="text-sm text-gray-200 group-hover:text-purple-200 transition-colors">
+                      {method.value}
+                    </p>
+                  </div>
+                </a>
               ))}
             </div>
           </div>
 
-          {/* Contact */}
-          <div className="md:col-span-4">
-            <h4 className="text-lg font-semibold mb-4">Contact</h4>
-              {/* Socials */}
-              <div className="flex gap-4 mt-6">
-                  {socialLinks.map((s) => (
-                      <a
-                          key={s.label}
-                          href={s.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={s.label}
-                          className="p-3 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transform hover:scale-110 transition-all duration-200"
-                      >
-                          <s.icon className="w-5 h-5 text-white" />
-                      </a>
-                  ))}
-              </div>
+          {/* Socials Section - Richer & Positioned Right */}
+          <div className="lg:col-span-3 flex flex-col lg:items-end">
+            <h4 className="text-lg font-semibold mb-6 text-white text-center lg:text-right">Follow Me</h4>
+            <div className="flex flex-wrap justify-center lg:justify-end gap-3">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className={`p-3 bg-white/5 border border-white/5 rounded-xl text-gray-400 transition-all duration-300 hover:-translate-y-1 hover:scale-105 shadow-lg ${s.color}`}
+                >
+                  <s.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+            <p className="mt-4 text-sm text-gray-500 text-center lg:text-right max-w-xs">
+              Let's connect on social media to discuss tech and development.
+            </p>
           </div>
+
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-white/10 my-10" />
-
-        {/* Bottom bar */}
-        <div className="text-sm flex flex-col md:flex-row items-center justify-between gap-4 text-gray-400">
-          <p>
-            © {year} Noé Plantier. All rights reserved.
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm">
+            © {currentYear} Noé Plantier. All rights reserved.
           </p>
-
-
-
-
-            <div className="text-sm">
-            Built with React, TypeScript & Tailwind CSS
+          <div className="flex gap-6 text-sm text-gray-500">
+            <a href="#" className="hover:text-purple-400 transition-colors">Legal Notice</a>
+            <a href="#" className="hover:text-purple-400 transition-colors">Privacy Policy</a>
           </div>
         </div>
       </div>
