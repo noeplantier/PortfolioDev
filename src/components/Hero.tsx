@@ -177,7 +177,7 @@ export default function Hero() {
       description: 'Back-end x Front-end Development',
       metric: '30+ Projects',
       stats: [
-        { label: 'Uptime', value: '99.9%', icon: <Zap className="w-4 h-4" /> },
+        { label: 'Uptime', value: '100%', icon: <Zap className="w-4 h-4" /> },
         { label: 'Code Quality', value: 'A+', icon: <Target className="w-4 h-4" /> },
         { label: 'Latency', value: '< 100ms', icon: <TrendingUp className="w-4 h-4" /> }
       ]
@@ -188,8 +188,8 @@ export default function Hero() {
       description: 'Modern mobile applications',
       metric: '4+ Years Experience',
       stats: [
-        { label: 'Active Users', value: '50k+', icon: <Users className="w-4 h-4" /> },
-        { label: 'App Rating', value: '4.9/5', icon: <Sparkles className="w-4 h-4" /> },
+        { label: 'Active Users', value: '10+', icon: <Users className="w-4 h-4" /> },
+        { label: 'App Rating', value: '5/5', icon: <Sparkles className="w-4 h-4" /> },
         { label: 'Crash Rate', value: '0.01%', icon: <BarChart3 className="w-4 h-4" /> }
       ]
     },
@@ -211,7 +211,7 @@ export default function Hero() {
       metric: 'New gen UI/UX',
       stats: [
         { label: 'User Retention', value: '85%', icon: <Users className="w-4 h-4" /> },
-        { label: 'Satisfaction', value: '98%', icon: <Sparkles className="w-4 h-4" /> },
+        { label: 'Satisfaction', value: '100%', icon: <Sparkles className="w-4 h-4" /> },
         { label: 'Conversion', value: '+40%', icon: <TrendingUp className="w-4 h-4" /> }
       ]
     }

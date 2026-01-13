@@ -7,6 +7,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import AIChat from './components/AIChat';
+import Feedbacks from './components/Feedback';
 
 function App() {
     const { scrollYProgress } = useScroll();
@@ -36,7 +37,15 @@ function App() {
                     transition={{ duration: 0.6 }}
                 >
                     <Hero />
-                </motion.div>
+≈                </motion.div>
+                {/* <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <Feedbacks />
+                    </motion.div> */}
 
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
