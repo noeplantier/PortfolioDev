@@ -362,7 +362,7 @@ export default function Hero() {
                     className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-m font-semibold justify-center relative"
                   >
                     <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Ask Claude
+                    Ask IA
                   </motion.a>
                 </>
               )}
