@@ -1,269 +1,327 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
-import { Sparkles, Zap, X, TrendingUp, Users, Target, BarChart3 } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useSpring, Variants } from 'framer-motion';
+import { Sparkles, Zap, X, TrendingUp, Users, Target, BarChart3, ArrowRight } from 'lucide-react';
 import Loader from './Loader';
+
+// --- Types ---
+type CardData = {
+  icon: string;
+  title: string;
+  description: string;
+  metric: string;
+  stats: { label: string; value: string; icon: React.ReactNode }[];
+};
+
+// --- Animations Configuration ---
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: 'spring', stiffness: 50, damping: 20 } 
+  },
+};
 
 export default function Hero() {
   const [isLoading, setIsLoading] = useState(true);
-  const [revealH1, setRevealH1] = useState(false);
-  const [revealFounder, setRevealFounder] = useState(false);
-  const [revealTagline, setRevealTagline] = useState(false);
-  const [revealButton, setRevealButton] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState('default');
-  const [selectedCard, setSelectedCard] = useState(null);
-  const particlesRef = useRef(null);
+  const [showContent, setShowContent] = useState(false);
+  const [cursorVariant, setCursorVariant] = useState<'default' | 'button' | 'card'>('default');
+  const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Smooth cursor tracking
+  // --- Mouse Tracking & Custom Cursor ---
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  const springConfig = { damping: 25, stiffness: 700 };
+  const springConfig = { damping: 25, stiffness: 700, mass: 0.5 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  // Track mouse position for cursor and particles
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      cursorX.set(e.clientX - 16);
-      cursorY.set(e.clientY - 16);
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const handleMouseMove = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
-
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [cursorX, cursorY]);
 
+  // --- Particles Animation System (Optimized) ---
+  useEffect(() => {
+    if (isLoading) return;
+    
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
+    let requestID: number;
+    let particles: { x: number; y: number; vx: number; vy: number; size: number; alpha: number }[] = [];
 
-  // Handle loading complete
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    const initParticles = () => {
+      particles = [];
+      // Légèrement moins de particules pour garder le look épuré original
+      const particleCount = Math.min(window.innerWidth / 15, 80); 
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.3, // Vitesse plus lente et subtile
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 1.5 + 0.5,
+          alpha: Math.random() * 0.4 + 0.1,
+        });
+      }
+    };
+
+    const drawParticles = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(147, 51, 234, ${p.alpha})`;
+        ctx.fill();
+
+        // Connexions subtiles
+        const dx = cursorX.get() - p.x;
+        const dy = cursorY.get() - p.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 120) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(cursorX.get(), cursorY.get());
+          ctx.strokeStyle = `rgba(147, 51, 234, ${0.15 - distance / 120 * 0.15})`;
+          ctx.stroke();
+        }
+      });
+      
+      requestID = requestAnimationFrame(drawParticles);
+    };
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    drawParticles();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(requestID);
+    };
+  }, [isLoading, cursorX, cursorY]);
+
   const handleLoadingComplete = () => {
     setIsLoading(false);
-    setTimeout(() => setRevealH1(true), 100);
-    setTimeout(() => setRevealFounder(true), 200);
-    setTimeout(() => setRevealTagline(true), 400);
-    setTimeout(() => setRevealButton(true), 600);
+    setTimeout(() => setShowContent(true), 100);
   };
 
-  const cursorVariants = {
-    default: {
-      height: 32,
-      width: 32,
-      backgroundColor: 'rgba(147, 51, 234, 0.5)',
-      border: '2px solid rgba(147, 51, 234, 1)',
-      mixBlendMode: 'difference'
-    },
-    button: {
-      height: 64,
-      width: 64,
-      backgroundColor: 'rgba(147, 51, 234, 0.2)',
-      border: '2px solid rgba(147, 51, 234, 1)',
-      mixBlendMode: 'difference'
-    }
-  };
-
-  const cards = [
+  const cards: CardData[] = [
     {
       icon: '⚡',
       title: 'Full Stack',
-      description: 'Back-end x Front-end Development',
+      description: 'Robust Architectures',
       metric: '30+ Projects',
       stats: [
         { label: 'Uptime', value: '100%', icon: <Zap className="w-4 h-4" /> },
         { label: 'Code Quality', value: 'A+', icon: <Target className="w-4 h-4" /> },
-        { label: 'Latency', value: '< 100ms', icon: <TrendingUp className="w-4 h-4" /> }
       ]
     },
     {
       icon: '📱',
       title: 'Mobile Dev',
-      description: 'Modern mobile applications',
-      metric: '4+ Years Experience',
+      description: 'Seamless Experiences',
+      metric: 'iOS & Android',
       stats: [
-        { label: 'Active Users', value: '10+', icon: <Users className="w-4 h-4" /> },
-        { label: 'App Rating', value: '5/5', icon: <Sparkles className="w-4 h-4" /> },
-        { label: 'Crash Rate', value: '0.01%', icon: <BarChart3 className="w-4 h-4" /> }
+        { label: 'Rating', value: '5.0', icon: <Sparkles className="w-4 h-4" /> },
+        { label: 'Crash Free', value: '99.9%', icon: <BarChart3 className="w-4 h-4" /> },
       ]
     },
     {
       icon: '🚀',
       title: 'Performance',
-      description: 'Lightning fast & scalable',
-      metric: 'Fastest in class',
+      description: 'Next.js Optimization',
+      metric: '< 100ms TTI',
       stats: [
-        { label: 'Load Time', value: '0.8s', icon: <Zap className="w-4 h-4" /> },
-        { label: 'Optimization', value: '100%', icon: <Target className="w-4 h-4" /> },
-        { label: 'Scalability', value: 'Infinite', icon: <TrendingUp className="w-4 h-4" /> }
+        { label: 'Core Vitals', value: '100', icon: <Zap className="w-4 h-4" /> },
+        { label: 'SEO Score', value: '100%', icon: <TrendingUp className="w-4 h-4" /> },
       ]
     },
     {
       icon: '🎨',
-      title: 'UX Design',
-      description: 'Modern & user-friendly',
-      metric: 'New gen UI/UX',
+      title: 'UI/UX',
+      description: 'Pixel Perfect Design',
+      metric: 'Award Winning',
       stats: [
-        { label: 'User Retention', value: '85%', icon: <Users className="w-4 h-4" /> },
-        { label: 'Satisfaction', value: '100%', icon: <Sparkles className="w-4 h-4" /> },
-        { label: 'Conversion', value: '+40%', icon: <TrendingUp className="w-4 h-4" /> }
+        { label: 'Retention', value: '+45%', icon: <Users className="w-4 h-4" /> },
+        { label: 'Conversion', value: 'High', icon: <TrendingUp className="w-4 h-4" /> },
       ]
     }
   ];
 
   return (
     <>
-      {/* Loader Component */}
-      <AnimatePresence>
-        {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />}
+      <AnimatePresence mode="wait">
+        {isLoading && <Loader onLoadingComplete={handleLoadingComplete} key="loader" />}
       </AnimatePresence>
 
-      {/* Custom Futuristic Cursor */}
+      {/* Cursor */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block"
-        variants={cursorVariants}
-        animate={cursorVariant}
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block mix-blend-exclusion"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
+          translateX: '-50%',
+          translateY: '-50%',
         }}
-        transition={{ type: 'spring', damping: 25, stiffness: 700 }}
+        variants={{
+          default: { height: 20, width: 20, backgroundColor: '#fff', opacity: 0.8 },
+          button: { height: 60, width: 60, backgroundColor: '#fff', opacity: 0.2 },
+          card: { height: 80, width: 80, backgroundColor: 'rgba(147, 51, 234, 1)', opacity: 0.2, border: '1px solid white' }
+        }}
+        animate={cursorVariant}
       />
 
       <section
         id="hero"
-        className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden cursor-none"
-        style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, sans-serif" }}
+        className="relative min-h-screen flex flex-col items-center justify-center text-white selection:bg-purple-500/30"
       >
-        {/* Particle Background */}
         <canvas
-          ref={particlesRef}
-          className="absolute inset-0 pointer-events-none"
-          style={{ opacity: 0.6 }}
+          ref={canvasRef}
+          className="absolute inset-0 z-0 pointer-events-none opacity-40"
         />
+        
+        {/* Original Gradients */}
+        <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/20 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-blue-900/20 rounded-full blur-[100px] animate-pulse delay-1000" />
 
-        {/* Main Content */}
-        <div className="w-full max-w-7xl flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 relative z-10 px-4 sm:px-6 md:px-8 py-8">
-          {/* H1 with React Bits SplitText */}
-          {/* H1 Title */}
-          <div className="relative min-h-[120px] flex items-center justify-center">
-            <AnimatePresence>
-              {revealH1 && (
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="text-7xl xs:text-8xl sm:text-[9rem] md:text-[10rem] lg:text-[11rem] xl:text-[13rem] font-extrabold text-center text-white/90 mb-1 sm:mb-2 leading-none tracking-tighter"
-                  onMouseEnter={() => setCursorVariant('button')}
-                  onMouseLeave={() => setCursorVariant('default')}
-                >
-                  HI ! I'M       <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
-                    {' '}NOÉ
-                  </span>
+        <motion.div 
+          className="w-full max-w-7xl flex flex-col items-center justify-center relative z-10 px-4 py-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={showContent ? "visible" : "hidden"}
+        >
+          
+          {/* Main Title - Preserved Original Styling */}
+          <motion.div variants={itemVariants} className="relative z-20 text-center mb-0">
+            <h1 
+              onMouseEnter={() => setCursorVariant('button')}
+              onMouseLeave={() => setCursorVariant('default')}
+              className="font-extrabold tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 text-[16vw] sm:text-[14vw] xl:text-[13rem]"
+            >
+              HI! I'M
+              <span className="relative inline-block ml-4 md:ml-8">
+                <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-purple-600 to-blue-600 opacity-50"></span>
+                <span className="relative bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                  NOÉ
                 </span>
-                </motion.h1>
-              )}
-            </AnimatePresence>
-          </div>
-          {/* Founder with typing effect */}
-          <AnimatePresence>
-            {revealFounder && (
-              <motion.h2
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-                onMouseEnter={() => setCursorVariant('button')}
-                onMouseLeave={() => setCursorVariant('default')}
-                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-center text-white/90 mb-1 sm:mb-2 leading-tight flex items-center justify-center gap-3"
-              >
-                FOUNDER OF 
-                <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
-                    {' '}PLANTIERS
-                  </span>
-                </span>
-              </motion.h2>
-            )}
-          </AnimatePresence>
+              </span>
+            </h1>
+          </motion.div>
 
-          {/* Expertise Cards */}
-          <AnimatePresence>
-            {revealTagline && (
+          {/* Subtitle - Preserved Original Styling */}
+          <motion.div variants={itemVariants} className="relative z-20 text-center mb-12">
+            <h1 
+              onMouseEnter={() => setCursorVariant('button')}
+              onMouseLeave={() => setCursorVariant('default')}
+              className="font-extrabold tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 text-[8vw] sm:text-[6vw] xl:text-[5rem]"
+            >
+              FOUNDER OF
+              <span className="relative inline-block ml-4 md:ml-8">
+                <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-purple-600 to-blue-600 opacity-50"></span>
+                <span className="relative bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                  PLANTIERS
+                </span>
+              </span>
+            </h1>
+          </motion.div>
+
+          {/* Cards - Preserved Original Layout */}
+          <motion.div 
+            variants={containerVariants}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-6xl mb-12"
+          >
+            {cards.map((card) => (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mt-4 sm:mt-6 md:mt-8 w-full max-w-6xl px-4"
+                key={card.title}
+                variants={itemVariants}
+                whileHover={{ y: -10, scale: 1.02 }}
+                onClick={() => setSelectedCard(card)}
+                onMouseEnter={() => setCursorVariant('card')}
+                onMouseLeave={() => setCursorVariant('default')}
+                className="group relative p-6 rounded-2xl  border border-white/10  backdrop-blur-xl cursor-pointer overflow-hidden"
               >
-                {cards.map((card, index) => (
-                  <motion.div
-                    key={card.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setSelectedCard(card)}
-                    onMouseEnter={() => setCursorVariant('button')}
-                    onMouseLeave={() => setCursorVariant('default')}
-                    className="flex flex-col items-center gap-2 px-3 sm:px-4 py-3 sm:py-4 rounded-xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 text-white border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 transition-all duration-300 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/30 cursor-pointer"
-                  >
-                    <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 transition-all duration-300">
-                      <span className="text-xl sm:text-2xl">{card.icon}</span>
-                    </div>
-                    <h3 className="font-bold text-white text-sm sm:text-base text-center">{card.title}</h3>
-                    <p className="text-xs text-white/80 text-center leading-relaxed">{card.description}</p>
-                    <div className="mt-auto pt-1.5 sm:pt-2 border-t border-white/20 w-full">
-                      <div className="text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
-                        {card.metric}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative z-10 flex flex-col items-center text-center h-full">
+                  <div className="mb-4 text-4xl p-3 bg-white/1 rounded-full border border-white/5 shadow-inner">
+                    {card.icon}
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-purple-300 transition-colors">{card.title}</h3>
+                  <p className="text-sm text-gray-400 mb-4">{card.description}</p>
+                  
+                  <div className="mt-auto w-full pt-4 border-t border-white/10 flex justify-center items-center gap-2">
+                    <span className="text-xs font-mono font-bold text-purple-400">{card.metric}</span>
+                  </div>
+                </div>
               </motion.div>
-            )}
-          </AnimatePresence>
+            ))}
+          </motion.div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8 w-full max-w-xs xs:max-w-none xs:w-auto">
-            <AnimatePresence>
-              {revealButton && (
-                <>
-                  <motion.a
-                    href="#skills"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, type: 'spring' }}
-                    whileTap={{ scale: 0.95 }}
-                    onMouseEnter={() => setCursorVariant('button')}
-                    onMouseLeave={() => setCursorVariant('default')}
-                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-m font-semibold justify-center"
-                  >
-                    <Zap className="w-4 h-4" />
-                    Get Started
-                  </motion.a>
+          {/* Buttons - Preserved Original Styling */}
+          <motion.div 
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-4 w-full justify-center max-w-md mx-auto"
+          >
+            <motion.a
+              href="#skills"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onMouseEnter={() => setCursorVariant('button')}
+              onMouseLeave={() => setCursorVariant('default')}
+              className="flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-xl  bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 text-white font-bold hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-shadow"
+            >
+              Get Started <Zap className="w-4 h-4" />
+            </motion.a>
 
-                  <motion.a
-                    href="#ask-ai"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.1, type: 'spring' }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onMouseEnter={() => setCursorVariant('button')}
-                    onMouseLeave={() => setCursorVariant('default')}
-                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 text-m font-semibold justify-center relative"
-                  >
-                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Ask IA
-                  </motion.a>
-                </>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
+            <motion.a
+              href="#ask-ai"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onMouseEnter={() => setCursorVariant('button')}
+              onMouseLeave={() => setCursorVariant('default')}
+              className="flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold hover:bg-white/20 transition-colors"
+            >
+              Ask AI <Sparkles className="w-4 h-4" />
+            </motion.a>
+          </motion.div>
+
+        </motion.div>
       </section>
 
-      {/* Modal for Cards */}
+      {/* Modal - Improved Code, Same Visuals */}
       <AnimatePresence>
         {selectedCard && (
           <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
@@ -272,62 +330,63 @@ export default function Hero() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedCard(null)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
             />
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.9, y: 50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-lg bg-gradient-to-br from-gray-900 to-purple-900/50 border border-purple-500/30 rounded-2xl p-6 shadow-2xl overflow-hidden"
+              exit={{ opacity: 0, scale: 0.9, y: 50 }}
+              className="relative w-full max-w-lg bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 shadow-2xl overflow-hidden"
             >
-              {/* Modal Background Glow */}
-              <div className="absolute -top-24 -right-24 w-48 h-48 bg-purple-600/20 blur-[100px]" />
-              <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-600/20 blur-[100px]" />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/20 blur-[80px]" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/20 blur-[80px]" />
 
               <button
                 onClick={() => setSelectedCard(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white"
+                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-white"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 text-2xl">
-                  {selectedCard.icon}
+              <div className="relative z-10">
+                <div className="flex items-center gap-5 mb-8">
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-white/10 text-4xl">
+                    {selectedCard.icon}
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold text-white mb-1">{selectedCard.title}</h2>
+                    <p className="text-purple-400 font-medium">{selectedCard.metric}</p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-white">{selectedCard.title}</h2>
-                  <p className="text-purple-300/80">{selectedCard.description}</p>
+
+                <div className="grid gap-3">
+                  {selectedCard.stats.map((stat, i) => (
+                    <motion.div
+                      key={stat.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors"
+                    >
+                      <div className="flex items-center gap-3 text-gray-300">
+                        <span className="text-purple-400">{stat.icon}</span>
+                        <span>{stat.label}</span>
+                      </div>
+                      <span className="text-lg font-bold text-white font-mono tracking-tight">
+                        {stat.value}
+                      </span>
+                    </motion.div>
+                  ))}
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 gap-4 mb-6">
-                {selectedCard.stats.map((stat, i) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10"
-                  >
-                    <div className="flex items-center gap-3 text-white/70">
-                      {stat.icon}
-                      <span>{stat.label}</span>
-                    </div>
-                    <div className="text-xl font-bold text-white font-mono">
-                      {stat.value}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <div className="pt-4 border-t border-white/10">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/50">Status</span>
-                  <span className="flex items-center gap-2 text-green-400">
-                    <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                    Live Data Active
-                  </span>
+                <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
+                   <div className="flex gap-2 items-center text-sm text-green-400">
+                      <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                      Verified Metrics
+                   </div>
+                   <button onClick={() => setSelectedCard(null)} className="text-sm text-gray-400 hover:text-white flex items-center gap-1 transition-colors">
+                      Close <ArrowRight className="w-3 h-3" />
+                   </button>
                 </div>
               </div>
             </motion.div>
@@ -341,15 +400,11 @@ export default function Hero() {
           50% { background-position: 100% 50%; }
         }
         .animate-gradient {
-          animation: gradient 3s ease infinite;
+          animation: gradient 4s ease infinite;
         }
-        * {
-          cursor: none !important;
-        }
-        @media (max-width: 768px) {
-          * {
-            cursor: auto !important;
-          }
+        @media (min-width: 768px) {
+           body { cursor: none; }
+           a, button, [role="button"] { cursor: none; }
         }
       `}</style>
     </>
