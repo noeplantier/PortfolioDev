@@ -7,7 +7,6 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import AIChat from './components/AIChat';
-import Feedbacks from './components/Feedback';
 
 function App() {
     const { scrollYProgress } = useScroll();
@@ -18,7 +17,7 @@ function App() {
     });
 
     return (
-        <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black">
+        <div className="relative overflow-hidden min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black">
             {/* Barre de progression en haut */}
             <motion.div
                 className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-blue-500 origin-left z-50 shadow-lg shadow-purple-500/50"
