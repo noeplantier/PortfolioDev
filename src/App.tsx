@@ -37,22 +37,15 @@ function App() {
                 >
                     <Hero />
 ≈                </motion.div>
-                {/* <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <Feedbacks />
-                    </motion.div> */}
+             
 
-                <motion.div
+<motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6 }}
                 >
-                    <Skills />
+                    <Projects />
                 </motion.div>
 
                 <motion.div
@@ -61,7 +54,7 @@ function App() {
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6 }}
                 >
-                    <Projects />
+                    <Skills />
                 </motion.div>
 
                 <motion.div

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Smartphone, Globe, Database, Zap, Star, Calendar, Mail, MessageCircle, Github, Linkedin } from 'lucide-react';
+import { Smartphone, Globe, Database, Zap, Star, Calendar, Mail, MessageCircle, Github, Linkedin, BrainCog, BrainCircuit } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Skills = () => {
@@ -242,7 +242,7 @@ const Skills = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            My Skills
+          Main Skills <BrainCircuit className="inline-block w-10 h-10 text-white ml-1 mb-1" />
           </h2>
           <p className="text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
             4+ years of experience crafting exceptional web and mobile applications with modern technologies

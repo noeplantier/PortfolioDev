@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, MapPin, Phone, Send, Calendar, Clock, Github, Linkedin } from 'lucide-react';
+import { Mail, MapPin, Phone, Send, Calendar, Clock, Github, Linkedin, PhoneCall } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -60,6 +60,7 @@ const Contact: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-white animate-gradient">
             Get In Touch
+            <PhoneCall className="w-8 h-8 inline-block ml-2 mb-1 text-white" />
           </h2>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? Feel free to reach out!

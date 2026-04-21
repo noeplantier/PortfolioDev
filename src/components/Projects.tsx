@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Github, ExternalLink, Star, GitFork, Calendar, Code2, Smartphone, Globe } from 'lucide-react';
+import { Github, ExternalLink, Star, GitFork, Calendar, Code2, Smartphone, Globe, FolderGit2, ComputerIcon, Code, FileCode2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface Repository {
@@ -22,18 +22,36 @@ const Projects = () => {
 
   const mockRepositories: Repository[] = [
     {
-      id: 1,
-      name: 'Mots de maitre',
-      description: 'Scalable microservices architecture with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
-      html_url: 'https://github.com/noeplantier/Mots-de-ma-tre',
-      homepage: 'https://motsdemaitre.netlify.app/',
-      stargazers_count: 156,
-      forks_count: 45,
-      language: 'Next',
-      updated_at: '2024-01-08T09:15:00Z',
-      topics: ['nodejs', 'microservices', 'express', 'react']
+      id: 9,
+      name: 'CreatorPro Suite',
+      description: 'A comprehensive suite of AI-powered tools for content creators, including video editing, script generation, and social media management.',
+      html_url:'https://github.com/noeplantier/creator-studio-suite' ,
+      homepage: 'https://creatorprosuite.netlify.app/',
+      stargazers_count: 200,
+      forks_count: 50,
+      language: 'React',
+      updated_at: '2026-05-10T12:00:00Z',
+      topics: ['react', 'ai', 'content-creation', 'video-editing']
+
     },
- 
+
+    {
+      id: 10,
+      name: 'Crypto Compass',
+      description: 'A real-time cryptocurrency tracking dashboard built with React and Node.js, featuring interactive charts, price alerts, and portfolio management tools.',
+      html_url:'https://github.com/noeplantier/crypto-compass',
+      homepage: 'https://cryptocompass.netlify.app/',
+      stargazers_count: 180,
+      forks_count: 40,
+      language: 'React',
+      updated_at: '2026-06-15T14:30:00Z',
+      topics: ['react', 'crypto', 'dashboard', 'real-time']
+
+
+
+
+    },
+
     {
       id: 2,
       name: 'Ti Padel',
@@ -47,6 +65,20 @@ const Projects = () => {
       topics: ['nodejs', 'microservices', 'express', 'react']
     },
     {
+      id: 1,
+      name: 'Mots de maitre',
+      description: 'Scalable microservices architecture with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
+      html_url: 'https://github.com/noeplantier/Mots-de-ma-tre',
+      homepage: 'https://motsdemaitre.netlify.app/',
+      stargazers_count: 156,
+      forks_count: 45,
+      language: 'Next',
+      updated_at: '2024-01-08T09:15:00Z',
+      topics: ['nodejs', 'microservices', 'express', 'react']
+    },
+
+
+    {
       id: 3,
       name: 'Plantiers',
       description: 'Plantiers pricing platform with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
@@ -57,6 +89,20 @@ const Projects = () => {
       language: 'Next',
       updated_at: '2024-01-08T09:15:00Z',
       topics: ['nodejs', 'microservices', 'express', 'react']
+    },
+
+    {
+      id: 8,
+      name: 'Universe App',
+      description: 'A React Native Mobile Application for streaming movies and TV shows, featuring a sleek UI, personalized recommendations, and seamless navigation.',
+      html_url:"https://github.com/noeplantier/universe-streaming-app" ,
+      homepage: '',
+      stargazers_count: 120,
+      forks_count: 30,
+      language: 'React Native',
+      updated_at: '2026-04-21T18:00:00Z',
+      topics: ['react-native', 'mobile', 'streaming', 'movies']
+
     },
     {
       id: 4,
@@ -94,55 +140,6 @@ const Projects = () => {
       updated_at: '2024-01-03T11:30:00Z',
       topics: ['react', 'portfolio', 'web developer', 'seo']
     },
-    {
-      id: 7,
-      name: 'Feelomi',
-      description: 'Brain new medical application. Built with Flutter and Firebase.',
-      html_url: 'https://github.com/noeplantier/FEELOMI',
-      homepage: '',
-      stargazers_count: 203,
-      forks_count: 67,
-      language: 'Dart',
-      updated_at: '2024-01-05T16:45:00Z',
-      topics: ['flutter', 'medics', 'mobile', 'firebase', 'health']
-    },
-    {
-      id:8,
-      name: 'WestApp',
-      description: 'A full-featured sport meeting website built with TypeScript, featuring user authentication, real-time chat, and event management.',
-      html_url: 'https://github.com/noeplantier/WestApp',
-      homepage: '',
-      stargazers_count: 124,
-      forks_count: 32,
-      language: 'React',
-      updated_at: '2024-01-15T10:30:00Z',
-      topics: ['sport', 'meeting', 'typescript', 'Node.JS']
-    },
-    {
-      id: 9,
-      name: 'TECUM',
-      description: 'A SaaS platform for selling mode accessories and brain new jewelry, built with Next.JS, GraphQL Node.JS/Express.',
-      html_url: 'https://github.com/noeplantier/TECUM',
-      homepage: 'https://github.com/noeplantier/TECUM',
-      stargazers_count: 145,
-      forks_count: 38,
-      language: 'TypeScript, NextJS, Node.JS, GraphQL',
-      updated_at: '2023-12-28T13:20:00Z',
-      topics: ['jewelry', 'next', 'mode', 'graphql']
-    },
-
-    {
-      id: 10,
-      name: 'Bellagancia',
-      description: 'Modern nail art site built with Next.JS, featuring real-time nails beauty booking, responsive design, and dark mode support.',
-      html_url: 'https://github.com/noeplantier/Bellangancia',
-      homepage: 'https://github.com/noeplantier/Bellangancia',
-      stargazers_count: 89,
-      forks_count: 21,
-      language: 'Next',
-      updated_at: '2024-01-10T14:20:00Z',
-      topics: ['next', 'beauty', 'responsive', 'charts', 'responsive']
-    },
    
   ];
 
@@ -155,15 +152,14 @@ const Projects = () => {
 
   const getLanguageColor = (language: string) => {
     const colors: { [key: string]: string } = {
-      TypeScript: 'from-purple-500 to-blue-500',
-      JavaScript: 'from-yellow-500 to-orange-500',
-      Vue: 'from-green-500 to-emerald-500',
-      Dart: 'from-cyan-500 to-blue-500',
-      Python: 'from-blue-500 to-indigo-500',
-      React: 'from-cyan-400 to-blue-400',
+      TypeScript: 'from-gray-800 to-black',
+      JavaScript: 'from-gray-800 to-black',
+      Vue: 'from-gray-800 to-black',
+      Dart: 'from-gray-800 to-black',
+      Python: 'from-gray-800 to-black',
+      React: 'from-gray-800 to-black',
       Next: 'from-gray-800 to-black',
     };
-    return colors[language] || 'from-gray-500 to-gray-700';
   };
 
   const getProjectIcon = (topics: string[]) => {
@@ -171,16 +167,16 @@ const Projects = () => {
       return <Smartphone className="w-5 h-5 text-white" />;
     }
     if (topics.some(topic => ['api', 'nodejs', 'microservices'].includes(topic))) {
-      return <Code2 className="w-5 h-5 text-white" />;
+      return <ComputerIcon className="w-5 h-5 text-white" />;
     }
-    return <Globe className="w-5 h-5 text-white" />;
+    return <ComputerIcon className="w-5 h-5 text-white" />;
   };
 
   const filteredRepositories = repositories.filter(repo => {
     const name = repo.name.toLowerCase();
     if (filter === 'all') return true;
-    if (filter === 'web') {
-      return name !== 'feelomi' && name !== "clem's coffee shop";
+    if (filter === 'web') { 
+      return repo.topics.some(topic => ['react', 'vue', 'next', 'javascript', 'typescript'].includes(topic));
     }
     if (filter === 'mobile') {
       return repo.topics.some(topic => ['react-native', 'flutter', 'mobile'].includes(topic));
@@ -208,7 +204,7 @@ const Projects = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            My Projects
+           Main Projects <FolderGit2 className="inline-block w-10 h-10 text-white ml-1 mb-1" />
           </h2>
           <p className="text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
             Explore my latest work showcasing innovative solutions across web and mobile development.
@@ -224,8 +220,8 @@ const Projects = () => {
           viewport={{ once: true }}
         >
           {[
-            { key: 'all', label: 'All Projects', icon: Globe },
-            { key: 'web', label: 'Web Apps', icon: Globe },
+            { key: 'all', label: 'All Projects', icon: FileCode2 },
+            { key: 'web', label: 'Web Apps', icon: ComputerIcon },
             { key: 'mobile', label: 'Mobile Apps', icon: Smartphone },
           ].map((filterOption) => (
             <motion.button

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Sparkles, Trash2, Copy, Check, Download } from 'lucide-react';
+import { Send, Sparkles, Trash2, Copy, Check, Download, BotIcon } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -396,8 +396,10 @@ Question : ${userQuestion}`;
               transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
               className="text-4xl md:text-5xl font-bold text-white mb-4"
             >
-              Demandez à l'Intelligence Artificielle
+              Ask AI 
+              <BotIcon className="inline-block w-10 h-10 text-white ml-3 mb-1 animate-pulse" />
             </motion.h1>
+
           )}
         </AnimatePresence>
 
@@ -410,7 +412,7 @@ Question : ${userQuestion}`;
               transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
               className="text-lg text-center text-white/70 mb-6 max-w-2xl"
             >
-              Obtenez des réponses instantanées sur mon expertise et mes services
+             Get instant answers about Noé Plantier's skills, services, projects, and contact info.
             </motion.p>
           )}
         </AnimatePresence>
