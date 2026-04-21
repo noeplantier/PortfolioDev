@@ -9,8 +9,8 @@ const Footer = () => {
     {
       icon: Mail,
       label: 'Email',
-      value: 'plantiernoe50@gmail.com',
-      href: 'mailto:contact@plantiernoe50@gmail.com',
+      value: 'founder@plantiers.com',
+      href: 'mailto:contact@founder@plantiers.com',
     },
     {
       icon: Calendar,
@@ -21,7 +21,7 @@ const Footer = () => {
     {
       icon: MapPin,
       label: 'Location',
-      value: 'Vancouver, Canada',
+      value: 'Bali, Indonesia',
     },
   ];
 
