@@ -47,9 +47,18 @@ const Projects = () => {
       updated_at: '2026-06-15T14:30:00Z',
       topics: ['react', 'crypto', 'dashboard', 'real-time']
 
-
-
-
+    },
+    {
+id: 4,
+name: 'Skin Metrics Lab',
+description: 'Skin Metrics Lab AI-powered skin analysis platform built with Nuxt.js and TensorFlow.js, offering personalized skincare recommendations based on user-uploaded photos.',
+html_url:'https://github.com/noeplantier/Skin-Metrics-Lab',
+homepage: '',
+stargazers_count: 156,
+forks_count: 45,
+language: 'Nuxt',
+updated_at: '2024-01-08T09:15:00Z',
+topics: ['nuxt', 'ai', 'skincare', 'health']
     },
 
     {
@@ -65,30 +74,28 @@ const Projects = () => {
       topics: ['nodejs', 'microservices', 'express', 'react']
     },
     {
-      id: 1,
-      name: 'Mots de maitre',
-      description: 'Scalable microservices architecture with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
-      html_url: 'https://github.com/noeplantier/Mots-de-ma-tre',
-      homepage: 'https://motsdemaitre.netlify.app/',
+      id: 0,
+      name: 'Feelomi',
+      description: 'Feelomi medical and mental health platform with Flutter. Includes optimized UX design, rate limiting, and comprehensive testing.',
+      html_url:'https://github.com/noeplantier/FEELOMI',
+      homepage: '',
       stargazers_count: 156,
       forks_count: 45,
-      language: 'Next',
+      language: 'Flutter',
       updated_at: '2024-01-08T09:15:00Z',
-      topics: ['nodejs', 'microservices', 'express', 'react']
+      topics: ['flutter', 'mobile', 'health', 'mental-health']
     },
-
-
     {
-      id: 3,
-      name: 'Plantiers',
-      description: 'Plantiers pricing platform with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
-      html_url: 'https://github.com/noeplantier/plantiers',
-      homepage: 'https://plantiers.com',
+      id: 1,
+      name: 'Clem’s Coffee Shop',
+      description: 'Clem’s Coffee Shop booking platform with Glide. Includes optimized UX design, rate limiting, and comprehensive testing.', 
+      html_url:'https://clems-coffee-shop.glide.page/',
+      homepage: 'https://clems-coffee-shop.glide.page/',
       stargazers_count: 156,
       forks_count: 45,
-      language: 'Next',
+      language: 'Glide',
       updated_at: '2024-01-08T09:15:00Z',
-      topics: ['nodejs', 'microservices', 'express', 'react']
+      topics: ['glide', 'mobile', 'coffee', 'booking']
     },
 
     {
@@ -104,18 +111,20 @@ const Projects = () => {
       topics: ['react-native', 'mobile', 'streaming', 'movies']
 
     },
+
     {
-      id: 4,
-      name: "Clem's Coffee Shop",
-      description: 'Brain new coffee application. Built with Glide.',
-      html_url: 'https://go.glideapps.com/app/1bDa4VcCb8Xq43lHkA8L/layout',
-      homepage: 'https://clems-coffee-shop.glide.page',
-      stargazers_count: 203,
-      forks_count: 67,
-      language: 'Dart',
-      updated_at: '2024-01-05T16:45:00Z',
-      topics: ['glide', 'coffee', 'mobile', 'chill']
+      id: 3,
+      name: 'Plantiers',
+      description: 'Plantiers pricing platform with Node.js, Express, and React. Includes optimized UX design, rate limiting, and comprehensive testing.',
+      html_url: 'https://github.com/noeplantier/plantiers',
+      homepage: 'https://plantiers.com',
+      stargazers_count: 156,
+      forks_count: 45,
+      language: 'Next',
+      updated_at: '2024-01-08T09:15:00Z',
+      topics: ['nodejs', 'microservices', 'express', 'react']
     },
+
     {
       id: 5,
       name: 'StudioCall',
@@ -130,16 +139,18 @@ const Projects = () => {
     },
     {
       id: 6,
-      name: 'Stadium Spot',
-      description: 'Sports Bar and Restaurant locator app built with Vue.js and Tailwind CSS, featuring interactive maps and user reviews.',
-      html_url: 'https://github.com/noeplantier/StadiumSpot',
-      homepage: '',
-      stargazers_count: 78,
-      forks_count: 19,
-      language: 'TypeScript, JavaScript',
-      updated_at: '2024-01-03T11:30:00Z',
-      topics: ['react', 'portfolio', 'web developer', 'seo']
-    },
+      name: 'Mots De Maître',
+      description: 'Mots De Maître is a mobile app that provides users with daily motivational quotes and affirmations, designed to inspire and uplift their spirits.',
+      html_url:'https://github.com/noeplantier/Mots-de-ma-tre',
+      homepage: 'https://motsdemaitre.netlify.app/',
+      stargazers_count: 75,
+      forks_count: 18,
+      language: 'Next',
+      updated_at: '2024-02-15T10:00:00Z',
+      topics: ['nextjs', 'nodejs', 'quotes', 'motivation']
+
+
+    }
    
   ];
 
@@ -220,9 +231,10 @@ const Projects = () => {
           viewport={{ once: true }}
         >
           {[
-            { key: 'all', label: 'All Projects', icon: FileCode2 },
             { key: 'web', label: 'Web Apps', icon: ComputerIcon },
             { key: 'mobile', label: 'Mobile Apps', icon: Smartphone },
+            { key: 'all', label: 'All Projects', icon: FileCode2 },
+
           ].map((filterOption) => (
             <motion.button
               key={filterOption.key}
