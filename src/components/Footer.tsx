@@ -26,7 +26,7 @@ const Footer = () => {
     {
       icon: MapPin,
       label: 'Location',
-      value: 'Bali, Indonesia 🌴',
+      value: 'Bali, Indonesia',
       href: null,
       color: 'text-sky-400',
       bg: 'bg-sky-400/10 border-sky-400/20',

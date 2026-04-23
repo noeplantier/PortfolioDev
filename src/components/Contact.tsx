@@ -46,7 +46,7 @@ const INFO_ITEMS = [
   {
     icon: MapPin,
     label: 'Location',
-    value: 'Bali, Indonesia 🌴',
+    value: 'Bali, Indonesia',
     href: null,
     color: 'text-sky-400',
     bg: 'bg-sky-400/10 border-sky-400/20',
@@ -359,7 +359,7 @@ const Contact: React.FC = () => {
           {[
             { value: '< 24h', label: 'Response Time' },
             { value: '100%', label: 'Client Satisfaction' },
-            { value: '4+',   label: 'Years Experience' },
+            { value: '5+',   label: 'Years Experience' },
             { value: '30+',  label: 'Projects Shipped' },
           ].map(({ value, label }) => (
             <div key={label} className="text-center p-4 bg-white/[0.03] rounded-xl border border-white/[0.07]">

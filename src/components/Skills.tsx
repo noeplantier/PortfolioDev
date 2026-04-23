@@ -279,7 +279,7 @@ const Skills = () => {
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="h-px w-8 bg-gradient-to-r from-transparent to-violet-500" />
             <span className="font-mono text-[10px] tracking-[0.3em] text-violet-400 uppercase">
-              Stack · 4+ Years
+              Stack · 5+ Years
             </span>
             <div className="h-px w-8 bg-gradient-to-l from-transparent to-violet-500" />
           </div>
@@ -473,7 +473,7 @@ const Skills = () => {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
               {[
-                { value: '4+',   label: 'Years Exp.' },
+                { value: '5+',   label: 'Years Exp.' },
                 { value: '30+',  label: 'Projects' },
                 { value: '100%', label: 'Satisfaction' },
                 { value: '24/7', label: 'Support' },
