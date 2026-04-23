@@ -1,614 +1,473 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Sparkles, Trash2, Copy, Check, Download, BotIcon } from 'lucide-react';
+import {
+  Send, Sparkles, Trash2, Copy, Check,
+  Download, BotIcon, Circle, Terminal,
+} from 'lucide-react';
 
+// ─── Types ────────────────────────────────────────────────────────────────────
 interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: string;
 }
 
+// ─── Variants ─────────────────────────────────────────────────────────────────
+const slideIn = {
+  hidden: { clipPath: 'inset(0 100% 0 0)' },
+  visible: { clipPath: 'inset(0 0 0 0)', transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] } },
+};
+
+// ─── System Prompt ────────────────────────────────────────────────────────────
+const SYSTEM_PROMPT = `You are the intelligent portfolio assistant for Noé Plantier, a Full Stack Developer and Founder of Plantiers agency.
+
+ABOUT NOÉ:
+- 4+ years experience, 30+ shipped projects
+- Based in Bali, Indonesia (open to remote worldwide)
+- Available for freelance & full-time opportunities
+- Response time: under 24 hours
+
+TECHNICAL SKILLS:
+Frontend: React 18+, Next.js 15, TypeScript, Tailwind CSS v4, Svelte 5, Astro 5, Framer Motion
+Mobile: React Native (New Architecture), Expo, Flutter, Swift/SwiftUI, Kotlin/Compose
+Backend: Node.js, Bun 2, Golang, tRPC, GraphQL
+Databases: PostgreSQL, Supabase, Neon DB, Drizzle ORM, MongoDB, Redis, Firebase
+DevOps: Docker, Kubernetes, Vercel, Cloudflare Workers, AWS, Terraform, Turborepo
+Testing: Vitest, Playwright
+
+SERVICES (Plantiers Agency):
+- Web SaaS & dashboards
+- Cross-platform mobile apps
+- Performance-first architecture (<80ms TTI, Lighthouse 100)
+- AI/ML integration (OpenAI, Anthropic, LLM workflows)
+- Design systems & UI/UX
+
+PRICING (indicative):
+- Landing page: €2,000 – €3,000 (1-2 weeks)
+- Showcase site: €3,000 – €5,000 (3-4 weeks)
+- Web app standard: €8,000 – €12,000 (6-8 weeks)
+- E-commerce: €7,000 – €15,000 (8-12 weeks)
+- Complex SaaS: €15,000+ (3-6 months)
+
+KEY PROJECTS:
+- CreatorPro Suite: AI tools for content creators (React, Node.js)
+- Crypto Compass: Real-time crypto dashboard, 2000+ traders (React, WebSocket)
+- Feelomi: Mental health mobile platform (Flutter)
+- Ti Padel: Court booking system (Next.js, Node.js)
+- Universe App: Streaming mobile app (React Native)
+- StudioCall: AI voice recording studio (JavaScript)
+- Plantiers: Agency website & pricing platform (Next.js)
+
+CONTACT:
+- Email: plantiernoe50@gmail.com
+- LinkedIn: linkedin.com/in/noeplantier
+- GitHub: github.com/noeplantier
+- Calendly: calendly.com/plantiernoe50/30min (free 30min call)
+
+INSTRUCTIONS:
+- Be concise, professional, and helpful
+- Answer in the language the user writes in (French or English)
+- For technical questions, give precise answers based on Noé's actual stack
+- When relevant, encourage them to book a call or send an email
+- Keep responses under 300 words unless a detailed breakdown is explicitly requested
+- Use markdown formatting (bold, bullet points) for clarity`;
+
+// ─── Suggested Questions ──────────────────────────────────────────────────────
+const SUGGESTIONS = [
+  "What's your full tech stack?",
+  "How much does a web app cost?",
+  "How long does a typical project take?",
+  "Can you show me some projects?",
+  "Are you available for freelance?",
+  "How can I contact Noé?",
+];
+
+// ─── Format message (basic markdown → JSX) ────────────────────────────────────
+const FormattedMessage = ({ content }: { content: string }) => {
+  const lines = content.split('\n');
+  return (
+    <div className="space-y-1.5 text-sm leading-relaxed">
+      {lines.map((line, i) => {
+        if (line.startsWith('**') && line.endsWith('**'))
+          return <p key={i} className="font-bold text-white">{line.slice(2, -2)}</p>;
+        if (line.startsWith('• ') || line.startsWith('- '))
+          return (
+            <p key={i} className="flex gap-2 text-white/75">
+              <span className="shrink-0 mt-1.5 w-1 h-1 rounded-full bg-violet-400" />
+              <span dangerouslySetInnerHTML={{ __html: line.slice(2).replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') }} />
+            </p>
+          );
+        if (!line.trim()) return <div key={i} className="h-1" />;
+        return (
+          <p key={i} className="text-white/75"
+            dangerouslySetInnerHTML={{ __html: line.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') }} />
+        );
+      })}
+    </div>
+  );
+};
+
+// ─── Component ────────────────────────────────────────────────────────────────
 export default function AIChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-  const [revealTitle, setRevealTitle] = useState(false);
-  const [revealSubtitle, setRevealSubtitle] = useState(false);
-  const [revealChat, setRevealChat] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [visible, setVisible] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    setTimeout(() => setRevealTitle(true), 100);
-    setTimeout(() => setRevealSubtitle(true), 200);
-    setTimeout(() => setRevealChat(true), 300);
+    const t = setTimeout(() => setVisible(true), 100);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, isLoading]);
 
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
-    }
+    if (!textareaRef.current) return;
+    textareaRef.current.style.height = 'auto';
+    textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 160) + 'px';
   }, [input]);
 
-  const portfolioKnowledge = {
-    competences: `🚀 **Compétences de Noé Plantier :**
+  // ── API Call ────────────────────────────────────────────────────────────────
+  const sendMessage = async (userInput: string) => {
+    if (!userInput.trim() || isLoading) return;
 
-**Frontend Expert**
-• React 18+ & Next.js 14/15 (App Router, Server Components)
-• TypeScript avancé (génériques, utility types)
-• Tailwind CSS & Framer Motion
-• Redux Toolkit, Zustand, React Query
-• Performance & SEO optimisés
-
-**Backend Solide**
-• Node.js & Express (APIs RESTful)
-• PostgreSQL, MongoDB, Prisma ORM
-• NextAuth.js, JWT, OAuth 2.0
-• GraphQL & tRPC
-
-**DevOps & IA**
-• Vercel, AWS, Docker, CI/CD
-• Intégration OpenAI, Claude, chatbots
-• Automatisation & workflows IA
-
-Stack moderne et performante ! 💪`,
-
-    services: `💼 **Services Plantiers :**
-
-**Développement Web**
-• Applications SaaS & dashboards
-• Sites vitrine performants
-• Progressive Web Apps (PWA)
-
-**E-commerce**
-• Shopify, WooCommerce, solutions custom
-• Paiements Stripe/PayPal
-• Gestion stocks temps réel
-
-**IA & Automatisation**
-• Chatbots intelligents
-• Génération de contenu
-• Workflows automatisés
-
-**Optimisation**
-• Migration stack moderne
-• Performance & SEO
-• Tests & maintenance
-
-💎 "Code that ages like fine wine" - Des solutions durables !`,
-
-    prixTypique: `💰 **Projet Typique - Tarification :**
-
-**Application Web Standard**
-Budget : 8 000€ - 12 000€
-Durée : 6-8 semaines
-
-**Inclus :**
-✅ Design UI/UX moderne
-✅ Frontend React/Next.js responsive
-✅ Backend Node.js + API
-✅ Base de données PostgreSQL
-✅ Authentification utilisateurs
-✅ Dashboard admin
-✅ Tests & optimisation
-✅ Déploiement Vercel/AWS
-✅ Formation & documentation
-
-**Autres projets :**
-• Landing page : 2 000€ - 3 000€
-• Site vitrine (10 pages) : 3 000€ - 5 000€
-• E-commerce : 7 000€ - 15 000€
-• App complexe : 15 000€+
-
-📧 Devis gratuit : plantiernoe50@gmail.com`,
-
-    delaiTypique: `⏱️ **Délais de Livraison - Projet Typique :**
-
-**Application Web Standard**
-Durée : 6-8 semaines (1.5-2 mois)
-
-**Détail du planning :**
-• Semaine 1-2 : Analyse & design UI/UX
-• Semaine 3-5 : Développement frontend
-• Semaine 4-6 : Développement backend
-• Semaine 7 : Tests & optimisation
-• Semaine 8 : Déploiement & formation
-
-**Autres délais :**
-• Landing page : 1-2 semaines
-• Site vitrine : 3-4 semaines
-• E-commerce : 8-12 semaines
-• App complexe : 3-6 mois
-
-**Méthode Agile :**
-✅ Livraisons progressives (sprints 2 semaines)
-✅ Démos régulières
-✅ Ajustements en cours de route
-
-Mode rush disponible pour urgences ! ⚡`,
-
-    projetsRealises: `🎯 **Projets Réalisés par Noé :**
-
-**1. Plateforme SaaS Analytics**
-• Dashboard temps réel avec graphiques interactifs
-• 5000+ utilisateurs actifs
-• Tech : Next.js, PostgreSQL, Redis
-• Performance : <1s chargement
-
-**2. E-commerce Mode (15k produits)**
-• Recommandations IA personnalisées
-• +40% conversion après optimisation
-• Tech : Next.js, Shopify, Stripe
-• Revenue : +500k€/an
-
-**3. App Trading Crypto**
-• Données temps réel (WebSocket)
-• Interface ultra-rapide (<100ms)
-• Tech : React, Node.js, MongoDB
-• 2000+ traders actifs
-
-**4. Chatbot Service Client IA**
-• Réponses automatisées intelligentes
-• -60% tickets support
-• Tech : OpenAI API, Next.js
-• Satisfaction : 4.8/5
-
-**5. CMS Intranet Entreprise**
-• Gestion documents & workflow
-• 200+ employés
-• Tech : Next.js, Prisma, PostgreSQL
-• Gain productivité : +35%
-
-Tous avec code propre, tests, et maintenus ! 🚀
-
-Projet similaire en tête ? 📧 plantiernoe50@gmail.com`,
-
-    contact: `📬 **Contacter Noé Plantier :**
-
-**Email :** plantiernoe50@gmail.com
-**LinkedIn :** linkedin.com/in/noe-plantier
-**GitHub :** github.com/noeplantier
-
-💬 **Pour votre projet :**
-Envoyez un email avec :
-• Description du projet
-• Objectifs principaux
-• Timeline souhaitée
-• Budget estimé (optionnel)
-
-⚡ Réponse sous 24h garantie !
-🎁 Consultation gratuite de 30min`
-  };
-
-  const getSmartResponse = (question: string): string => {
-    const q = question.toLowerCase();
-
-    // Questions de salutation
-    if (q.match(/^(bonjour|salut|hello|hi|hey|bonsoir)/)) {
-      return `Bonjour ! 👋 Je suis l'assistant IA de Noé Plantier.
-
-Je peux vous renseigner sur :
-• Ses compétences techniques
-• Les services Plantiers
-• Les tarifs et délais
-• Ses projets réalisés
-• Comment le contacter
-
-Posez-moi vos questions ! 😊`;
-    }
-
-    // Question sur prix typique
-    if (q.match(/combien|prix|coût|tarif|budget|typique|coute|moyenne/)) {
-      return portfolioKnowledge.prixTypique;
-    }
-
-    // Question sur délais/temps
-    if (q.match(/temps|délai|durée|livraison|livrer|rapide|combien de temps/)) {
-      return portfolioKnowledge.delaiTypique;
-    }
-
-    // Question sur projets réalisés
-    if (q.match(/projet|réalisation|portfolio|exemple|référence|réalisé|fait|travaux/)) {
-      return portfolioKnowledge.projetsRealises;
-    }
-
-    // Question sur compétences
-    if (q.match(/compétence|skill|savoir|expertise|maîtrise|technologie|stack/)) {
-      return portfolioKnowledge.competences;
-    }
-
-    // Question sur services
-    if (q.match(/service|offre|proposer|faire|créer|développer/)) {
-      return portfolioKnowledge.services;
-    }
-
-    // Question sur contact
-    if (q.match(/contact|joindre|email|linkedin|github|appeler|discuter/)) {
-      return portfolioKnowledge.contact;
-    }
-
-    // Réponse par défaut
-    return `Merci pour votre question ! 😊
-
-**Noé Plantier - Développeur Full Stack**
-
-🚀 **Expertise**
-Frontend : React, Next.js, TypeScript, Tailwind
-Backend : Node.js, PostgreSQL, MongoDB
-IA : OpenAI, Claude, chatbots
-
-💼 **Services**
-• Apps web sur mesure
-• E-commerce performant
-• Intégration IA
-
-💰 **Tarif projet typique : 8-12k€**
-⏱️ **Délai projet typique : 6-8 semaines**
-
-📧 Contact : plantiernoe50@gmail.com
-
-**Questions fréquentes :**
-• "Quelles sont tes compétences ?"
-• "Quels services proposes-tu ?"
-• "Combien coûte un projet typique ?"
-• "Quels projets as-tu réalisés ?"
-
-N'hésitez pas ! 💡`;
-  };
-
-  const callRealAI = async (userQuestion: string): Promise<string> => {
-    try {
-      const context = `Tu es l'assistant IA de Noé Plantier, développeur Full Stack. Réponds de manière concise et professionnelle.
-
-Compétences : React, Next.js, TypeScript, Node.js, PostgreSQL, MongoDB, IA
-Services : Apps web, e-commerce, chatbots, SaaS
-Contact : plantiernoe50@gmail.com
-
-Question : ${userQuestion}`;
-
-      const response = await fetch(
-        'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            inputs: context,
-            parameters: {
-              max_new_tokens: 300,
-              temperature: 0.7,
-              top_p: 0.9,
-              return_full_text: false
-            }
-          })
-        }
-      );
-
-      if (!response.ok) throw new Error('API Error');
-
-      const data = await response.json();
-      if (Array.isArray(data) && data[0]?.generated_text) {
-        return data[0].generated_text.trim();
-      }
-      throw new Error('Invalid response');
-    } catch (error) {
-      return '';
-    }
-  };
-
-  const handleSendMessage = async () => {
-    if (!input.trim() || isLoading) return;
-
-    const userMessage: Message = {
+    const userMsg: Message = {
       role: 'user',
-      content: input,
-      timestamp: new Date().toISOString()
+      content: userInput,
+      timestamp: new Date().toISOString(),
     };
-    setMessages(prev => [...prev, userMessage]);
-    const userInput = input;
+    setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsLoading(true);
 
     try {
-      // Essayer l'IA réelle d'abord
-      const aiResponse = await callRealAI(userInput);
-      
-      // Si l'IA réelle échoue, utiliser les réponses intelligentes
-      const finalResponse = aiResponse || getSmartResponse(userInput);
-      
-      // Délai réaliste
-      await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400));
+      const history = [...messages, userMsg].map(m => ({
+        role: m.role,
+        content: m.content,
+      }));
+
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: SYSTEM_PROMPT,
+          messages: history,
+        }),
+      });
+
+      if (!response.ok) throw new Error(`API ${response.status}`);
+
+      const data = await response.json();
+      const text = data.content?.[0]?.text ?? "I couldn't generate a response. Please try again.";
 
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: finalResponse,
-        timestamp: new Date().toISOString()
+        content: text,
+        timestamp: new Date().toISOString(),
       }]);
-    } catch (error) {
-      const fallbackResponse = getSmartResponse(userInput);
+    } catch {
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: fallbackResponse,
-        timestamp: new Date().toISOString()
+        content: "I'm temporarily unavailable. You can reach Noé directly at **plantiernoe50@gmail.com** or book a call at calendly.com/plantiernoe50/30min",
+        timestamp: new Date().toISOString(),
       }]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleClearChat = () => {
-    if (window.confirm('Effacer la conversation ?')) {
-      setMessages([]);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(input);
     }
   };
 
-  const handleCopyMessage = (content: string, index: number) => {
+  const handleCopy = (content: string, idx: number) => {
     navigator.clipboard.writeText(content);
-    setCopiedIndex(index);
+    setCopiedIndex(idx);
     setTimeout(() => setCopiedIndex(null), 2000);
   };
 
-  const handleExportChat = () => {
-    const chatData = messages.map(msg =>
-      `[${msg.role.toUpperCase()}] ${new Date(msg.timestamp).toLocaleString()}\n${msg.content}\n`
-    ).join('\n---\n\n');
+  const handleClear = () => {
+    if (window.confirm('Clear this conversation?')) setMessages([]);
+  };
 
-    const blob = new Blob([chatData], { type: 'text/plain' });
+  const handleExport = () => {
+    const text = messages
+      .map(m => `[${m.role.toUpperCase()}] ${new Date(m.timestamp).toLocaleString()}\n${m.content}`)
+      .join('\n\n---\n\n');
+    const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `plantiers-chat-${Date.now()}.txt`;
+    a.download = `noeplantier-chat-${Date.now()}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
 
-  const suggestedQuestions = [
-    "Quelles sont tes compétences ?",
-    "Quels services proposes-tu ?",
-    "Combien coûte un projet typique ?",
-    "Combien de temps prends-tu pour livrer un projet ?",
-    "Comment te contacter ?",
-    "Quels projets as-tu réalisés ?"
-  ];
-
   return (
     <section
       id="ask-ai"
       className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 overflow-hidden"
-      style={{ fontFamily: "'Inter', 'SF Pro Display', -apple-system, sans-serif" }}
     >
-      <div className="w-full max-w-5xl flex flex-col items-center gap-6 relative z-10">
+      {/* Ambient glows */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-violet-900/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-sky-900/10 rounded-full blur-[100px] pointer-events-none" />
 
+      <div className="w-full max-w-4xl flex flex-col items-center gap-6 relative z-10">
+
+        {/* ── Header ────────────────────────────────────────────────────────── */}
         <AnimatePresence>
-          {revealTitle && (
-            <motion.h1
-              initial={{ clipPath: 'inset(0 100% 0 0)' }}
-              animate={{ clipPath: 'inset(0 0 0 0)' }}
-              exit={{ clipPath: 'inset(0 100% 0 0)' }}
-              transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-              className="text-4xl md:text-5xl font-bold text-white mb-4"
-            >
-              Ask AI 
-              <BotIcon className="inline-block w-10 h-10 text-white ml-3 mb-1 animate-pulse" />
-            </motion.h1>
+          {visible && (
+            <>
+              <motion.div
+                variants={slideIn}
+                initial="hidden"
+                animate="visible"
+                className="text-center"
+              >
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="h-px w-8 bg-gradient-to-r from-transparent to-violet-500" />
+                  <span className="font-mono text-[10px] tracking-[0.3em] text-violet-400 uppercase">
+                    Powered by Claude · Anthropic
+                  </span>
+                  <div className="h-px w-8 bg-gradient-to-l from-transparent to-violet-500" />
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">
+                  Ask AI{' '}
+                  <BotIcon className="inline-block w-10 h-10 text-white ml-2 mb-1" />
+                </h2>
+                <p className="text-white/55 text-lg max-w-xl mx-auto leading-relaxed">
+                  Get instant answers about Noé's skills, services, projects, and rates.
+                </p>
+              </motion.div>
 
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {revealSubtitle && (
-            <motion.p
-              initial={{ clipPath: 'inset(0 100% 0 0)' }}
-              animate={{ clipPath: 'inset(0 0 0 0)' }}
-              exit={{ clipPath: 'inset(0 100% 0 0)' }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-              className="text-lg text-center text-white/70 mb-6 max-w-2xl"
-            >
-             Get instant answers about Noé Plantier's skills, services, projects, and contact info.
-            </motion.p>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {revealChat && (
-            <motion.div
-              initial={{ clipPath: 'inset(0 100% 0 0)' }}
-              animate={{ clipPath: 'inset(0 0 0 0)' }}
-              exit={{ clipPath: 'inset(0 100% 0 0)' }}
-              transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-              className="w-full"
-            >
-              <div className="bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
-
-                <div className="flex items-center justify-between p-5 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-blue-600/20">
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl shadow-lg">
-                      <Sparkles className="w-6 h-6 text-white" />
+              {/* ── Chat window ─────────────────────────────────────────────── */}
+              <motion.div
+                variants={slideIn}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 0.1 }}
+                className="w-full"
+              >
+                <div
+                  className="rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden"
+                  style={{ boxShadow: '0 0 80px rgba(139,92,246,0.06), 0 0 0 1px rgba(255,255,255,0.04)' }}
+                >
+                  {/* Top bar */}
+                  <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.07] bg-white/[0.02]">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2.5 bg-gradient-to-br from-violet-500 to-blue-500 rounded-xl">
+                        <Sparkles className="w-4.5 h-4.5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-white">Portfolio Assistant</p>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <motion.div
+                            animate={{ opacity: [1, 0.3, 1] }}
+                            transition={{ duration: 1.6, repeat: Infinity }}
+                            className="w-1.5 h-1.5 rounded-full bg-emerald-400"
+                          />
+                          <span className="font-mono text-[10px] text-emerald-400/80">Online · Noé Plantier</span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-white/90">Assistant IA Intelligent</h3>
-                      <p className="text-sm text-white/60">Propulsé par IA avancée</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
+
+                    {/* Actions */}
                     {messages.length > 0 && (
-                      <>
+                      <div className="flex items-center gap-1">
                         <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={handleExportChat}
-                          className="p-2.5 hover:bg-white/10 rounded-lg transition-colors group"
-                          title="Exporter"
+                          whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                          onClick={handleExport}
+                          className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white/30 hover:text-white/70"
+                          title="Export chat"
                         >
-                          <Download className="w-5 h-5 text-white/70 group-hover:text-purple-400" />
+                          <Download className="w-4 h-4" />
                         </motion.button>
                         <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={handleClearChat}
-                          className="p-2.5 hover:bg-white/10 rounded-lg transition-colors group"
-                          title="Effacer"
+                          whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                          onClick={handleClear}
+                          className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white/30 hover:text-red-400"
+                          title="Clear chat"
                         >
-                          <Trash2 className="w-5 h-5 text-white/70 group-hover:text-red-400" />
+                          <Trash2 className="w-4 h-4" />
                         </motion.button>
-                      </>
+                      </div>
                     )}
                   </div>
-                </div>
 
-                <div className="h-[500px] overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-transparent to-black/20">
-                  {messages.length === 0 && (
-                    <div className="flex flex-col items-center justify-center h-full text-white/50">
-                      <div className="text-center max-w-xl">
-                        <Sparkles className="w-16 h-16 mx-auto mb-4 text-purple-400/50" />
-                        <h4 className="text-xl font-semibold text-white/70 mb-3">Commencez une conversation</h4>
-                        <p className="text-sm mb-6">Posez vos questions sur Noé, ses compétences, projets et services.</p>
+                  {/* Messages */}
+                  <div className="h-[480px] overflow-y-auto p-6 space-y-5 scroll-smooth">
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
-                          {suggestedQuestions.map((question, idx) => (
+                    {/* Empty state */}
+                    {messages.length === 0 && (
+                      <div className="flex flex-col items-center justify-center h-full text-center">
+                        <div className="p-5 bg-violet-500/10 rounded-2xl border border-violet-400/15 mb-6">
+                          <Terminal className="w-10 h-10 text-violet-400/60" />
+                        </div>
+                        <h4 className="text-lg font-bold text-white/70 mb-2">Start a conversation</h4>
+                        <p className="text-sm text-white/35 max-w-xs mb-8 leading-relaxed">
+                          Ask me anything about Noé's skills, projects, availability, or pricing.
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-lg">
+                          {SUGGESTIONS.map((q, i) => (
                             <motion.button
-                              key={idx}
-                              initial={{ opacity: 0, y: 10 }}
+                              key={i}
+                              initial={{ opacity: 0, y: 8 }}
                               animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: idx * 0.1 }}
+                              transition={{ delay: 0.3 + i * 0.06 }}
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
-                              onClick={() => setInput(question)}
-                              className="p-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-400/30 rounded-xl text-sm text-white/70 hover:text-white transition-all text-left"
+                              onClick={() => sendMessage(q)}
+                              className="p-3 bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.08] hover:border-violet-400/25 rounded-xl text-xs text-white/50 hover:text-white/80 transition-all text-left leading-relaxed"
                             >
-                              {question}
+                              {q}
                             </motion.button>
                           ))}
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {messages.map((msg, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4 }}
-                      className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div className={`max-w-[80%] group relative ${msg.role === 'user' ? 'ml-auto' : 'mr-auto'}`}>
-                        <div className={`p-4 rounded-2xl text-sm leading-relaxed ${
-                          msg.role === 'user'
-                            ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg'
-                            : 'bg-white/10 text-white/90 border border-white/10'
-                        }`}>
-                          <p className="whitespace-pre-wrap">{msg.content}</p>
+                    {/* Messages */}
+                    {messages.map((msg, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.35 }}
+                        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                      >
+                        <div className={`group max-w-[80%] ${msg.role === 'user' ? 'ml-auto' : 'mr-auto'}`}>
+                          {/* Sender label */}
+                          <p className={`font-mono text-[9px] tracking-widest mb-1.5 ${msg.role === 'user' ? 'text-right text-white/25' : 'text-white/25'}`}>
+                            {msg.role === 'user' ? 'YOU' : 'ASSISTANT'}
+                          </p>
+
+                          <div className={`p-4 rounded-2xl ${
+                            msg.role === 'user'
+                              ? 'bg-gradient-to-br from-violet-500 to-blue-500 text-white'
+                              : 'bg-white/[0.06] border border-white/[0.08]'
+                          }`}>
+                            {msg.role === 'assistant'
+                              ? <FormattedMessage content={msg.content} />
+                              : <p className="text-sm leading-relaxed">{msg.content}</p>}
+                          </div>
+
+                          {/* Meta row */}
+                          <div className={`flex items-center gap-2 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity ${msg.role === 'user' ? 'justify-end' : ''}`}>
+                            <span className="font-mono text-[9px] text-white/25">
+                              {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                            {msg.role === 'assistant' && (
+                              <motion.button
+                                whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                                onClick={() => handleCopy(msg.content, idx)}
+                                className="p-1 rounded hover:bg-white/10 transition-colors"
+                              >
+                                {copiedIndex === idx
+                                  ? <Check className="w-3.5 h-3.5 text-emerald-400" />
+                                  : <Copy className="w-3.5 h-3.5 text-white/30" />}
+                              </motion.button>
+                            )}
+                          </div>
                         </div>
+                      </motion.div>
+                    ))}
 
-                        <div className="flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <span className="text-xs text-white/40">
-                            {new Date(msg.timestamp).toLocaleTimeString()}
-                          </span>
-                          {msg.role === 'assistant' && (
-                            <motion.button
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                              onClick={() => handleCopyMessage(msg.content, idx)}
-                              className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
-                              title="Copier"
-                            >
-                              {copiedIndex === idx ? (
-                                <Check className="w-4 h-4 text-green-400" />
-                              ) : (
-                                <Copy className="w-4 h-4 text-white/50" />
-                              )}
-                            </motion.button>
-                          )}
+                    {/* Typing indicator */}
+                    {isLoading && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="flex justify-start"
+                      >
+                        <div className="p-4 bg-white/[0.06] rounded-2xl border border-white/[0.08]">
+                          <div className="flex gap-1.5 items-center">
+                            {[0, 150, 300].map(delay => (
+                              <motion.div
+                                key={delay}
+                                animate={{ y: [0, -5, 0] }}
+                                transition={{ duration: 0.6, repeat: Infinity, delay: delay / 1000 }}
+                                className="w-2 h-2 bg-violet-400/70 rounded-full"
+                              />
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
+                      </motion.div>
+                    )}
 
-                  {isLoading && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="flex justify-start"
-                    >
-                      <div className="bg-white/10 p-4 rounded-2xl border border-white/10">
-                        <div className="flex gap-1.5">
-                          <span className="w-2.5 h-2.5 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                          <span className="w-2.5 h-2.5 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                          <span className="w-2.5 h-2.5 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
+                    <div ref={messagesEndRef} />
+                  </div>
 
-                  <div ref={messagesEndRef} />
-                </div>
-
-                <div className="p-5 border-t border-white/10 bg-gradient-to-r from-purple-600/10 to-blue-600/10">
-                  <div className="flex gap-3 items-end">
-                    <div className="flex-1 relative">
+                  {/* Input bar */}
+                  <div className="px-5 py-4 border-t border-white/[0.07] bg-white/[0.02]">
+                    <div className="flex gap-3 items-end">
                       <textarea
                         ref={textareaRef}
                         value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        onKeyPress={(e) => {
-                          if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
-                            handleSendMessage();
-                          }
-                        }}
-                        placeholder="Posez votre question... (Maj+Entrée pour nouvelle ligne)"
-                        className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-3 text-sm text-white placeholder-white/50 focus:outline-none focus:border-purple-400/50 transition-colors resize-none min-h-[52px] max-h-[200px]"
-                        disabled={isLoading}
+                        onChange={e => setInput(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        placeholder="Ask anything… (Enter to send · Shift+Enter for new line)"
                         rows={1}
+                        disabled={isLoading}
+                        className="flex-1 bg-white/[0.06] border border-white/[0.1] rounded-2xl px-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-violet-400/50 focus:bg-white/[0.08] transition-all resize-none min-h-[46px] max-h-[160px] font-mono leading-relaxed disabled:opacity-50"
                       />
+                      <motion.button
+                        onClick={() => sendMessage(input)}
+                        disabled={isLoading || !input.trim()}
+                        whileHover={!isLoading && input.trim() ? { scale: 1.05, y: -1 } : {}}
+                        whileTap={!isLoading && input.trim() ? { scale: 0.95 } : {}}
+                        className="shrink-0 w-11 h-11 flex items-center justify-center bg-gradient-to-br from-violet-500 to-blue-500 rounded-xl disabled:opacity-35 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-violet-500/30 transition-all duration-200"
+                      >
+                        <Send className="w-4.5 h-4.5 text-white" />
+                      </motion.button>
                     </div>
-                    <motion.button
-                      onClick={handleSendMessage}
-                      disabled={isLoading || !input.trim()}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-3.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex-shrink-0"
-                    >
-                      <Send className="w-5 h-5 text-white" />
-                    </motion.button>
+                    <p className="font-mono text-[9px] text-white/20 mt-2 text-center tracking-wide">
+                      POWERED BY CLAUDE · ANTHROPIC AI
+                    </p>
                   </div>
-                  <p className="text-xs text-white/40 mt-2 text-center">
-                    Appuyez sur Entrée pour envoyer • Maj+Entrée pour nouvelle ligne
-                  </p>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+
+              {/* ── Feature pills ───────────────────────────────────────────── */}
+              <motion.div
+                variants={slideIn}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 0.2 }}
+                className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full"
+              >
+                {[
+                  { icon: '⚡', title: 'Instant', desc: 'Real-time responses, zero latency' },
+                  { icon: '🎯', title: 'Accurate', desc: 'Trained on Noé\'s full portfolio' },
+                  { icon: '🔒', title: 'Private', desc: 'No chat history stored' },
+                ].map(({ icon, title, desc }) => (
+                  <div
+                    key={title}
+                    className="flex items-center gap-3 p-4 bg-white/[0.03] rounded-xl border border-white/[0.07]"
+                  >
+                    <span className="text-xl">{icon}</span>
+                    <div>
+                      <p className="text-sm font-semibold text-white/80">{title}</p>
+                      <p className="text-xs text-white/35 font-mono">{desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mt-6"
-        >
-          <div className="p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
-            <h4 className="font-semibold text-white/90 mb-1">⚡ Instantané</h4>
-            <p className="text-sm text-white/60">Réponses immédiates et précises</p>
-          </div>
-          <div className="p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
-            <h4 className="font-semibold text-white/90 mb-1">🎯 IA Réelle</h4>
-            <p className="text-sm text-white/60">Propulsé par Mistral AI gratuit</p>
-          </div>
-          <div className="p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
-            <h4 className="font-semibold text-white/90 mb-1">💡 Expert</h4>
-            <p className="text-sm text-white/60">Connaissance complète du portfolio</p>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
