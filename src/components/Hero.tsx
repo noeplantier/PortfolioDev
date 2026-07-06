@@ -432,7 +432,7 @@ export default function Hero() {
       label: 'FULL STACK',
       title: 'End-to-End Engineering',
       description: 'From schema design to production deployment. Zero handoff friction.',
-      metric: '40+',
+      metric: '50+',
       metricLabel: 'shipped projects',
       color: 'from-violet-600/10 to-transparent',
       accentColor: 'text-violet-400',
@@ -639,7 +639,7 @@ export default function Hero() {
               >
                 {[
                   { value: '5+', label: 'Years', icon: <Code2 className="w-3.5 h-3.5" /> },
-                  { value: '40+', label: 'Projects', icon: <Layers className="w-3.5 h-3.5" /> },
+                  { value: '50+', label: 'Projects', icon: <Layers className="w-3.5 h-3.5" /> },
                   { value: '100%', label: 'Satisfaction', icon: <Target className="w-3.5 h-3.5" /> },
                 ].map((m) => (
                   <motion.div
