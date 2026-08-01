@@ -63,6 +63,21 @@ export function Navbar() {
   // so they resolve correctly instead of scrolling a section that isn't there.
   const hrefFor = (hash: string) => (onHome ? hash : `/${hash}`);
 
+  // The mobile menu locks body scroll (overflow: hidden) while open, released by
+  // an effect that runs after this state update commits. A native anchor jump
+  // fired synchronously on click loses that race and silently does nothing —
+  // so on Home, take over the scroll explicitly once the lock is actually gone.
+  const handleMobileNavClick = (e: React.MouseEvent, hash: string) => {
+    setIsMenuOpen(false);
+    if (!onHome) return;
+    e.preventDefault();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  };
+
   return (
     <header
       className={cn(
@@ -117,12 +132,18 @@ export function Navbar() {
                 <a
                   key={link.name}
                   href={hrefFor(link.href)}
+                  onClick={(e) => handleMobileNavClick(e, link.href)}
                   className="w-full py-3 text-center text-base font-medium text-white/80 hover:text-white"
                 >
                   {link.name}
                 </a>
               ))}
-              <Button href={hrefFor('#contact')} className="mt-3 w-full" variant="primary">
+              <Button
+                href={hrefFor('#contact')}
+                onClick={(e) => handleMobileNavClick(e, '#contact')}
+                className="mt-3 w-full"
+                variant="primary"
+              >
                 Start a project
               </Button>
             </div>

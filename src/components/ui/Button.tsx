@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useMagneticHover } from './MagneticButton';
@@ -17,7 +17,7 @@ export interface ButtonProps {
   href?: string;
   target?: string;
   rel?: string;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
   type?: 'button' | 'submit';
   disabled?: boolean;
 }
