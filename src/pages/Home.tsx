@@ -6,9 +6,8 @@ import { Portfolio } from '@/components/sections/portfolio/Portfolio';
 import { WhyPlantiers } from '@/components/sections/why-plantiers/WhyPlantiers';
 import { Testimonials } from '@/components/sections/testimonials/Testimonials';
 import { FAQ } from '@/components/sections/faq/FAQ';
+import { Contact } from '@/components/sections/contact/Contact';
 
-// Sections are added here one at a time as each is built (see the project's
-// task list) and finalized in the "assemble Home page" pass.
 export function Home() {
   return (
     <div>
@@ -20,6 +19,7 @@ export function Home() {
       <WhyPlantiers />
       <Testimonials />
       <FAQ />
+      <Contact />
     </div>
   );
 }

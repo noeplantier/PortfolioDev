@@ -8,7 +8,7 @@ import { NotFound } from '@/pages/NotFound';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="relative min-h-screen overflow-x-hidden bg-void text-white">
         <a
           href="#main"

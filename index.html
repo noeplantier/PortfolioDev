@@ -8,6 +8,25 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!--
+      Static hidden form so Netlify's build-time HTML scan can detect it.
+      Must stay a sibling of #root, not nested inside it — React fully
+      owns #root's contents from first render, so anything nested here
+      would vanish from the live DOM (harmless for Netlify's detection,
+      which reads the file at rest, but fragile for no reason).
+      Field names must exactly match src/components/sections/contact/ContactForm.tsx.
+    -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="company" />
+      <input type="text" name="projectType" />
+      <textarea name="message"></textarea>
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text" name="bot-field" />
+    </form>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
