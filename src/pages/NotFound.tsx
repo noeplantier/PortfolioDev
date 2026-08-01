@@ -2,8 +2,11 @@ import { ArrowLeft } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { GlowOrb } from '@/components/ui/GlowOrb';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 export function NotFound() {
+  useDocumentTitle('Page not found | Plantiers');
+
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
       <GlowOrb color="brand" className="left-1/2 top-1/3 h-[40vw] w-[40vw] -translate-x-1/2" />

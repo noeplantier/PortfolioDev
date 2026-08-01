@@ -1,7 +1,10 @@
 import { Container } from '@/components/ui/Container';
 import { site } from '@/data/site';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 
 export function Legal() {
+  useDocumentTitle('Legal & Privacy | Plantiers');
+
   return (
     <div className="pb-24 pt-36">
       <Container size="narrow">
