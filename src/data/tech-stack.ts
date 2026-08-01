@@ -1,0 +1,20 @@
+/** Must match keys in components/ui/TechIcon.tsx — unmatched names fall back to a generic glyph. */
+export const techStack: string[] = [
+  'React',
+  'Next.js',
+  'TypeScript',
+  'Tailwind CSS',
+  'Node.js',
+  'React Native',
+  'Expo',
+  'Flutter',
+  'Swift / SwiftUI',
+  'PostgreSQL',
+  'Supabase',
+  'GraphQL',
+  'Docker',
+  'Kubernetes',
+  'AWS',
+  'Vercel',
+  'Firebase',
+];
