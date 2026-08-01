@@ -34,7 +34,7 @@ export function Portfolio() {
                       <Globe className="h-4 w-4 text-white/70" />
                     )}
                   </div>
-                  <span className="rounded-full border border-white/[0.08] px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-white/35">
+                  <span className="rounded-full border border-white/[0.08] px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-white/60">
                     {project.type}
                   </span>
                 </div>
@@ -46,7 +46,7 @@ export function Portfolio() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-white/[0.07] px-2.5 py-1 font-mono text-[10px] text-white/35"
+                      className="rounded-full border border-white/[0.07] px-2.5 py-1 font-mono text-[10px] text-white/60"
                     >
                       {tag}
                     </span>

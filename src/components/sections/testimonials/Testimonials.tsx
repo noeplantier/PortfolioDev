@@ -28,7 +28,7 @@ export function Testimonials() {
                 <p className="mt-4 flex-1 text-sm italic leading-relaxed text-white/75">&ldquo;{t.quote}&rdquo;</p>
                 <div className="mt-5 border-t border-white/[0.07] pt-4">
                   <p className="text-sm font-semibold text-white">{t.name}</p>
-                  <p className="text-xs text-white/45">
+                  <p className="text-xs text-white/65">
                     {t.role}
                     {t.company ? ` · ${t.company}` : ''}
                   </p>

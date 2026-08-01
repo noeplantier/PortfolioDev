@@ -69,7 +69,7 @@ export function Hero() {
               </Button>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="mt-8 flex items-center gap-2.5 text-sm text-white/45">
+            <motion.div variants={fadeUp} className="mt-8 flex items-center gap-2.5 text-sm text-white/65">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf-400 opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-leaf-400" />
@@ -90,12 +90,12 @@ export function Hero() {
         transition={{ delay: 1.4 }}
         className="absolute inset-x-0 bottom-8 hidden flex-col items-center gap-2 sm:flex"
       >
-        <span className="font-mono text-[9px] tracking-[0.3em] text-white/25">SCROLL</span>
+        <span className="font-mono text-[9px] tracking-[0.3em] text-white/60">SCROLL</span>
         <motion.div
           animate={reduceMotion ? undefined : { y: [0, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <ChevronDown className="h-4 w-4 text-white/25" />
+          <ChevronDown className="h-4 w-4 text-white/60" />
         </motion.div>
       </motion.div>
     </section>

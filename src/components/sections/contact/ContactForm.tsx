@@ -71,13 +71,13 @@ export function ContactForm() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="mb-2 block font-mono text-[10px] tracking-widest text-white/40">
+          <label htmlFor="name" className="mb-2 block font-mono text-[10px] tracking-widest text-white/60">
             NAME
           </label>
           <input id="name" name="name" type="text" required placeholder="Jane Doe" className={inputClasses} />
         </div>
         <div>
-          <label htmlFor="email" className="mb-2 block font-mono text-[10px] tracking-widest text-white/40">
+          <label htmlFor="email" className="mb-2 block font-mono text-[10px] tracking-widest text-white/60">
             EMAIL
           </label>
           <input
@@ -93,13 +93,13 @@ export function ContactForm() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="company" className="mb-2 block font-mono text-[10px] tracking-widest text-white/40">
-            COMPANY <span className="text-white/20">(optional)</span>
+          <label htmlFor="company" className="mb-2 block font-mono text-[10px] tracking-widest text-white/60">
+            COMPANY <span className="text-white/60">(optional)</span>
           </label>
           <input id="company" name="company" type="text" placeholder="Acme Inc." className={inputClasses} />
         </div>
         <div>
-          <label htmlFor="projectType" className="mb-2 block font-mono text-[10px] tracking-widest text-white/40">
+          <label htmlFor="projectType" className="mb-2 block font-mono text-[10px] tracking-widest text-white/60">
             PROJECT TYPE
           </label>
           <select id="projectType" name="projectType" defaultValue="" required className={inputClasses}>
@@ -116,7 +116,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="mb-2 block font-mono text-[10px] tracking-widest text-white/40">
+        <label htmlFor="message" className="mb-2 block font-mono text-[10px] tracking-widest text-white/60">
           MESSAGE
         </label>
         <textarea

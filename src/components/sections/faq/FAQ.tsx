@@ -16,29 +16,38 @@ export function FAQ() {
         <div className="mt-14 space-y-3">
           {faqItems.map((item, index) => {
             const isOpen = openIndex === index;
+            const buttonId = `faq-button-${index}`;
+            const panelId = `faq-panel-${index}`;
             return (
               <div
                 key={item.question}
                 className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03]"
               >
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between gap-4 p-5 text-left"
-                >
-                  <span className="text-base font-semibold text-white">{item.question}</span>
-                  <motion.span
-                    animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="shrink-0 text-white/40"
+                <h3>
+                  <button
+                    type="button"
+                    id={buttonId}
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    className="flex w-full items-center justify-between gap-4 p-5 text-left"
                   >
-                    <ChevronDown className="h-5 w-5" />
-                  </motion.span>
-                </button>
+                    <span className="text-base font-semibold text-white">{item.question}</span>
+                    <motion.span
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="shrink-0 text-white/60"
+                    >
+                      <ChevronDown className="h-5 w-5" />
+                    </motion.span>
+                  </button>
+                </h3>
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

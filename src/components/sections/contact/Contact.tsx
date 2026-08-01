@@ -46,7 +46,7 @@ export function Contact() {
                   <item.icon className="h-4 w-4 text-brand-300" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block font-mono text-[10px] tracking-widest text-white/30">
+                  <span className="block font-mono text-[10px] tracking-widest text-white/60">
                     {item.label.toUpperCase()}
                   </span>
                   <span className="block truncate text-sm font-medium text-white/80">{item.value}</span>

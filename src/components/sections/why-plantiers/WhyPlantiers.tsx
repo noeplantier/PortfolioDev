@@ -55,7 +55,7 @@ export function WhyPlantiers() {
               </span>
               <span>
                 <span className="block text-sm font-semibold text-white">{site.founder.name}</span>
-                <span className="block font-mono text-xs text-white/40">{site.founder.role}</span>
+                <span className="block font-mono text-xs text-white/60">{site.founder.role}</span>
               </span>
             </motion.a>
           </motion.div>

@@ -28,7 +28,7 @@ export function Process() {
               <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border border-brand-400/25 bg-void">
                 <step.icon className="h-5 w-5 text-brand-300" />
               </div>
-              <span className="mt-4 font-mono text-xs text-white/25">{step.step}</span>
+              <span className="mt-4 font-mono text-xs text-white/60">{step.step}</span>
               <h3 className="mt-1 text-lg font-bold text-white">{step.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-white/55">{step.description}</p>
             </motion.div>

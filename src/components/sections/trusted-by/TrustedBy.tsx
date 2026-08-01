@@ -17,7 +17,7 @@ export function TrustedBy() {
           whileInView="visible"
           viewport={viewportOnce}
           variants={fadeUp}
-          className="mb-8 text-center font-mono text-[11px] uppercase tracking-[0.3em] text-white/35"
+          className="mb-8 text-center font-mono text-[11px] uppercase tracking-[0.3em] text-white/60"
         >
           The stack behind every engagement
         </motion.p>
@@ -30,7 +30,7 @@ export function TrustedBy() {
         {reduceMotion ? (
           <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 px-6">
             {techStack.map((name) => (
-              <div key={name} className="flex items-center gap-2.5 text-white/40">
+              <div key={name} className="flex items-center gap-2.5 text-white/60">
                 <TechIcon name={name} className="h-5 w-5" />
                 <span className="text-sm">{name}</span>
               </div>
@@ -45,7 +45,7 @@ export function TrustedBy() {
             {loopItems.map((name, i) => (
               <div
                 key={`${name}-${i}`}
-                className="flex shrink-0 items-center gap-2.5 text-white/40 transition-colors hover:text-white/80"
+                className="flex shrink-0 items-center gap-2.5 text-white/60 transition-colors hover:text-white/80"
               >
                 <TechIcon name={name} className="h-5 w-5" />
                 <span className="whitespace-nowrap text-sm">{name}</span>

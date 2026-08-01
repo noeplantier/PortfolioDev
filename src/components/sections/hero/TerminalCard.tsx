@@ -28,7 +28,7 @@ export function TerminalCard() {
           <span className="h-3 w-3 rounded-full bg-amber-500/70" />
           <span className="h-3 w-3 rounded-full bg-emerald-500/70" />
         </div>
-        <span className="ml-auto font-mono text-[11px] tracking-widest text-white/30">plantiers — zsh</span>
+        <span className="ml-auto font-mono text-[11px] tracking-widest text-white/60">plantiers — zsh</span>
       </div>
 
       <div className="min-h-[220px] space-y-2 p-5 font-mono text-[13px] leading-relaxed">

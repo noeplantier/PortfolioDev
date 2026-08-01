@@ -36,7 +36,7 @@ export function Services() {
                   {service.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-white/[0.08] px-2.5 py-1 font-mono text-[10px] text-white/40"
+                      className="rounded-full border border-white/[0.08] px-2.5 py-1 font-mono text-[10px] text-white/60"
                     >
                       {tag}
                     </span>
