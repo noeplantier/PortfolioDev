@@ -40,3 +40,8 @@ yarn-error.log*
 .netlify
 *.local
 .vite/
+
+# TypeScript incremental build info / stray project-reference emit
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
