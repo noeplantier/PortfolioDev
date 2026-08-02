@@ -41,7 +41,11 @@ export function Card({ children, className, tilt = false, hoverLift = true }: Ca
       style={tiltEnabled ? { rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800 } : undefined}
       whileHover={hoverLift && !reduceMotion ? { y: -4 } : undefined}
       className={cn(
-        'group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl transition-colors duration-300 hover:border-white/[0.15]',
+        // backdrop-blur-sm rather than -xl: this component renders many-at-once (every
+        // Service/Portfolio card), and backdrop-filter is one of the more expensive things
+        // a browser composites — a lighter blur is nearly as convincing here and much cheaper
+        // multiplied across a whole grid.
+        'group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm transition-colors duration-300 hover:border-white/[0.15]',
         className,
       )}
     >

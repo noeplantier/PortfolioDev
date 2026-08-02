@@ -23,7 +23,7 @@ export interface ButtonProps {
 }
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none';
+  'group relative inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-[background-color,background-position,border-color,box-shadow,opacity] duration-300 disabled:opacity-40 disabled:pointer-events-none';
 
 const sizes: Record<Size, string> = {
   md: 'px-5 py-2.5 text-sm',

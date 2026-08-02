@@ -16,8 +16,17 @@ export function Navbar() {
   const onHome = location.pathname === '/';
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
-    onScroll();
+    let ticking = false;
+    const check = () => {
+      setIsScrolled(window.scrollY > 20);
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(check);
+    };
+    check();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -81,7 +90,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b transition-all duration-300',
+        'fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,padding,backdrop-filter] duration-300',
         isScrolled ? 'border-white/[0.08] bg-void/80 py-3 backdrop-blur-xl' : 'border-transparent py-5',
       )}
     >

@@ -9,7 +9,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
 const PROJECT_TYPES = ['Web app', 'Mobile app', 'Landing page', 'Cloud / DevOps', 'AI integration', 'Something else'];
 
 const inputClasses =
-  'w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/25 backdrop-blur-sm transition-all duration-200 focus:border-brand-400/60 focus:bg-white/[0.07] focus:outline-none';
+  'w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-sm text-white placeholder-white/25 backdrop-blur-sm transition-colors duration-200 focus:border-brand-400/60 focus:bg-white/[0.07] focus:outline-none';
 
 /**
  * Netlify Forms, no backend. The static form in index.html is what Netlify's
@@ -135,7 +135,7 @@ export function ContactForm() {
         whileHover={status === 'idle' ? { scale: 1.01, y: -1 } : undefined}
         whileTap={status === 'idle' ? { scale: 0.99 } : undefined}
         className={cn(
-          'flex w-full items-center justify-center gap-3 rounded-xl px-6 py-4 text-sm font-bold transition-all duration-300',
+          'flex w-full items-center justify-center gap-3 rounded-xl px-6 py-4 text-sm font-bold transition-[background-color,border-color,color,box-shadow,opacity] duration-300',
           status === 'error'
             ? 'border border-red-400/30 bg-red-500/15 text-red-300'
             : 'bg-gradient-to-r from-brand-600 to-brand-500 text-white hover:shadow-glow disabled:opacity-60',
