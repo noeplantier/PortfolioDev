@@ -86,17 +86,22 @@ def make_og_image(mark):
 
     draw.text((98, 340), 'Engineering', font=font_xl, fill=(255, 255, 255, 255))
 
+    # Generous, font-size-based padding rather than a tight textbbox fit — a
+    # bbox-relative offset previously left too little room below the
+    # baseline and clipped the descender on the "g" in "Digital".
     line2 = 'Digital Growth.'
     bbox = draw.textbbox((0, 0), line2, font=font_xl)
-    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
-    grad = Image.new('RGB', (tw + 4, th + 20), (0, 0, 0))
+    tw = bbox[2] - bbox[0]
+    pad_top, pad_bottom = 20, 34
+    mask_h = font_xl.size + pad_top + pad_bottom
+    grad = Image.new('RGB', (tw + 4, mask_h), (0, 0, 0))
     gdraw2 = ImageDraw.Draw(grad)
     for gx in range(tw + 4):
         t = abs(((gx / (tw + 4) * 2) % 2) - 1)
-        gdraw2.line([(gx, 0), (gx, th + 20)], fill=(int(183 + (139 - 183) * t), int(155 + (92 - 155) * t), int(255 + (246 - 255) * t)))
-    mask = Image.new('L', (tw + 4, th + 20), 0)
-    ImageDraw.Draw(mask).text((-bbox[0] + 2, -bbox[1] + 2), line2, font=font_xl, fill=255)
-    img.paste(grad, (96, 412), mask)
+        gdraw2.line([(gx, 0), (gx, mask_h)], fill=(int(183 + (139 - 183) * t), int(155 + (92 - 155) * t), int(255 + (246 - 255) * t)))
+    mask = Image.new('L', (tw + 4, mask_h), 0)
+    ImageDraw.Draw(mask).text((-bbox[0] + 2, pad_top), line2, font=font_xl, fill=255)
+    img.paste(grad, (96, 405), mask)
 
     draw = ImageDraw.Draw(img, 'RGBA')
     draw.text((100, 515), 'Web · Mobile · Cloud & DevOps · AI Integrations', font=font_reg, fill=(255, 255, 255, 140))
