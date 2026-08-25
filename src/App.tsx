@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/layout/ScrollToTop';
+import { CursorGlow } from '@/components/layout/CursorGlow';
 import { Home } from '@/pages/Home';
 import { Legal } from '@/pages/Legal';
 import { NotFound } from '@/pages/NotFound';
@@ -16,6 +17,7 @@ function App() {
         >
           Skip to content
         </a>
+        <CursorGlow />
         <Navbar />
         <main id="main">
           <Routes>
