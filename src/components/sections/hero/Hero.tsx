@@ -8,6 +8,7 @@ import { GridOverlay } from '@/components/ui/GridOverlay';
 import { fadeIn, fadeUp, fadeUpPlain, stagger } from '@/lib/motion';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { TerminalCard } from './TerminalCard';
+import { NeuralField } from './NeuralField';
 
 export function Hero() {
   const reduceMotion = usePrefersReducedMotion();
@@ -15,25 +16,9 @@ export function Hero() {
   return (
     <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pb-20 pt-28">
       <GridOverlay />
+      <NeuralField className="opacity-70" />
       <GlowOrb color="brand" className="-top-40 left-1/4 h-[45vw] w-[45vw]" />
       <GlowOrb color="leaf" className="bottom-0 right-0 h-[25vw] w-[25vw]" />
-
-      {!reduceMotion && (
-        <>
-          <motion.div
-            aria-hidden="true"
-            animate={{ y: [0, -18, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-            className="pointer-events-none absolute right-[12%] top-[20%] hidden h-2 w-2 rounded-full bg-brand-300/60 blur-[1px] sm:block"
-          />
-          <motion.div
-            aria-hidden="true"
-            animate={{ y: [0, 14, 0] }}
-            transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="pointer-events-none absolute left-[8%] top-[55%] hidden h-1.5 w-1.5 rounded-full bg-leaf-400/70 blur-[1px] sm:block"
-          />
-        </>
-      )}
 
       <Container className="relative z-10">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-12">
