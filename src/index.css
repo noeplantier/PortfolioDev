@@ -46,6 +46,14 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    /* Force this element onto its own GPU compositing layer, isolated from
+       any ancestor's `filter`/`transform` transitions. Without this, a
+       parent animating `filter: blur()` (Framer Motion entrance transitions
+       do this) can cause WebKit/Chrome to lose track of the background-clip
+       layer mid-transition and paint the glyphs corrupted — missing chunks,
+       letters fused together — until the next unrelated repaint. */
+    transform: translateZ(0);
+    will-change: background-position;
   }
 }
 

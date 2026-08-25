@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { GlowOrb } from '@/components/ui/GlowOrb';
 import { GridOverlay } from '@/components/ui/GridOverlay';
-import { fadeIn, fadeUp, stagger } from '@/lib/motion';
+import { fadeIn, fadeUp, fadeUpPlain, stagger } from '@/lib/motion';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { TerminalCard } from './TerminalCard';
 
@@ -42,13 +42,17 @@ export function Hero() {
               <Badge dot>Software Engineering Studio</Badge>
             </motion.div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="mt-6 text-5xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl"
-            >
-              <span className="block">Engineering</span>
-              <span className="text-gradient animate-gradient block">Digital Growth.</span>
-            </motion.h1>
+            <h1 className="mt-6 text-5xl font-black leading-[1.15] tracking-tight text-white sm:text-6xl lg:text-7xl">
+              {/* Each line gets its own reveal timing (via stagger on the parent) rather than
+                  sharing one h1-level transform — see fadeUpPlain for why the gradient line
+                  specifically can't use the same blur-filter entrance as the plain-text line. */}
+              <motion.span variants={fadeUp} className="block pb-1">
+                Engineering
+              </motion.span>
+              <motion.span variants={fadeUpPlain} className="text-gradient animate-gradient block pb-1">
+                Digital Growth.
+              </motion.span>
+            </h1>
 
             <motion.p variants={fadeUp} className="mt-6 max-w-lg text-lg leading-relaxed text-white/65">
               Plantiers designs, builds, and ships production-grade web and mobile software for teams who can't
