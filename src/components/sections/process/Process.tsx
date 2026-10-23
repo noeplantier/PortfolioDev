@@ -11,6 +11,7 @@ export function Process() {
         <SectionHeading
           eyebrow="How we work"
           title="A process built for clarity, not ceremony."
+          accent="not ceremony."
           subtitle="No bloated rituals — five stages that keep you informed and the work moving."
         />
 

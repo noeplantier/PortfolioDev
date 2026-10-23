@@ -11,7 +11,7 @@ export function FAQ() {
   return (
     <section id="faq" className="relative py-28">
       <Container size="narrow">
-        <SectionHeading eyebrow="FAQ" title="Questions, answered." />
+        <SectionHeading eyebrow="FAQ" title="Questions, answered." accent="answered." />
 
         <div className="mt-14 space-y-3">
           {faqItems.map((item, index) => {

@@ -14,6 +14,7 @@ export function Services() {
         <SectionHeading
           eyebrow="What we do"
           title="Four disciplines. One team."
+          accent="One team."
           subtitle="Every engagement draws on the same senior engineering bar, whether it's a marketing site or a full product build."
         />
 

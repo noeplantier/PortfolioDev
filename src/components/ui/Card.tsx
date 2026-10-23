@@ -50,7 +50,9 @@ export function Card({ children, className, tilt = false, hoverLift = true, glow
       ref={ref}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      style={tiltEnabled ? { rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800 } : undefined}
+      // `transformPerspective` gives the card's *own* rotation a vanishing point
+      // (CSS `perspective` only affects children), so the tilt reads as real depth.
+      style={tiltEnabled ? { rotateX, rotateY, transformPerspective: 900, transformStyle: 'preserve-3d' } : undefined}
       whileHover={hoverLift && !reduceMotion ? { y: -4 } : undefined}
       className={cn(
         // `isolate` pins down a real stacking context regardless of whether Framer

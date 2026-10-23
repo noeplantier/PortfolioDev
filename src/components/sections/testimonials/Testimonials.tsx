@@ -13,7 +13,7 @@ export function Testimonials() {
   return (
     <section id="testimonials" className="relative py-28">
       <Container>
-        <SectionHeading eyebrow="Client feedback" title="What clients say" />
+        <SectionHeading eyebrow="Client feedback" title="What clients say" accent="clients say" />
         <motion.div
           variants={stagger()}
           initial="hidden"

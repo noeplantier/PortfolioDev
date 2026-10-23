@@ -59,6 +59,7 @@ export function Portfolio() {
         <SectionHeading
           eyebrow="Selected work"
           title="Explore the work."
+          accent="the work."
           subtitle="Real, verified projects — pick one to see the role, the system, and what shipped."
         />
 
