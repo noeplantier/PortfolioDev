@@ -122,7 +122,7 @@ export function Portfolio() {
                         className="absolute inset-0 rounded-xl border border-brand-400/30 bg-white/[0.06]"
                       />
                     )}
-                    <span className="relative z-10 font-mono text-[11px] text-white/30">
+                    <span className="relative z-10 font-mono text-[11px] text-white/55">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <span className="relative z-10 text-sm font-semibold">{p.name}</span>
@@ -188,10 +188,10 @@ export function Portfolio() {
 
                     <div className="mt-7 grid grid-cols-1 gap-8 sm:grid-cols-2">
                       <div>
-                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">Role</p>
+                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">Role</p>
                         <p className="mt-2 text-sm text-white/70">{project.role}</p>
 
-                        <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">Stack</p>
+                        <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">Stack</p>
                         <div className="mt-2 flex flex-wrap gap-1.5">
                           {project.tags.map((tag) => (
                             <span
@@ -203,12 +203,12 @@ export function Portfolio() {
                           ))}
                         </div>
 
-                        <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">Impact</p>
+                        <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">Impact</p>
                         <p className="mt-2 text-sm text-white/70">{project.impact}</p>
                       </div>
 
                       <div>
-                        <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">System</p>
+                        <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">System</p>
                         <SystemDiagram layers={project.layers} />
                       </div>
                     </div>
@@ -241,7 +241,7 @@ export function Portfolio() {
 
             {/* Prev/next — the swipe affordance made visible for mouse/keyboard users too */}
             <div className="mt-4 flex items-center justify-between">
-              <span className="font-mono text-[10px] tracking-widest text-white/25">
+              <span className="font-mono text-[10px] tracking-widest text-white/55">
                 {String(activeIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
               </span>
               <div className="flex gap-2">
