@@ -1,0 +1,41 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
+/**
+ * Which section is currently under the middle of the viewport.
+ *
+ * One IntersectionObserver watching a thin horizontal band (45–50% from the
+ * top) instead of a scroll listener doing layout reads: the browser tells us
+ * when a section crosses the band, nothing runs per scroll event. When no
+ * section is in the band (the gap between two), the previous one stays active.
+ *
+ * Re-subscribes when the route changes, since the sections only exist on Home.
+ */
+export function useScrollSpy(ids: readonly string[]): string | null {
+  const { pathname } = useLocation();
+  const [active, setActive] = useState<string | null>(null);
+  const key = ids.join('|');
+
+  useEffect(() => {
+    setActive(null);
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+    );
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+    // `key` stands in for `ids` so an inline array literal doesn't resubscribe every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, pathname]);
+
+  return active;
+}

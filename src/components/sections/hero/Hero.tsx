@@ -115,24 +115,28 @@ export function Hero() {
                   <Calendar className="h-4 w-4" />
                   {channels.book.label}
                 </Button>
-                <Button
-                  href={channels.email.href}
-                  size="lg"
-                  variant="secondary"
-                  className="w-full sm:w-auto"
-                  icon={<Mail className="h-4 w-4 transition-transform group-hover:-rotate-12 group-hover:scale-110" />}
-                >
-                  {channels.email.label}
-                </Button>
-                <a
-                  href={channels.linkedin.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${channels.linkedin.label} (opens in a new tab)`}
-                  className="group flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.04] text-white/70 transition-[border-color,background-color,color,transform] hover:border-brand-400/50 hover:bg-white/[0.08] hover:text-white active:scale-95"
-                >
-                  <Linkedin className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-                </a>
+                {/* Email + LinkedIn share a row on mobile (`sm:contents` dissolves the wrapper on
+                    wider screens so all three sit inline with the primary button). */}
+                <div className="flex gap-3 sm:contents">
+                  <Button
+                    href={channels.email.href}
+                    size="lg"
+                    variant="secondary"
+                    className="min-w-0 flex-1 sm:flex-none"
+                    icon={<Mail className="h-4 w-4 transition-transform group-hover:-rotate-12 group-hover:scale-110" />}
+                  >
+                    {channels.email.label}
+                  </Button>
+                  <a
+                    href={channels.linkedin.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${channels.linkedin.label} (opens in a new tab)`}
+                    className="group flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.04] text-white/70 transition-[border-color,background-color,color,transform] hover:border-brand-400/50 hover:bg-white/[0.08] hover:text-white active:scale-95"
+                  >
+                    <Linkedin className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+                  </a>
+                </div>
               </motion.div>
 
               <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
