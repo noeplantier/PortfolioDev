@@ -48,7 +48,7 @@ function App() {
     // drops transform/layout animations app-wide (opacity fades are kept) — a safety
     // net under the per-component checks, so a forgotten `y:` entrance can't slip through.
     <MotionConfig reducedMotion="user">
-      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <BrowserRouter>
         <div className="relative min-h-screen overflow-x-hidden bg-void text-white">
           <a
             href="#main"
