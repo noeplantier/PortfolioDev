@@ -1,5 +1,6 @@
 import { Hero } from '@/components/sections/hero/Hero';
 import { TrustedBy } from '@/components/sections/trusted-by/TrustedBy';
+import { Manifesto } from '@/components/sections/manifesto/Manifesto';
 import { Services } from '@/components/sections/services/Services';
 import { Process } from '@/components/sections/process/Process';
 import { Portfolio } from '@/components/sections/portfolio/Portfolio';
@@ -13,6 +14,7 @@ export function Home() {
     <div>
       <Hero />
       <TrustedBy />
+      <Manifesto />
       <Services />
       <Process />
       <Portfolio />

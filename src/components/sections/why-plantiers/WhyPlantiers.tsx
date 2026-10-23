@@ -1,10 +1,38 @@
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Badge } from '@/components/ui/Badge';
 import { GlowOrb } from '@/components/ui/GlowOrb';
+import { ScrambleText, WordReveal } from '@/components/ui/AnimatedText';
 import { fadeUp, stagger, viewportOnce } from '@/lib/motion';
 import { site } from '@/data/site';
+
+/**
+ * A check that draws itself: the stroke's pathLength runs 0 → 1 when the
+ * parent card's reveal variant fires (variant labels propagate through the
+ * <svg> via React context, so no extra observer is needed).
+ */
+function AnimatedCheck() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-4 w-4 text-leaf-400"
+    >
+      <motion.path
+        d="M5 12.5l4.5 4.5L19 7.5"
+        variants={{
+          hidden: { pathLength: 0, opacity: 0 },
+          visible: { pathLength: 1, opacity: 1, transition: { duration: 0.55, delay: 0.25, ease: 'easeOut' } },
+        }}
+      />
+    </svg>
+  );
+}
 
 const pillars = [
   {
@@ -33,11 +61,16 @@ export function WhyPlantiers() {
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-12">
           <motion.div variants={stagger()} initial="hidden" whileInView="visible" viewport={viewportOnce}>
             <motion.div variants={fadeUp}>
-              <Badge>Why Plantiers</Badge>
+              <Badge>
+                <ScrambleText text="WHY PLANTIERS" />
+              </Badge>
             </motion.div>
-            <motion.h2 variants={fadeUp} className="mt-6 text-4xl font-bold leading-tight text-white sm:text-5xl">
-              Senior attention, not a rotating cast.
-            </motion.h2>
+            <WordReveal
+              text="Senior attention, not a rotating cast."
+              accent="not a rotating cast."
+              className="mt-6 text-4xl font-bold leading-[1.15] text-white sm:text-5xl sm:leading-[1.15]"
+              delay={0.1}
+            />
             <motion.p variants={fadeUp} className="mt-5 text-lg leading-relaxed text-white/65">
               Plantiers is led by {site.founder.name} — every engagement gets senior-level attention from day one,
               not a chain of account managers between you and the person actually writing the code.
@@ -74,7 +107,7 @@ export function WhyPlantiers() {
                 className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 backdrop-blur-xl"
               >
                 <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg border border-leaf-400/25 bg-leaf-400/10">
-                  <Check className="h-4 w-4 text-leaf-400" />
+                  <AnimatedCheck />
                 </div>
                 <h3 className="text-sm font-bold text-white">{pillar.title}</h3>
                 <p className="mt-2 text-xs leading-relaxed text-white/55">{pillar.description}</p>
