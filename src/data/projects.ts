@@ -11,12 +11,14 @@ export interface Project {
   type: 'web' | 'mobile';
   tags: string[];
   layers: SystemLayer[];
-  codeUrl: string;
+  /** Public repository — omitted for closed-source products. */
+  codeUrl?: string;
   liveUrl?: string;
 }
 
 /**
- * Real, verified work (cross-checked against github.com/noeplantier). The
+ * Real, verified work (cross-checked against github.com/noeplantier, and
+ * kretopia.com for the one closed-source product). The
  * old repo's project cards mixed up names/descriptions across entries and
  * invented star/fork counts via a fake "loading" GitHub fetch — this list
  * only includes what could be confirmed, with no fabricated metrics. Impact
@@ -86,16 +88,20 @@ export const projects: Project[] = [
     codeUrl: 'https://github.com/noeplantier/eventure',
   },
   {
-    id: 'feelomi',
-    name: 'Feelomi',
-    role: 'Mobile engineering',
-    description: 'A Flutter mobile app for mental wellbeing check-ins, designed around a calm, unintimidating interface.',
-    challenge: 'Wellbeing check-in apps can feel clinical or overwhelming at the exact moment someone needs simplicity.',
-    solution: 'A Flutter app designed around a calm interface — a check-in that takes seconds, not a form to dread.',
-    impact: 'Shipped as a working Flutter mobile app.',
+    id: 'kretopia',
+    name: 'Kretopia',
+    role: 'CTO — technology & mobile app',
+    description:
+      'The Creative Economy OS: a mobile app and platform where creative professionals build a verified Creative Passport, find work that fits it, and run projects from brief to payment.',
+    challenge:
+      'Creative careers run on claims — profiles and follower counts — with no trusted record of the work someone has actually done, and opportunities scattered across the web.',
+    solution:
+      'A Creative Passport that holds credits, projects, co-signs and evidence; Scout and Match surface opportunities and collaborators from that record; Studio runs the project from brief to payment. Kreto, an AI "Executive Producer", suggests next steps — its output is labelled AI-assisted, stays editable, and only joins the record once the user confirms it.',
+    impact: 'Live in beta at kretopia.com.',
     type: 'mobile',
-    tags: ['Flutter', 'Dart', 'Mobile'],
-    layers: ['mobile'],
-    codeUrl: 'https://github.com/noeplantier/FEELOMI',
+    tags: ['Mobile', 'AI-assisted', 'Creative Economy'],
+    layers: ['mobile', 'backend', 'ai'],
+    // Commercial product — no public repository, so only the live site is linked.
+    liveUrl: 'https://www.kretopia.com',
   },
 ];
