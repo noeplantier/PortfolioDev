@@ -1,16 +1,19 @@
 import { cn } from '@/lib/utils';
-import logoMarkSrc from '@/assets/logo-mark.png';
+// Displayed at ~36px tall; 112px (≈3x) covers retina. vite-imagetools resizes and re-encodes at build time.
+import logoMarkSrc from '@/assets/logo-mark.png?h=112&format=webp&quality=90&as=url';
 
 interface LogoMarkProps {
   className?: string;
+  /** Inside the full lockup the wordmark already names the brand, so the image adds nothing for assistive tech. */
+  decorative?: boolean;
 }
 
 /** The real Plantiers mark (ribbon "P" + leaf sprout), background-removed from the source render. */
-export function LogoMark({ className }: LogoMarkProps) {
+export function LogoMark({ className, decorative = false }: LogoMarkProps) {
   return (
     <img
       src={logoMarkSrc}
-      alt="Plantiers"
+      alt={decorative ? '' : 'Plantiers'}
       className={cn('h-8 w-auto object-contain', className)}
       style={{ aspectRatio: '200 / 280' }}
     />
@@ -28,7 +31,7 @@ export function Logo({ variant = 'full', className }: LogoProps) {
 
   return (
     <span className={cn('inline-flex items-center gap-3', className)}>
-      <LogoMark className="h-9 w-auto shrink-0" />
+      <LogoMark decorative className="h-9 w-auto shrink-0" />
       <span className="flex flex-col leading-none">
         <span className="text-lg font-extrabold tracking-tight text-white">PLANTIERS</span>
         <span className="font-mono text-[9px] tracking-[0.25em] text-brand-300/80">SOFTWARE ENGINEERING</span>
