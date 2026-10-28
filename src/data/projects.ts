@@ -27,22 +27,40 @@ export interface Project {
  */
 export const projects: Project[] = [
   {
-    id: 'put-in-coffee',
-    name: 'Put-in Coffee',
-    role: 'Full-stack build & design',
+    id: 'kretopia',
+    name: 'Kretopia',
+    role: 'CTO — technology & mobile app',
     description:
-      'A performance-first landing page for an independent coffee shop, built with Astro for near-instant load on mobile.',
+      'The Creative Economy OS: a mobile app and platform where creative professionals build a verified Creative Passport, find work that fits it, and run projects from brief to payment.',
     challenge:
-      'An independent coffee shop needed a web presence that loads instantly on the phones customers actually browse with — not a bloated template.',
+      'Creative careers run on claims — profiles and follower counts — with no trusted record of the work someone has actually done, and opportunities scattered across the web.',
     solution:
-      'Built on Astro for near-zero JS by default, with hand-tuned image loading and a layout that reads clearly on a five-inch screen.',
-    impact: "Live as the shop's primary web presence, optimized mobile-first.",
-    type: 'web',
-    tags: ['Astro', 'Landing Page', 'Performance'],
-    layers: ['frontend'],
-    codeUrl: 'https://github.com/noeplantier/put-in-coffee',
-    liveUrl: 'https://put-in-coffee.netlify.app',
+      'A Creative Passport that holds credits, projects, co-signs and evidence; Scout and Match surface opportunities and collaborators from that record; Studio runs the project from brief to payment. Kreto, an AI "Executive Producer", suggests next steps — its output is labelled AI-assisted, stays editable, and only joins the record once the user confirms it.',
+    impact: 'Live in beta at kretopia.com.',
+    type: 'mobile',
+    tags: ['Mobile', 'AI-assisted', 'Creative Economy'],
+    layers: ['mobile', 'backend', 'ai'],
+    // Commercial product — no public repository, so only the live site is linked.
+    liveUrl: 'https://www.kretopia.com',
   },
+  {
+    id: 'put-in-coffee',
+    name: 'Put in Coffee',
+    role: 'Full-stack engineering',
+    description:
+      'A platform for managing coffee subscriptions, with a live dashboard for tracking orders and deliveries.',
+    challenge: 'Coffee subscriptions were managed via spreadsheets and email, with no real-time visibility into orders or deliveries.',
+    solution: 'A live dashboard that tracks coffee subscriptions in real-time, replacing spreadsheets and email with a single source of truth.',
+    impact: 'Shipped as a working web app, with live tracking of coffee subscriptions.',
+    type: 'web',
+    tags: ['TypeScript', 'React', 'Realtime'],
+    layers: ['frontend', 'backend', 'realtime'],
+    codeUrl:'https://github.com/noeplantier/put-in-coffee',
+    liveUrl: 'https://put-in-coffee.netlify.app/',
+
+    
+  },
+
   {
     id: 'universe',
     name: 'Universe',
@@ -60,48 +78,34 @@ export const projects: Project[] = [
     liveUrl: 'https://universestreaming.netlify.app',
   },
   {
-    id: 'ti-padel',
-    name: 'Ti Padel',
+    id: 'plantiers-outreach-os',
+    name: 'Plantiers - Outreach OS',
     role: 'Full-stack engineering',
     description:
-      'A reservation platform for a padel club — real-time court availability and a booking flow built for members reserving from their phone.',
-    challenge: 'A padel club was managing court bookings by phone call and a shared spreadsheet — double-bookings were routine.',
-    solution: 'A reservation platform with real-time court availability, built for members booking between games.',
-    impact: 'Replaced manual, error-prone booking with a live availability system.',
+      'A platform for managing outreach campaigns, with a live dashboard for tracking progress and results.',
+    challenge: 'Outreach campaigns were managed via spreadsheets and email, with no real-time visibility into progress or results.',
+    solution: 'A live dashboard that tracks outreach campaigns in real-time, replacing spreadsheets and email with a single source of truth.',
+    impact: 'Shipped as a working web app, with live tracking of outreach campaigns.',
     type: 'web',
-    tags: ['TypeScript', 'Booking Platform'],
+    tags: ['TypeScript', 'React', 'Realtime'],
     layers: ['frontend', 'backend', 'realtime'],
-    codeUrl: 'https://github.com/noeplantier/Ti-Padel',
+    codeUrl: 'https://github.com/noeplantier/ClawPilot',
+    liveUrl: 'https://plantiers-outreach-os.netlify.app/',
   },
   {
-    id: 'eventure',
-    name: 'Eventure',
+    id: 'monis-rent',
+    name: 'Monis Rent',
     role: 'Full-stack engineering',
     description:
-      'A staff scheduling and event management platform, replacing a spreadsheet-and-group-chat workflow with one real-time dashboard.',
-    challenge: 'Staff scheduling and event coordination were spread across spreadsheets and group chats — no single source of truth.',
-    solution: 'One real-time dashboard for scheduling and event management.',
-    impact: 'Consolidated staff coordination into a single live system.',
+      'A platform for managing staff scheduling and event coordination, with a live dashboard for tracking schedules and events.',
+    challenge: 'Staff scheduling and event coordination were managed via spreadsheets and email, with no real-time visibility into schedules or events.',
+    solution: 'A live dashboard that tracks staff schedules and events in real-time, replacing spreadsheets and email with a single source of truth.',
+    impact: 'Shipped as a working web app, with live tracking of staff schedules and events.',
     type: 'web',
     tags: ['TypeScript', 'Scheduling'],
     layers: ['frontend', 'backend', 'realtime'],
-    codeUrl: 'https://github.com/noeplantier/eventure',
+    codeUrl: 'https://github.com/noeplantier/monis.rent',
+    liveUrl: 'https://monisrent.netlify.app/',
   },
-  {
-    id: 'kretopia',
-    name: 'Kretopia',
-    role: 'CTO — technology & mobile app',
-    description:
-      'The Creative Economy OS: a mobile app and platform where creative professionals build a verified Creative Passport, find work that fits it, and run projects from brief to payment.',
-    challenge:
-      'Creative careers run on claims — profiles and follower counts — with no trusted record of the work someone has actually done, and opportunities scattered across the web.',
-    solution:
-      'A Creative Passport that holds credits, projects, co-signs and evidence; Scout and Match surface opportunities and collaborators from that record; Studio runs the project from brief to payment. Kreto, an AI "Executive Producer", suggests next steps — its output is labelled AI-assisted, stays editable, and only joins the record once the user confirms it.',
-    impact: 'Live in beta at kretopia.com.',
-    type: 'mobile',
-    tags: ['Mobile', 'AI-assisted', 'Creative Economy'],
-    layers: ['mobile', 'backend', 'ai'],
-    // Commercial product — no public repository, so only the live site is linked.
-    liveUrl: 'https://www.kretopia.com',
-  },
+
 ];
